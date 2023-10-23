@@ -9,6 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.swp</groupId>
+	
 	<artifactId>ArtQuack</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ArtQuack</name>
@@ -17,9 +18,10 @@
 		<java.version>19</java.version>
 	</properties>
 	<dependencies>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
 		<dependency>
@@ -125,6 +127,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
+		
 	</dependencies>
 
 	<build>
