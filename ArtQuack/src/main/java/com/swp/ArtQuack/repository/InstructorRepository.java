@@ -1,11 +1,12 @@
 package com.swp.ArtQuack.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.swp.ArtQuack.entity.Instructor;
 
 @Repository
-public interface InstructorRepository extends JpaRepository<Instructor, String>{
+public interface InstructorRepository extends JpaRepository<Instructor, String>, JpaSpecificationExecutor<Instructor>{
 
 }

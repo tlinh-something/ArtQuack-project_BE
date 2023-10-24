@@ -8,7 +8,6 @@ import org.springframework.boot.convert.DataSizeUnit;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import Utilities.Constants;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -63,7 +62,7 @@ public class Instructor implements Serializable{
 	private boolean status;
 	
 	//RELATIONSHIP SETUP
-	@OneToMany(targetEntity = Course.class)
+	@OneToMany(targetEntity = Course.class, mappedBy = "instructor")
 	@JsonIgnore
 	@ToString.Exclude
 	private Collection<Course> coursesList;

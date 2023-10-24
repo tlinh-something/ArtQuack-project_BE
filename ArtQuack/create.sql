@@ -4,7 +4,6 @@ create table Complete (itemID int not null, status bit, date datetime2(6), compl
 create table Course (rate int, status bit, viewer int, upload_date datetime2(6), cateID varchar(255) not null, courseID varchar(255) not null, description varchar(255), instructorID varchar(255) not null, levelID varchar(255) not null, name varchar(255) not null, primary key (courseID));
 create table Enrollment (enrollmentID int identity not null, status bit, courseID varchar(255) not null, studentID varchar(255) not null, primary key (enrollmentID));
 create table Instructor (rate int, status bit, certificate varchar(255) not null, email varchar(255) not null, instructorID varchar(255) not null, name varchar(255) not null, password varchar(255) not null, summarize varchar(255), primary key (instructorID));
-create table Instructor_coursesList (Instructor_instructorID varchar(255) not null, coursesList_courseID varchar(255) not null);
 create table Item (itemID int identity not null, status bit, chapterID varchar(255) not null, content varchar(255), itemName varchar(255) not null, primary key (itemID));
 create table Level (levelID varchar(255) not null, levelName varchar(255), primary key (levelID));
 create table Post (postID int identity not null, status bit, date datetime2(6), author varchar(255) not null, cateID varchar(255) not null, content varchar(255) not null, title varchar(255) not null, primary key (postID));
@@ -13,7 +12,6 @@ create table Student (status bit, email varchar(255) not null, name varchar(255)
 create table Submission (grade int, status bit, chapterID varchar(255) not null, comment varchar(255), final_project varchar(255) not null, studentID varchar(255) not null, submitID varchar(255) not null, primary key (submitID));
 alter table Instructor add constraint UK_t6alh4njssx4tk4rlm6lu0odw unique (email);
 alter table Instructor add constraint UK_nqikd9bj01tthg41nert5ohuy unique (name);
-alter table Instructor_coursesList add constraint UK_8ybh1c5i5oatnyi9j5fkvbov5 unique (coursesList_courseID);
 alter table Student add constraint UK_msrnvlmsye9t98fb3bvekffiq unique (email);
 alter table Student add constraint UK_3up80j396y3ioi39u367gy3bn unique (name);
 alter table Student add constraint UK_j55tabckuns1mj95ipgnxf54t unique (password);
@@ -24,8 +22,6 @@ alter table Course add constraint FKff7a1un6hp6ki4dtl9e4hru0k foreign key (instr
 alter table Course add constraint FK7isx9tia8g67e2q4okwitot5m foreign key (levelID) references Level;
 alter table Enrollment add constraint FKfcxfn633c555js0hdapvjxyh6 foreign key (courseID) references Course;
 alter table Enrollment add constraint FKipc5qnpx3fbn748xgnf1yvvne foreign key (studentID) references Student;
-alter table Instructor_coursesList add constraint FKlwbcokrbpleu70y8avdo62pu5 foreign key (coursesList_courseID) references Course;
-alter table Instructor_coursesList add constraint FKlauwefg5en7i0qi8hd1i9aesk foreign key (Instructor_instructorID) references Instructor;
 alter table Item add constraint FKg9hgc86ngl1f7x8j8y51ai1ls foreign key (chapterID) references Chapter;
 alter table Post add constraint FK202bahptojc0t82jc82ja9jmv foreign key (cateID) references Category;
 alter table Review add constraint FK3fs2ic30pweamvkltgu68o9kq foreign key (courseID) references Course;
