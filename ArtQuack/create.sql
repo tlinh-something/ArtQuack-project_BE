@@ -1,14 +1,14 @@
 create table Category (cateID varchar(255) not null, cateName varchar(255) not null, primary key (cateID));
 create table Chapter (status bit, chapterID varchar(255) not null, chapterName varchar(255) not null, courseID varchar(255) not null, primary key (chapterID));
 create table Complete (itemID int not null, status bit, date datetime2(6), completeID varchar(255) not null, primary key (completeID));
-create table Course (rate int, status bit, viewer int, upload_date datetime2(6), cateID varchar(255) not null, courseID varchar(255) not null, description varchar(255), instructorID varchar(255) not null, levelID varchar(255) not null, name varchar(255) not null, primary key (courseID));
+create table Course (rate int, status bit not null, viewer int, upload_date datetime2(6), cateID varchar(255) not null, courseID varchar(255) not null, description varchar(255), instructorID varchar(255) not null, levelID varchar(255) not null, name varchar(255) not null, primary key (courseID));
 create table Enrollment (enrollmentID int identity not null, status bit, courseID varchar(255) not null, studentID varchar(255) not null, primary key (enrollmentID));
-create table Instructor (rate int, status bit, certificate varchar(255) not null, email varchar(255) not null, instructorID varchar(255) not null, name varchar(255) not null, password varchar(255) not null, summarize varchar(255), primary key (instructorID));
+create table Instructor (rate int, status bit, certificate varchar(255) not null, email varchar(255) not null, instructorID varchar(255) not null, name varchar(255) not null, password varchar(255) not null, role varchar(255), summarize varchar(255), primary key (instructorID));
 create table Item (itemID int identity not null, status bit, chapterID varchar(255) not null, content varchar(255), itemName varchar(255) not null, primary key (itemID));
 create table Level (levelID varchar(255) not null, levelName varchar(255), primary key (levelID));
 create table Post (postID int identity not null, status bit, date datetime2(6), author varchar(255) not null, cateID varchar(255) not null, content varchar(255) not null, title varchar(255) not null, primary key (postID));
 create table Review (rate int, status bit, date datetime2(6), comment varchar(255), courseID varchar(255) not null, reviewID varchar(255) not null, studentID varchar(255) not null, primary key (reviewID));
-create table Student (status bit, email varchar(255) not null, name varchar(255) not null, password varchar(255) not null, studentID varchar(255) not null, primary key (studentID));
+create table Student (status bit, email varchar(255) not null, name varchar(255) not null, password varchar(255) not null, reviewID varchar(255) not null, role varchar(255), studentID varchar(255) not null, primary key (studentID));
 create table Submission (grade int, status bit, chapterID varchar(255) not null, comment varchar(255), final_project varchar(255) not null, studentID varchar(255) not null, submitID varchar(255) not null, primary key (submitID));
 alter table Instructor add constraint UK_t6alh4njssx4tk4rlm6lu0odw unique (email);
 alter table Instructor add constraint UK_nqikd9bj01tthg41nert5ohuy unique (name);

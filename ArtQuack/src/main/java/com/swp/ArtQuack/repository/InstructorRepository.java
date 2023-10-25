@@ -5,8 +5,21 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.swp.ArtQuack.entity.Instructor;
+import java.util.List;
+
 
 @Repository
 public interface InstructorRepository extends JpaRepository<Instructor, String>, JpaSpecificationExecutor<Instructor>{
 
+	public List<Instructor> findByNameIgnoreCaseAndStatusIsTrue(String name);
+	
+	public List<Instructor> findByStatusIsTrue();
+	
+	public List<Instructor> findByStatusIsFalse();
+	
+	public Instructor findByInstructorIDAndStatusIsTrue(String instructorID);
+	
+	public Instructor findByEmail(String email);
+	
+	public Instructor findByEmailAndPassword(String email, String password);
 }

@@ -41,4 +41,33 @@ public class Level implements Serializable{
 	@ToString.Exclude
 	private Collection<Course> coursesList;
 
+	public String getLevelID() {
+		return levelID;
+	}
+
+	public void setLevelID(String levelID) {
+		this.levelID = levelID;
+	}
+
+	public String getLevelName() {
+		return levelName;
+	}
+
+	public void setLevelName(String levelName) {
+		this.levelName = levelName;
+	}
+
+	public Collection<Course> getCoursesList() {
+		return coursesList;
+	}
+
+	public void setCoursesList(Collection<Course> coursesList) {
+		this.coursesList = coursesList;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 }

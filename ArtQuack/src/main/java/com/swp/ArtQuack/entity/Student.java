@@ -49,11 +49,14 @@ public class Student implements Serializable{
 //	@Size(min = Constants.PASSWORD_MIN, message = "password must have at least 6 characters")
 	private String password;
 	
-//	@Column(name = "reviewID", nullable = false)
-//	private String reviewID;
+	@Column(name = "reviewID", nullable = false)
+	private String reviewID;
 	
 	@Column(name = "status")
 	private boolean status;
+	
+	@Column(name = "role")
+	private String role;
 	
 	//RELATIONSHIP SETUP	
 	@OneToMany(targetEntity = Enrollment.class, mappedBy = "student")

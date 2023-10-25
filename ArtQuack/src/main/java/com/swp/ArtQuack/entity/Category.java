@@ -42,6 +42,34 @@ public class Category implements Serializable{
 	@JsonIgnore
 	@ToString.Exclude
 	private Collection<Course> courseList;
+
+	public String getCateID() {
+		return cateID;
+	}
+
+	public void setCateID(String cateID) {
+		this.cateID = cateID;
+	}
+
+	public String getCateName() {
+		return cateName;
+	}
+
+	public void setCateName(String cateName) {
+		this.cateName = cateName;
+	}
+
+	public Collection<Course> getCourseList() {
+		return courseList;
+	}
+
+	public void setCourseList(Collection<Course> courseList) {
+		this.courseList = courseList;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	
 	
 }
