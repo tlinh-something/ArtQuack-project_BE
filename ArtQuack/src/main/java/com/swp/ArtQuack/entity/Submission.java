@@ -57,7 +57,7 @@ public class Submission implements Serializable{
 	@ToString.Exclude
 	private Student student;
 	
-	@ManyToOne
+	@ManyToOne(targetEntity = Chapter.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "chapterID", referencedColumnName = "chapterID", nullable = false, insertable = true, updatable = false)
 	@JsonIgnore
 	@ToString.Exclude
