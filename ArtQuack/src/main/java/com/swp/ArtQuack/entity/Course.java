@@ -3,6 +3,7 @@ package com.swp.ArtQuack.entity;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -109,6 +110,8 @@ public class Course implements Serializable{
 	@OneToMany(targetEntity = Enrollment.class, mappedBy = "course")
 	@JsonIgnore
 	@ToString.Exclude
-	private Collection<Enrollment> enrollmentsList; 
+	private Collection<Enrollment> enrollmentsList;
+
+  
 
 }
