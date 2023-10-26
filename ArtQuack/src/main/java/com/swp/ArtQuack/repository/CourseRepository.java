@@ -22,7 +22,7 @@ public interface CourseRepository extends JpaRepository<Course, String>, JpaSpec
 	
 	public List<Course> findByCategoryCateID(String cateID);
 	
-	public List<Course> findByNameContainingIgnoreCaseAndStatusIsTrue(String name);
+	public Course  findByNameIgnoreCaseAndStatusIsTrue(String name);
 	
 	public List<Course> findByInstructorInstructorID(String instructorID);
 	

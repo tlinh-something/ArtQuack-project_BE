@@ -43,19 +43,16 @@ public class CourseService {
 		return courseRepoService.findByCategoryCateID(cateID);
 	}
 	
-	public List<Course> findByKeyword(String keyword){
-		return courseRepoService.findByNameContainingIgnoreCaseAndStatusIsTrue(keyword);
-	}
-	
 	public List<Course> findByInstructorID(String instructorID){
 		return courseRepoService.findByInstructorInstructorID(instructorID);
 	}
 	
+	public Course findByKeyword(String keyword) {
+		return courseRepoService.findByNameIgnoreCaseAndStatusIsTrue(keyword);
+	}
+	
 	//DISPLAY
-	public List<CourseObject> displayRender(List<Course> ls) {
-		List<CourseObject> list = new ArrayList<CourseObject>();
-//		CourseObject object = new CourseObject();
-		for(Course x: ls) {
+	public CourseObject displayRender(Course x) {
 			CourseObject object = new CourseObject();
 			object.setCourseID(x.getCourseID());
 			object.setName(x.getName());
@@ -77,16 +74,15 @@ public class CourseService {
 			object.setLevelID(x.getLevel().getLevelID());
 			object.setLevelName(x.getLevel().getLevelName());
 			
-			//Review
-			List<Review> lr = reviewService.findByCourseID(x.getCourseID());
-			object.setRateReview(lr.get(0).getRate());
+//			//Review
+//			List<Review> lr = reviewService.findByCourseID(x.getCourseID());
+//			object.setRateReview(lr.get(0).getRate());
+//			
+//			//Chapter
+//			List<Chapter> lc = chapterService.findByCourseID(x.getCourseID());
+//			object.setChapterName(lc.get(0).getChapterName());
 			
-			//Chapter
-			List<Chapter> lc = chapterService.findByCourseID(x.getCourseID());
-			object.setChapterName(lc.get(0).getChapterName());
-			list.add(object);
-		}
-		return list;
+		return object;
 	}
 	
 	//ADD

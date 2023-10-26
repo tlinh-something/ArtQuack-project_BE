@@ -42,13 +42,13 @@ public class CourseObject implements Serializable{
 	private String levelID;
 	private String levelName;
 	
-	//Review
-	private String reviewID;
-	private int rateReview;
-	
-	//Chapter
-	private String chapterID;
-	private String chapterName;
+//	//Review
+//	private String reviewID;
+//	private int rateReview;
+//	
+//	//Chapter
+//	private String chapterID;
+//	private String chapterName;
 	public String getCourseID() {
 		return courseID;
 	}
@@ -127,30 +127,30 @@ public class CourseObject implements Serializable{
 	public void setLevelName(String levelName) {
 		this.levelName = levelName;
 	}
-	public String getReviewID() {
-		return reviewID;
-	}
-	public void setReviewID(String reviewID) {
-		this.reviewID = reviewID;
-	}
-	public int getRateReview() {
-		return rateReview;
-	}
-	public void setRateReview(int rateReview) {
-		this.rateReview = rateReview;
-	}
-	public String getChapterID() {
-		return chapterID;
-	}
-	public void setChapterID(String chapterID) {
-		this.chapterID = chapterID;
-	}
-	public String getChapterName() {
-		return chapterName;
-	}
-	public void setChapterName(String chapterName) {
-		this.chapterName = chapterName;
-	}
+//	public String getReviewID() {
+//		return reviewID;
+//	}
+//	public void setReviewID(String reviewID) {
+//		this.reviewID = reviewID;
+//	}
+//	public int getRateReview() {
+//		return rateReview;
+//	}
+//	public void setRateReview(int rateReview) {
+//		this.rateReview = rateReview;
+//	}
+//	public String getChapterID() {
+//		return chapterID;
+//	}
+//	public void setChapterID(String chapterID) {
+//		this.chapterID = chapterID;
+//	}
+//	public String getChapterName() {
+//		return chapterName;
+//	}
+//	public void setChapterName(String chapterName) {
+//		this.chapterName = chapterName;
+//	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

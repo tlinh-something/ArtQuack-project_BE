@@ -5,8 +5,11 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import com.swp.ArtQuack.entity.Level;
+import java.util.List;
+
 
 @Repository
 public interface LevelRepository extends JpaRepository<Level, String>, JpaSpecificationExecutor<Level>{
 
+	public Level findByLevelID(String levelID);
 }

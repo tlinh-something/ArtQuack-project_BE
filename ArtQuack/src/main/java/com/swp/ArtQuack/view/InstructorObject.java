@@ -25,13 +25,6 @@ public class InstructorObject {
 	private boolean status;
 	private String role;
 	
-	//Course
-	private String courseID;
-	private String courseName;
-	private String description;
-	private Date upload_date;
-	private int viewer;
-	private int rateCourse;
 	public String getInstructorID() {
 		return instructorID;
 	}
@@ -85,42 +78,6 @@ public class InstructorObject {
 	}
 	public void setRole(String role) {
 		this.role = role;
-	}
-	public String getCourseID() {
-		return courseID;
-	}
-	public void setCourseID(String courseID) {
-		this.courseID = courseID;
-	}
-	public String getCourseName() {
-		return courseName;
-	}
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public Date getUpload_date() {
-		return upload_date;
-	}
-	public void setUpload_date(Date upload_date) {
-		this.upload_date = upload_date;
-	}
-	public int getViewer() {
-		return viewer;
-	}
-	public void setViewer(int viewer) {
-		this.viewer = viewer;
-	}
-	public int getRateCourse() {
-		return rateCourse;
-	}
-	public void setRateCourse(int rateCourse) {
-		this.rateCourse = rateCourse;
 	}
 	
 	

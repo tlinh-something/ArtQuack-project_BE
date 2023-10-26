@@ -18,8 +18,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.swp.ArtQuack.entity.Category;
 import com.swp.ArtQuack.entity.Course;
 import com.swp.ArtQuack.entity.Instructor;
+import com.swp.ArtQuack.entity.Level;
+import com.swp.ArtQuack.entity.Review;
 import com.swp.ArtQuack.service.CategoryService;
 import com.swp.ArtQuack.service.CourseService;
+import com.swp.ArtQuack.service.InstructorService;
+import com.swp.ArtQuack.service.LevelService;
 import com.swp.ArtQuack.view.CourseObject;
 
 
@@ -33,131 +37,131 @@ public class CourseController {
 	@Autowired
 	private CategoryService categoryService;
 	
+	@Autowired
+	private InstructorService instructorService;
+	
+	@Autowired
+	private LevelService levelService;
+	
 	@GetMapping("/courses")
-	public ResponseEntity<List<CourseObject>> retrieveAllCourses(){
-		List<Course> ls = courseService.findAll();
-		List<CourseObject> list = courseService.displayRender(ls);
-		return ResponseEntity.ok(list);
-    }
+	public ResponseEntity<List<CourseObject>> retrieveAllCourses() {
+		List<CourseObject> ls = new ArrayList<CourseObject>();
+		List<Course> courseList = courseService.findAll();
+		for(Course x: courseList) {
+			ls.add(courseService.displayRender(x));
+		}
+		return ResponseEntity.ok(ls);
+	}
+	
 	
 	@GetMapping("/course/{courseID}")
-	public ResponseEntity<CourseObject> retrieveGiGService(@PathVariable String courseID) {
+	public ResponseEntity<CourseObject> retrieveCourse(@PathVariable String courseID) {
 		Course course = courseService.findById(courseID);
-		if(course != null) {
-			List<Course> ls = new ArrayList<>();
-			ls.add(course);
-			List<CourseObject> list = courseService.displayRender(ls);
-			return ResponseEntity.status(HttpStatus.OK).body(list.get(0));
-		}else {
+		if (course != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(courseService.displayRender(course));
+		} else {
 			return ResponseEntity.notFound().build();
 		}
 	}
 	
-	@GetMapping("/Category/{cateID}/courses")
-	public ResponseEntity<List<CourseObject>> retrieveAllCoursesOfCategory(@PathVariable String cateID){
+	@GetMapping("/category/{cateID}/courses")
+	public ResponseEntity<List<CourseObject>> findByCateID(@PathVariable("cateID") String cateID){
 		Category category = categoryService.findById(cateID);
-		if(category != null) {
-			List<Course> ls = courseService.findByCategory(cateID);
-			List<CourseObject> list = courseService.displayRender(ls);
-			return ResponseEntity.ok(list);
+		if(category == null)
+			return ResponseEntity.notFound().header("message", "No Category found for such ID").build();
+		List<CourseObject> ls = new ArrayList<CourseObject>();
+		List<Course> courseList = courseService.findByCategory(cateID);
+		for(Course x: courseList) {
+			ls.add(courseService.displayRender(x));
 		}
-		else return ResponseEntity.notFound().header("message", "No Service Category found for such ID").build();
-    }
-	
+		return ResponseEntity.ok(ls);
+	}
+		
 	@GetMapping("/courses/{keyword}")
-	public ResponseEntity<List<CourseObject>> retrieveCoursesByKeyword(@PathVariable String keyword){
-		List<Course> ls = courseService.findByKeyword(keyword);
-		List<CourseObject> list = courseService.displayRender(ls);
-		return ResponseEntity.ok(list);
-    }
+	public ResponseEntity<CourseObject> retrieveCourseByKeyword(@PathVariable String keyword) {
+		Course courses = courseService.findByKeyword(keyword);
+		if (courses != null) {
+			return ResponseEntity.status(HttpStatus.OK).body(courseService.displayRender(courses));
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
 	
-//	@PostMapping("/instructor/{instructorID}/category/{cateID}/course")
-//	public ResponseEntity<Course> createCourse(@RequestBody CourseObject courseObject, @PathVariable("insrtructorID") String instructorID, @PathVariable("cateID") String cateID) {
-//		Course course = courseService.findById(courseObject.getCourseID());
-//		if (course != null)
-//			return ResponseEntity.notFound().header("message", "Course with such ID already exists").build();
-//
-//		try {
-//			Instructor instructor = courseService.;
-//			if(provider == null)
-//				return ResponseEntity.notFound().header("message", "Provider with such ID does not exist!").build();
-//			
-//			GiGService service = giGServiceService.findById(serviceID);
-//			if(service == null)
-//				return ResponseEntity.notFound().header("message", "Service with such ID does not exist!").build();
-//			proService = new ProviderService();
-//		
-//			proService.setProvider(provider);
-//			proService.setService(service);
-//			proService.setActive(true);
-//			proService.setAvailability(true);
-//			proService.setVisible(true);
-//			if(providerServiceObject.getDescription() != null) proService.setDescription(providerServiceObject.getDescription());
-//			proService.setUnitPrice(providerServiceObject.getUnitPrice());
-//			ProviderService savedProviderService = providerServiceService.add(proService);
-//			
-//			//CREATE IMAGE
-//			Image image = new Image();
-//			if(providerServiceObject.getLink() != null) image.setLink(providerServiceObject.getLink());
-//			image.setProviderService(savedProviderService);
-//			imageService.add(image);
-//			
-//			return ResponseEntity.status(HttpStatus.CREATED).body(savedProviderService);
-//		} catch (Exception e) {
-//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//					.header("message", "Failed to add new providerService").build();
-//		}
-//	}
+	@GetMapping("/instructor/{instructorID}/coursesOfInstructor")
+	public ResponseEntity<List<CourseObject>> findByInstructorID(@PathVariable String instructorID) {
+		Instructor instructor = instructorService.findById(instructorID);
+		if (instructor != null) {
+			List<CourseObject> ls = new ArrayList<CourseObject>();
+			List<Course> courseList = courseService.findByInstructorID(instructorID);
+			for(Course x: courseList) {
+				ls.add(courseService.displayRender(x));
+			}
+			return ResponseEntity.ok(ls);
+		} else
+			return ResponseEntity.notFound().header("message", "No Provider found for such ID").build();
+	}
 	
+	@PostMapping("/instructor/{instructorID}/category/{cateID}/level/{levelID}/course")
+	public ResponseEntity<Course> createCourse(@PathVariable String instructorID,@PathVariable String cateID, @PathVariable String levelID, @RequestBody Course course){
+		try {
+			Instructor instructor = instructorService.findById(instructorID);
+			if(instructor == null) return ResponseEntity.notFound().header("message", "Instructor not found. Adding failed").build();
+			
+			Category category = categoryService.findById(cateID);
+			if(instructor == null) return ResponseEntity.notFound().header("message", "Category not found. Adding failed").build();
+			
+			Level level = levelService.findById(levelID);
+			if(instructor == null) return ResponseEntity.notFound().header("message", "Level not found. Adding failed").build();
+			
+			if(courseService.findById(course.getCourseID()) != null) 
+				return ResponseEntity.badRequest().header("message", "Course with such ID already exists").build();
+			
+			course.setInstructor(instructor);
+			course.setCategory(category);
+			course.setLevel(level);
+			course.setStatus(true);
+			Course savedCourse = courseService.add(course);
+			if(savedCourse != null)
+				return ResponseEntity.status(HttpStatus.CREATED).body(savedCourse);
+			else return ResponseEntity.internalServerError().build();
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "Failed to add new course").build();
+		}
+	}
 	
-//	@PostMapping("/Category/{courseID}/course")
-//	public ResponseEntity<Course> createCourse(@PathVariable String courseID, @RequestBody Course course){
-//		try {
-//			Category category = categoryService.findById(courseID);
-//			if(category == null) return ResponseEntity.notFound().header("message", "Category not found. Adding failed").build();
-//			
-//			if(courseService.findById(course.getCourseID()) != null) 
-//				return ResponseEntity.badRequest().header("message", "Course with such ID already exists").build();
-//			
-//			course.setCategory(category);
-//			Course savedCourse = courseService.add(course);
-//			if(savedCourse != null)
-//				return ResponseEntity.status(HttpStatus.CREATED).body(savedCourse);
-//			else return ResponseEntity.internalServerError().build();
-//		}catch(Exception e) {
-//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "Failed to add new course").build();
-//		}
-//	}
-//	
-//	@PutMapping("/Category/{courseID}/course")
-//	public ResponseEntity<Course> updateCourse(@PathVariable String courseID , @RequestBody Course course){
-//		try {
-//			Category category = categoryService.findById(courseID);
-//			if(category == null) return ResponseEntity.notFound().header("message", "Category not found. Update failed").build();
-//			
-//			if(courseService.findById(course.getCourseID()) == null) return ResponseEntity.notFound().header("message", "Course with such ID not found. Update failed").build();
-//			course.setCategory(category);
-//			Course savedCourse = courseService.update(course);
-//			if(savedCourse != null)
-//				return ResponseEntity.status(HttpStatus.OK).body(savedCourse);
-//			else return ResponseEntity.internalServerError().build();
-//		}catch(Exception e) {
-//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "Failed to update course").build();
-//		}
-//	}
-//	
-//	@DeleteMapping("/course/{courseID}")
-//	public ResponseEntity<Void> deleteGiGService(@PathVariable String courseID){
-//		try{
-//			Category category = categoryService.findById(courseID);
-//			if(category == null) return ResponseEntity.notFound().header("message", "Service Category not found. Delete failed").build();
-//			
-//			courseService.delete(courseID);
-//			return ResponseEntity.noContent().header("message", "GiGService deleted successfully").build();
-//		}
-//		catch(Exception e){
-//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "GiGService deletion failed").build();
-//		}
-//	}
+	@PutMapping("/instructor/{instructorID}/category/{cateID}/updatecourse")
+	public ResponseEntity<Course> updateCourse(@PathVariable String instructorID, @PathVariable String cateID, @RequestBody Course course){
+		try {
+			Instructor instructor = instructorService.findById(instructorID);
+			if(instructor == null) return ResponseEntity.notFound().header("message", "Instructor not found. Update failed").build();
+			
+			Category category = categoryService.findById(cateID);
+			if(category == null) return ResponseEntity.notFound().header("message", "Category not found. Update failed").build();
+			
+			if(courseService.findById(course.getCourseID()) == null) return ResponseEntity.notFound().header("message", "Course with such ID not found. Update failed").build();
+			course.setCategory(category);
+			course.setInstructor(instructor);
+			Course savedCourse = courseService.update(course);
+			if(savedCourse != null)
+				return ResponseEntity.status(HttpStatus.OK).body(savedCourse);
+			else return ResponseEntity.internalServerError().build();
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "Failed to update course").build();
+		}
+	}
+	
+	@DeleteMapping("/deletecourse/{courseID}")
+	public ResponseEntity<Void> deleteCourse(@PathVariable String courseID){
+		try{
+			Category category = categoryService.findById(courseID);
+			if(category == null) return ResponseEntity.notFound().header("message", "Category not found. Delete failed").build();
+			
+			courseService.delete(courseID);
+			return ResponseEntity.noContent().header("message", "Course deleted successfully").build();
+		}
+		catch(Exception e){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "Course deletion failed").build();
+		}
+	}
 	
 }

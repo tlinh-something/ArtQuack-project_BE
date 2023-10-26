@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import com.swp.ArtQuack.entity.Course;
 import com.swp.ArtQuack.entity.Instructor;
 import com.swp.ArtQuack.repository.InstructorRepository;
@@ -75,14 +76,6 @@ public class InstructorService {
 				y.setRate(x.getRate());
 				y.setStatus(x.isStatus());
 				y.setRole(x.getRole());
-				
-				//Course
-				List<Course> lc = courseService.findByInstructorID(x.getInstructorID());
-				y.setCourseName(lc.get(0).getName());
-				y.setDescription(lc.get(0).getDescription());
-				y.setUpload_date(lc.get(0).getUpload_date());
-				y.setViewer(lc.get(0).getViewer());
-				y.setRateCourse(lc.get(0).getRate());
 				
 				list.add(y);
 			}
