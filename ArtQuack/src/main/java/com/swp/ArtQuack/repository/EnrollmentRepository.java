@@ -9,6 +9,6 @@ import org.springframework.stereotype.Repository;
 import com.swp.ArtQuack.entity.Enrollment;
 
 @Repository
-public interface EnrollmentRepository extends JpaRepository<Enrollment, Integer>{
+public interface EnrollmentRepository extends JpaRepository<Enrollment, Integer>, JpaSpecificationExecutor<Enrollment>{
 	
 }

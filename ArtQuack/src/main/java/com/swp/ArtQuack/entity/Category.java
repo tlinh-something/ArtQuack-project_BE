@@ -3,6 +3,8 @@ package com.swp.ArtQuack.entity;
 import java.io.Serializable;
 import java.util.Collection;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -37,7 +39,37 @@ public class Category implements Serializable{
 	
 	//RELATIONSHIP SETUP
 	@OneToMany(targetEntity = Course.class, mappedBy = "category")
+	@JsonIgnore
+	@ToString.Exclude
 	private Collection<Course> courseList;
+
+	public String getCateID() {
+		return cateID;
+	}
+
+	public void setCateID(String cateID) {
+		this.cateID = cateID;
+	}
+
+	public String getCateName() {
+		return cateName;
+	}
+
+	public void setCateName(String cateName) {
+		this.cateName = cateName;
+	}
+
+	public Collection<Course> getCourseList() {
+		return courseList;
+	}
+
+	public void setCourseList(Collection<Course> courseList) {
+		this.courseList = courseList;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	
 	
 }

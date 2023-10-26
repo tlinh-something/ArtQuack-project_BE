@@ -21,8 +21,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -72,4 +70,58 @@ public class Chapter implements Serializable{
 	@JsonIgnore
 	@ToString.Exclude
 	private Collection<Submission> submissionsList;
+
+	public String getChapterID() {
+		return chapterID;
+	}
+
+	public void setChapterID(String chapterID) {
+		this.chapterID = chapterID;
+	}
+
+	public String getChapterName() {
+		return chapterName;
+	}
+
+	public void setChapterName(String chapterName) {
+		this.chapterName = chapterName;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+	public Collection<Item> getItemsList() {
+		return itemsList;
+	}
+
+	public void setItemsList(Collection<Item> itemsList) {
+		this.itemsList = itemsList;
+	}
+
+	public Collection<Submission> getSubmissionsList() {
+		return submissionsList;
+	}
+
+	public void setSubmissionsList(Collection<Submission> submissionsList) {
+		this.submissionsList = submissionsList;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 }

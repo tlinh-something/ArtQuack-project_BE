@@ -8,7 +8,6 @@ import org.springframework.boot.convert.DataSizeUnit;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import Utilities.Constants;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -62,9 +61,98 @@ public class Instructor implements Serializable{
 	@Column(name = "status")
 	private boolean status;
 	
+	@Column(name = "role")
+	private String role;
+	
 	//RELATIONSHIP SETUP
-	@OneToMany(targetEntity = Course.class)
+	@OneToMany(targetEntity = Course.class, mappedBy = "instructor")
 	@JsonIgnore
 	@ToString.Exclude
 	private Collection<Course> coursesList;
+
+	public String getInstructorID() {
+		return instructorID;
+	}
+
+	public void setInstructorID(String instructorID) {
+		this.instructorID = instructorID;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getCertificate() {
+		return certificate;
+	}
+
+	public void setCertificate(String certificate) {
+		this.certificate = certificate;
+	}
+
+	public int getRate() {
+		return rate;
+	}
+
+	public void setRate(int rate) {
+		this.rate = rate;
+	}
+
+	public String getSummarize() {
+		return summarize;
+	}
+
+	public void setSummarize(String summarize) {
+		this.summarize = summarize;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public Collection<Course> getCoursesList() {
+		return coursesList;
+	}
+
+	public void setCoursesList(Collection<Course> coursesList) {
+		this.coursesList = coursesList;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
 }
