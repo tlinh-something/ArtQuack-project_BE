@@ -24,6 +24,6 @@ public interface CourseRepository extends JpaRepository<Course, String>, JpaSpec
 	
 	public List<Course> findByNameContainingIgnoreCaseAndStatusIsTrue(String name);
 	
-	public List<Course> findByInstructorIDAndStatusIsTrue(String instructorID);
+	public List<Course> findByInstructorInstructorID(String instructorID);
 	
 }

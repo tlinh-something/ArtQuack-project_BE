@@ -48,7 +48,7 @@ public class CourseService {
 	}
 	
 	public List<Course> findByInstructorID(String instructorID){
-		return courseRepoService.findByInstructorIDAndStatusIsTrue(instructorID);
+		return courseRepoService.findByInstructorInstructorID(instructorID);
 	}
 	
 	//DISPLAY

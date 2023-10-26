@@ -71,43 +71,43 @@ public class CourseController {
 		return ResponseEntity.ok(list);
     }
 	
-	@PostMapping("/instructor/{instructorID}/category/{cateID}/course")
-	public ResponseEntity<Course> createCourse(@RequestBody CourseObject courseObject, @PathVariable("insrtructorID") String instructorID, @PathVariable("cateID") String cateID) {
-		Course course = courseService.findById(courseObject.getCourseID());
-		if (course != null)
-			return ResponseEntity.notFound().header("message", "Course with such ID already exists").build();
-
-		try {
-			Instructor instructor = courseService.;
-			if(provider == null)
-				return ResponseEntity.notFound().header("message", "Provider with such ID does not exist!").build();
-			
-			GiGService service = giGServiceService.findById(serviceID);
-			if(service == null)
-				return ResponseEntity.notFound().header("message", "Service with such ID does not exist!").build();
-			proService = new ProviderService();
-		
-			proService.setProvider(provider);
-			proService.setService(service);
-			proService.setActive(true);
-			proService.setAvailability(true);
-			proService.setVisible(true);
-			if(providerServiceObject.getDescription() != null) proService.setDescription(providerServiceObject.getDescription());
-			proService.setUnitPrice(providerServiceObject.getUnitPrice());
-			ProviderService savedProviderService = providerServiceService.add(proService);
-			
-			//CREATE IMAGE
-			Image image = new Image();
-			if(providerServiceObject.getLink() != null) image.setLink(providerServiceObject.getLink());
-			image.setProviderService(savedProviderService);
-			imageService.add(image);
-			
-			return ResponseEntity.status(HttpStatus.CREATED).body(savedProviderService);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.header("message", "Failed to add new providerService").build();
-		}
-	}
+//	@PostMapping("/instructor/{instructorID}/category/{cateID}/course")
+//	public ResponseEntity<Course> createCourse(@RequestBody CourseObject courseObject, @PathVariable("insrtructorID") String instructorID, @PathVariable("cateID") String cateID) {
+//		Course course = courseService.findById(courseObject.getCourseID());
+//		if (course != null)
+//			return ResponseEntity.notFound().header("message", "Course with such ID already exists").build();
+//
+//		try {
+//			Instructor instructor = courseService.;
+//			if(provider == null)
+//				return ResponseEntity.notFound().header("message", "Provider with such ID does not exist!").build();
+//			
+//			GiGService service = giGServiceService.findById(serviceID);
+//			if(service == null)
+//				return ResponseEntity.notFound().header("message", "Service with such ID does not exist!").build();
+//			proService = new ProviderService();
+//		
+//			proService.setProvider(provider);
+//			proService.setService(service);
+//			proService.setActive(true);
+//			proService.setAvailability(true);
+//			proService.setVisible(true);
+//			if(providerServiceObject.getDescription() != null) proService.setDescription(providerServiceObject.getDescription());
+//			proService.setUnitPrice(providerServiceObject.getUnitPrice());
+//			ProviderService savedProviderService = providerServiceService.add(proService);
+//			
+//			//CREATE IMAGE
+//			Image image = new Image();
+//			if(providerServiceObject.getLink() != null) image.setLink(providerServiceObject.getLink());
+//			image.setProviderService(savedProviderService);
+//			imageService.add(image);
+//			
+//			return ResponseEntity.status(HttpStatus.CREATED).body(savedProviderService);
+//		} catch (Exception e) {
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//					.header("message", "Failed to add new providerService").build();
+//		}
+//	}
 	
 	
 //	@PostMapping("/Category/{courseID}/course")
