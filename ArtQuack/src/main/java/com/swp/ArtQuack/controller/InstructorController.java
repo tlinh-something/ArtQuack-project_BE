@@ -34,7 +34,7 @@ public class InstructorController {
     }
 	
 	@GetMapping("/instructor/{instructorID}")
-	public ResponseEntity<InstructorObject> retrieveInstructor(@PathVariable String instructorID) {
+	public ResponseEntity<InstructorObject> retrieveInstructor(@PathVariable int instructorID) {
 		Instructor instructor = instructorService.findById(instructorID);
 		if(instructor != null) {
 			List<Instructor> ls = new ArrayList<>();
@@ -70,7 +70,7 @@ public class InstructorController {
 	}
 	
 	@DeleteMapping("/instructor/{instructorID}")
-	public ResponseEntity<Void> deleteInstructor(@PathVariable String instructorID){
+	public ResponseEntity<Void> deleteInstructor(@PathVariable int instructorID){
 		try{
 			if(instructorService.findById(instructorID) == null)
 			return ResponseEntity.notFound().header("message", "No Instructor found for such ID").build();

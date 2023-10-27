@@ -12,7 +12,7 @@ public class LevelService {
 	@Autowired
 	private LevelRepository levelRepository;
 	
-	public Level findById(String levelID) {
+	public Level findById(int levelID) {
 		return levelRepository.findByLevelID(levelID);
 	}
 }

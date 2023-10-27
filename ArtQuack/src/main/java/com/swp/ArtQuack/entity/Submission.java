@@ -2,6 +2,9 @@ package com.swp.ArtQuack.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -33,7 +36,8 @@ public class Submission implements Serializable{
 	
 	@Id
 	@Column(name = "submitID")
-	private String submitID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int submitID;
 	
 	@Column(name = "final_project", nullable = false)
 	private String final_project;

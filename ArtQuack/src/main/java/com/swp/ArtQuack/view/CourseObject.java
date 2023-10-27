@@ -22,7 +22,7 @@ public class CourseObject implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
-	private String courseID;
+	private int courseID;
 	private String name;
 	private String description;
 	private Date upload_date;
@@ -31,15 +31,15 @@ public class CourseObject implements Serializable{
 	private boolean status;
 	
 	//Instructor
-	private String instructorID;
+	private int instructorID;
 	private String instructorName;
 	
 	//Category
-	private String cateID;
+	private int cateID;
 	private String cateName;
 	
 	//Level
-	private String levelID;
+	private int levelID;
 	private String levelName;
 	
 //	//Review
@@ -49,14 +49,16 @@ public class CourseObject implements Serializable{
 //	//Chapter
 //	private String chapterID;
 //	private String chapterName;
-	public String getCourseID() {
-		return courseID;
-	}
-	public void setCourseID(String courseID) {
-		this.courseID = courseID;
-	}
+
+	
 	public String getName() {
 		return name;
+	}
+	public int getCourseID() {
+		return courseID;
+	}
+	public void setCourseID(int courseID) {
+		this.courseID = courseID;
 	}
 	public void setName(String name) {
 		this.name = name;
@@ -91,23 +93,11 @@ public class CourseObject implements Serializable{
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	public String getInstructorID() {
-		return instructorID;
-	}
-	public void setInstructorID(String instructorID) {
-		this.instructorID = instructorID;
-	}
 	public String getInstructorName() {
 		return instructorName;
 	}
 	public void setInstructorName(String instructorName) {
 		this.instructorName = instructorName;
-	}
-	public String getCateID() {
-		return cateID;
-	}
-	public void setCateID(String cateID) {
-		this.cateID = cateID;
 	}
 	public String getCateName() {
 		return cateName;
@@ -115,42 +105,30 @@ public class CourseObject implements Serializable{
 	public void setCateName(String cateName) {
 		this.cateName = cateName;
 	}
-	public String getLevelID() {
-		return levelID;
-	}
-	public void setLevelID(String levelID) {
-		this.levelID = levelID;
-	}
 	public String getLevelName() {
 		return levelName;
 	}
 	public void setLevelName(String levelName) {
 		this.levelName = levelName;
 	}
-//	public String getReviewID() {
-//		return reviewID;
-//	}
-//	public void setReviewID(String reviewID) {
-//		this.reviewID = reviewID;
-//	}
-//	public int getRateReview() {
-//		return rateReview;
-//	}
-//	public void setRateReview(int rateReview) {
-//		this.rateReview = rateReview;
-//	}
-//	public String getChapterID() {
-//		return chapterID;
-//	}
-//	public void setChapterID(String chapterID) {
-//		this.chapterID = chapterID;
-//	}
-//	public String getChapterName() {
-//		return chapterName;
-//	}
-//	public void setChapterName(String chapterName) {
-//		this.chapterName = chapterName;
-//	}
+	public int getInstructorID() {
+		return instructorID;
+	}
+	public void setInstructorID(int instructorID) {
+		this.instructorID = instructorID;
+	}
+	public int getCateID() {
+		return cateID;
+	}
+	public void setCateID(int cateID) {
+		this.cateID = cateID;
+	}
+	public int getLevelID() {
+		return levelID;
+	}
+	public void setLevelID(int levelID) {
+		this.levelID = levelID;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

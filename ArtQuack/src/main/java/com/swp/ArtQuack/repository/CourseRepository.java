@@ -12,18 +12,18 @@ import com.swp.ArtQuack.entity.Instructor;
 
 
 @Repository
-public interface CourseRepository extends JpaRepository<Course, String>, JpaSpecificationExecutor<Course>{
+public interface CourseRepository extends JpaRepository<Course, Integer>, JpaSpecificationExecutor<Course>{
 
-	public Course findByCourseIDAndStatusIsTrue(String courseID);
+	public Course findByCourseIDAndStatusIsTrue(int courseID);
 	
 	public List<Course> findByStatusIsTrue();
 	
 	public List<Course> findByStatusIsFalse();
 	
-	public List<Course> findByCategoryCateID(String cateID);
+	public List<Course> findByCategoryCateID(int cateID);
 	
 	public Course  findByNameIgnoreCaseAndStatusIsTrue(String name);
 	
-	public List<Course> findByInstructorInstructorID(String instructorID);
+	public List<Course> findByInstructorInstructorID(int instructorID);
 	
 }

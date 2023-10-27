@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.swp.ArtQuack.entity.Chapter;
 
 @Repository
-public interface ChapterRepository extends JpaRepository<Chapter, String>, JpaSpecificationExecutor<Chapter>{
+public interface ChapterRepository extends JpaRepository<Chapter, Integer>, JpaSpecificationExecutor<Chapter>{
 
-	public List<Chapter> findByCourseCourseID(String courseID);
+	public List<Chapter> findByCourseCourseID(int courseID);
 }

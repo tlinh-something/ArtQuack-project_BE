@@ -19,13 +19,13 @@ public class ReviewService {
 		return reviewRepoService.findAll();
 	}
 	
-	public Review findById(String id) {
+	public Review findById(int id) {
 		Optional<Review> review = reviewRepoService.findById(id);
 		if(review.isPresent()) return review.get();
 		else return null;
 	}
 	
-	public List<Review> findByCourseID(String courseID){
+	public List<Review> findByCourseID(int courseID){
 		return reviewRepoService.findByCourseCourseID(courseID);
 	}
 	

@@ -3,6 +3,9 @@ package com.swp.ArtQuack.entity;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -33,7 +36,8 @@ public class Chapter implements Serializable{
 	
 	@Id
 	@Column(name = "chapterID")
-	private String chapterID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int chapterID;
 	
 	@Column(name = "chapterName", nullable = false)
 	private String chapterName;
@@ -71,11 +75,11 @@ public class Chapter implements Serializable{
 	@ToString.Exclude
 	private Collection<Submission> submissionsList;
 
-	public String getChapterID() {
+	public int getChapterID() {
 		return chapterID;
 	}
 
-	public void setChapterID(String chapterID) {
+	public void setChapterID(int chapterID) {
 		this.chapterID = chapterID;
 	}
 

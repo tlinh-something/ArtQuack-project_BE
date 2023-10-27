@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.swp.ArtQuack.Utilities.Constants;
 
@@ -38,7 +41,8 @@ public class Course implements Serializable{
 	
 	@Id
 	@Column(name = "courseID")
-	private String courseID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int courseID;
 	
 //	@Column(name = "instructorID")
 //	private String instructorID;
@@ -111,11 +115,12 @@ public class Course implements Serializable{
 	@ToString.Exclude
 	private Collection<Enrollment> enrollmentsList;
 
-	public String getCourseID() {
+
+	public int getCourseID() {
 		return courseID;
 	}
 
-	public void setCourseID(String courseID) {
+	public void setCourseID(int courseID) {
 		this.courseID = courseID;
 	}
 

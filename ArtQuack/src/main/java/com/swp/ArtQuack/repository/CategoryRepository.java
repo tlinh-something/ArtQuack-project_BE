@@ -9,9 +9,9 @@ import org.springframework.stereotype.Repository;
 import com.swp.ArtQuack.entity.Category;
 
 @Repository
-public interface CategoryRepository extends JpaRepository<Category, String>, JpaSpecificationExecutor<Category>{
+public interface CategoryRepository extends JpaRepository<Category, Integer>, JpaSpecificationExecutor<Category>{
 
-	public Category  findByCateID(String cateID);
+	public Category  findByCateID(int cateID);
 	
 	public List<Category> findByCateNameContainingIgnoreCase(String cateName);
 }

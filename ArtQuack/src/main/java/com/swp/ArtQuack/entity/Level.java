@@ -3,6 +3,9 @@ package com.swp.ArtQuack.entity;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -30,7 +33,8 @@ public class Level implements Serializable{
 	
 	@Id
 	@Column(name = "levelID")
-	private String levelID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int levelID;
 	
 	@Column(name = "levelName")
 	private String levelName;
@@ -41,11 +45,12 @@ public class Level implements Serializable{
 	@ToString.Exclude
 	private Collection<Course> coursesList;
 
-	public String getLevelID() {
+
+	public int getLevelID() {
 		return levelID;
 	}
 
-	public void setLevelID(String levelID) {
+	public void setLevelID(int levelID) {
 		this.levelID = levelID;
 	}
 

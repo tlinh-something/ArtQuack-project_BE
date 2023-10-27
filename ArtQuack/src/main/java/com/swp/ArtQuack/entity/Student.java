@@ -3,6 +3,9 @@ package com.swp.ArtQuack.entity;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -36,21 +39,19 @@ public class Student implements Serializable{
 	
 	@Id
 	@Column(name = "studentID")
-	private String studentID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int studentID;
 	
-	@Column(name = "name",unique = true, nullable = false)
+	@Column(name = "name", nullable = false)
 //	@Size(min = Constants.USERNAME_MIN, message = "username must have at least 6 characters")
 	private String name;
 	
 	@Column(name = "email",unique = true, nullable = false)
 	private String email;
 	
-	@Column(name = "password",unique = true, nullable = false)
+	@Column(name = "password", nullable = false)
 //	@Size(min = Constants.PASSWORD_MIN, message = "password must have at least 6 characters")
 	private String password;
-	
-	@Column(name = "reviewID", nullable = false)
-	private String reviewID;
 	
 	@Column(name = "status")
 	private boolean status;
@@ -74,4 +75,81 @@ public class Student implements Serializable{
 	@ToString.Exclude
 	private Collection<Review> reviewsList;
 
+	public int getStudentID() {
+		return studentID;
+	}
+
+	public void setStudentID(int studentID) {
+		this.studentID = studentID;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public Collection<Enrollment> getEnrollmentsList() {
+		return enrollmentsList;
+	}
+
+	public void setEnrollmentsList(Collection<Enrollment> enrollmentsList) {
+		this.enrollmentsList = enrollmentsList;
+	}
+
+	public Collection<Submission> getSubmissionsList() {
+		return submissionsList;
+	}
+
+	public void setSubmissionsList(Collection<Submission> submissionsList) {
+		this.submissionsList = submissionsList;
+	}
+
+	public Collection<Review> getReviewsList() {
+		return reviewsList;
+	}
+
+	public void setReviewsList(Collection<Review> reviewsList) {
+		this.reviewsList = reviewsList;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	
 }

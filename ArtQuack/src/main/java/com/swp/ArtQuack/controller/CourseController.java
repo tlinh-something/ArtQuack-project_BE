@@ -55,7 +55,7 @@ public class CourseController {
 	
 	
 	@GetMapping("/course/{courseID}")
-	public ResponseEntity<CourseObject> retrieveCourse(@PathVariable String courseID) {
+	public ResponseEntity<CourseObject> retrieveCourse(@PathVariable int courseID) {
 		Course course = courseService.findById(courseID);
 		if (course != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(courseService.displayRender(course));
@@ -65,7 +65,7 @@ public class CourseController {
 	}
 	
 	@GetMapping("/category/{cateID}/courses")
-	public ResponseEntity<List<CourseObject>> findByCateID(@PathVariable("cateID") String cateID){
+	public ResponseEntity<List<CourseObject>> findByCateID(@PathVariable("cateID") int cateID){
 		Category category = categoryService.findById(cateID);
 		if(category == null)
 			return ResponseEntity.notFound().header("message", "No Category found for such ID").build();
@@ -88,7 +88,7 @@ public class CourseController {
 	}
 	
 	@GetMapping("/instructor/{instructorID}/coursesOfInstructor")
-	public ResponseEntity<List<CourseObject>> findByInstructorID(@PathVariable String instructorID) {
+	public ResponseEntity<List<CourseObject>> findByInstructorID(@PathVariable int instructorID) {
 		Instructor instructor = instructorService.findById(instructorID);
 		if (instructor != null) {
 			List<CourseObject> ls = new ArrayList<CourseObject>();
@@ -102,7 +102,7 @@ public class CourseController {
 	}
 	
 	@PostMapping("/instructor/{instructorID}/category/{cateID}/level/{levelID}/course")
-	public ResponseEntity<Course> createCourse(@PathVariable String instructorID,@PathVariable String cateID, @PathVariable String levelID, @RequestBody Course course){
+	public ResponseEntity<Course> createCourse(@PathVariable int instructorID,@PathVariable int cateID, @PathVariable int levelID, @RequestBody Course course){
 		try {
 			Instructor instructor = instructorService.findById(instructorID);
 			if(instructor == null) return ResponseEntity.notFound().header("message", "Instructor not found. Adding failed").build();
@@ -130,7 +130,7 @@ public class CourseController {
 	}
 	
 	@PutMapping("/instructor/{instructorID}/category/{cateID}/updatecourse")
-	public ResponseEntity<Course> updateCourse(@PathVariable String instructorID, @PathVariable String cateID, @RequestBody Course course){
+	public ResponseEntity<Course> updateCourse(@PathVariable int instructorID, @PathVariable int cateID, @RequestBody Course course){
 		try {
 			Instructor instructor = instructorService.findById(instructorID);
 			if(instructor == null) return ResponseEntity.notFound().header("message", "Instructor not found. Update failed").build();
@@ -151,7 +151,7 @@ public class CourseController {
 	}
 	
 	@DeleteMapping("/deletecourse/{courseID}")
-	public ResponseEntity<Void> deleteCourse(@PathVariable String courseID){
+	public ResponseEntity<Void> deleteCourse(@PathVariable int courseID){
 		try{
 			Category category = categoryService.findById(courseID);
 			if(category == null) return ResponseEntity.notFound().header("message", "Category not found. Delete failed").build();

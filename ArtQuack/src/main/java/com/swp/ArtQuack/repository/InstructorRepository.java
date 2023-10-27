@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Repository
-public interface InstructorRepository extends JpaRepository<Instructor, String>, JpaSpecificationExecutor<Instructor>{
+public interface InstructorRepository extends JpaRepository<Instructor, Integer>, JpaSpecificationExecutor<Instructor>{
 
 	public List<Instructor> findByNameIgnoreCaseAndStatusIsTrue(String name);
 	
@@ -17,7 +17,7 @@ public interface InstructorRepository extends JpaRepository<Instructor, String>,
 	
 	public List<Instructor> findByStatusIsFalse();
 	
-	public Instructor findByInstructorIDAndStatusIsTrue(String instructorID);
+	public Instructor findByInstructorIDAndStatusIsTrue(int instructorID);
 	
 	public Instructor findByEmail(String email);
 	

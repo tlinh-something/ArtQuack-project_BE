@@ -25,7 +25,7 @@ public class InstructorService {
 		return instructorRepoService.findAll();
 	}
 	
-	public Instructor findById(String instructorID) {
+	public Instructor findById(int instructorID) {
 		return instructorRepoService.findByInstructorIDAndStatusIsTrue(instructorID);
 	}
 	
@@ -54,7 +54,7 @@ public class InstructorService {
 		}
 		
 	//DELETE
-	public boolean delete(String id) {
+	public boolean delete(int id) {
 		Instructor instructor = findById(id);
 		if(instructor == null) return false;
 		instructor.setStatus(false);
@@ -67,7 +67,7 @@ public class InstructorService {
 			List<InstructorObject> list = new ArrayList<>();
 			for(Instructor x: ls) {
 				InstructorObject y = new InstructorObject();
-				y.setInstructorID(x.getInstructorID());
+				y.setInstructorID(x.getInstructorID());;
 				y.setName(x.getName());
 				y.setEmail(x.getEmail());
 				y.setPassword(x.getPassword());

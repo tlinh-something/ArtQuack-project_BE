@@ -3,6 +3,9 @@ package com.swp.ArtQuack.entity;
 import java.io.Serializable;
 import java.util.Collection;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
 import org.hibernate.annotations.BatchSize;
 import org.springframework.boot.convert.DataSizeUnit;
 
@@ -36,9 +39,10 @@ public class Instructor implements Serializable{
 	
 	@Id
 	@Column(name = "instructorID")
-	private String instructorID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int instructorID;
 
-	@Column(name = "name", unique = true, nullable = false)
+	@Column(name = "name", nullable = false)
 //	@Size(min = Constants.USERNAME_MIN, message = "username must have at least 6 characters")
 	private String name;
 	
@@ -49,7 +53,7 @@ public class Instructor implements Serializable{
 //	@Size(min = Constants.PASSWORD_MIN, message = "password must have at least 6 characters")
 	private String password;
 	
-	@Column(name = "certificate", nullable = false)
+	@Column(name = "certificate")
 	private String certificate;
 	
 	@Column(name = "rate", precision = 2, scale = 1)
@@ -70,11 +74,11 @@ public class Instructor implements Serializable{
 	@ToString.Exclude
 	private Collection<Course> coursesList;
 
-	public String getInstructorID() {
+	public int getInstructorID() {
 		return instructorID;
 	}
 
-	public void setInstructorID(String instructorID) {
+	public void setInstructorID(int instructorID) {
 		this.instructorID = instructorID;
 	}
 

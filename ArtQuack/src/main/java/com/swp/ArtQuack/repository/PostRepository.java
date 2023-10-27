@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.swp.ArtQuack.entity.Post;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, String>, JpaSpecificationExecutor<Post>{
+public interface PostRepository extends JpaRepository<Post, Integer>, JpaSpecificationExecutor<Post>{
 
 }

@@ -15,7 +15,7 @@ import lombok.ToString;
 @Data
 public class InstructorObject {
 
-	private String instructorID;
+	private int instructorID;
 	private String name;
 	private String email;
 	private String password;
@@ -25,10 +25,11 @@ public class InstructorObject {
 	private boolean status;
 	private String role;
 	
-	public String getInstructorID() {
+	
+	public int getInstructorID() {
 		return instructorID;
 	}
-	public void setInstructorID(String instructorID) {
+	public void setInstructorID(int instructorID) {
 		this.instructorID = instructorID;
 	}
 	public String getName() {

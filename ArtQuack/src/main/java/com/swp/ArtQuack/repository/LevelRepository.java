@@ -9,7 +9,7 @@ import java.util.List;
 
 
 @Repository
-public interface LevelRepository extends JpaRepository<Level, String>, JpaSpecificationExecutor<Level>{
+public interface LevelRepository extends JpaRepository<Level, Integer>, JpaSpecificationExecutor<Level>{
 
-	public Level findByLevelID(String levelID);
+	public Level findByLevelID(int levelID);
 }

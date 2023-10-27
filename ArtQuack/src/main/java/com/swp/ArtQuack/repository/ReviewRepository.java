@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.swp.ArtQuack.entity.Review;
 
 @Repository
-public interface ReviewRepository extends JpaRepository<Review, String>, JpaSpecificationExecutor<Review>{
+public interface ReviewRepository extends JpaRepository<Review, Integer>, JpaSpecificationExecutor<Review>{
 
-	public List<Review> findByCourseCourseID(String CourseID);
+	public List<Review> findByCourseCourseID(int CourseID);
 }

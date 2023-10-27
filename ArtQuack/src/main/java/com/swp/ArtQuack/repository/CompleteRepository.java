@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.swp.ArtQuack.entity.Complete;
 
 @Repository
-public interface CompleteRepository extends JpaRepository<Complete, String>, JpaSpecificationExecutor<Complete>{
+public interface CompleteRepository extends JpaRepository<Complete, Integer>, JpaSpecificationExecutor<Complete>{
 
 //	public Complete findByCompleteIDAndStatusIsTrue(String completeID);
 //	

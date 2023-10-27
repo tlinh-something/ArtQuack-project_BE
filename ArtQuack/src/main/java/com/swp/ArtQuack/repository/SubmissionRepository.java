@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import com.swp.ArtQuack.entity.Submission;
 
 @Repository
-public interface SubmissionRepository extends JpaRepository<Submission, String>, JpaSpecificationExecutor<Submission>{
+public interface SubmissionRepository extends JpaRepository<Submission, Integer>, JpaSpecificationExecutor<Submission>{
 
 }

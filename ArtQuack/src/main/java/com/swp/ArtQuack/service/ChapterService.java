@@ -20,13 +20,13 @@ public class ChapterService {
 		return chapterRepoService.findAll();
 	}
 	
-	public Chapter findById(String id) {
+	public Chapter findById(int id) {
 		Optional<Chapter> chapter = chapterRepoService.findById(id);
 		if(chapter.isPresent()) return chapter.get();
 		else return null;
 	}
 	
-	public List<Chapter> findByCourseID(String courseID){
+	public List<Chapter> findByCourseID(int courseID){
 		return chapterRepoService.findByCourseCourseID(courseID);
 	}
 }

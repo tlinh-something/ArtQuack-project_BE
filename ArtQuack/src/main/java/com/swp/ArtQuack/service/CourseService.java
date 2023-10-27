@@ -35,15 +35,15 @@ public class CourseService {
 		return courseRepoService.findByStatusIsFalse();
 	}
 	
-	public Course findById(String Id) {
+	public Course findById(int Id) {
 		return courseRepoService.findByCourseIDAndStatusIsTrue(Id);
 	}
 	
-	public List<Course> findByCategory(String cateID){
+	public List<Course> findByCategory(int cateID){
 		return courseRepoService.findByCategoryCateID(cateID);
 	}
 	
-	public List<Course> findByInstructorID(String instructorID){
+	public List<Course> findByInstructorID(int instructorID){
 		return courseRepoService.findByInstructorInstructorID(instructorID);
 	}
 	
@@ -96,7 +96,7 @@ public class CourseService {
 	}
 	
 	//DELETE
-	public boolean delete(String courseID) {
+	public boolean delete(int courseID) {
 		Course course = findById(courseID);
 		if(course == null) return false;
 		course.setStatus(false);

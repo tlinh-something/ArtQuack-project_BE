@@ -3,6 +3,9 @@ package com.swp.ArtQuack.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
@@ -35,7 +38,8 @@ public class Review implements Serializable{
 	
 	@Id
 	@Column(name = "reviewID")
-	private String reviewID;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int reviewID;
 	
 //	@Column(name = "courseID", nullable = false)
 //	private String courseID;
@@ -68,11 +72,12 @@ public class Review implements Serializable{
 	@ToString.Exclude
 	private Student student;
 
-	public String getReviewID() {
+
+	public int getReviewID() {
 		return reviewID;
 	}
 
-	public void setReviewID(String reviewID) {
+	public void setReviewID(int reviewID) {
 		this.reviewID = reviewID;
 	}
 
