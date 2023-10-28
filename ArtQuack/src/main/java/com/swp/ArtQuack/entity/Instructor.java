@@ -53,9 +53,6 @@ public class Instructor implements Serializable{
 //	@Size(min = Constants.PASSWORD_MIN, message = "password must have at least 6 characters")
 	private String password;
 	
-	@Column(name = "certificate")
-	private String certificate;
-	
 	@Column(name = "rate", precision = 2, scale = 1)
 	private int rate;
 	
@@ -104,14 +101,6 @@ public class Instructor implements Serializable{
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getCertificate() {
-		return certificate;
-	}
-
-	public void setCertificate(String certificate) {
-		this.certificate = certificate;
 	}
 
 	public int getRate() {

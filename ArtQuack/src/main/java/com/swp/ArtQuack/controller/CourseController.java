@@ -19,6 +19,7 @@ import com.swp.ArtQuack.entity.Category;
 import com.swp.ArtQuack.entity.Course;
 import com.swp.ArtQuack.entity.Instructor;
 import com.swp.ArtQuack.entity.Level;
+import com.swp.ArtQuack.entity.Post;
 import com.swp.ArtQuack.entity.Review;
 import com.swp.ArtQuack.service.CategoryService;
 import com.swp.ArtQuack.service.CourseService;
@@ -129,25 +130,20 @@ public class CourseController {
 		}
 	}
 	
-	@PutMapping("/instructor/{instructorID}/category/{cateID}/updatecourse")
-	public ResponseEntity<Course> updateCourse(@PathVariable int instructorID, @PathVariable int cateID, @RequestBody Course course){
-		try {
-			Instructor instructor = instructorService.findById(instructorID);
-			if(instructor == null) return ResponseEntity.notFound().header("message", "Instructor not found. Update failed").build();
-			
-			Category category = categoryService.findById(cateID);
-			if(category == null) return ResponseEntity.notFound().header("message", "Category not found. Update failed").build();
-			
-			if(courseService.findById(course.getCourseID()) == null) return ResponseEntity.notFound().header("message", "Course with such ID not found. Update failed").build();
-			course.setCategory(category);
-			course.setInstructor(instructor);
-			Course savedCourse = courseService.update(course);
-			if(savedCourse != null)
-				return ResponseEntity.status(HttpStatus.OK).body(savedCourse);
-			else return ResponseEntity.internalServerError().build();
-		}catch(Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "Failed to update course").build();
-		}
+	@PutMapping("/course/{courseID}/updatecourse")
+	public ResponseEntity<Course> updatePost(@PathVariable int courseID, @RequestBody Course course){
+		Course available = courseService.findById(course.getCourseID());
+		if(available == null)
+			return  ResponseEntity.notFound().header("message", "No Course found for such ID").build();
+		
+		course.setInstructor(available.getInstructor());
+		
+		Course updatedCourse = courseService.update(course);
+		if(updatedCourse != null)
+			return ResponseEntity.ok(updatedCourse);
+		else 
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		
 	}
 	
 	@DeleteMapping("/deletecourse/{courseID}")

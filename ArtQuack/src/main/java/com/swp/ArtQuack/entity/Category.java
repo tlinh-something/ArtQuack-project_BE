@@ -10,7 +10,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -46,6 +49,12 @@ public class Category implements Serializable{
 	@JsonIgnore
 	@ToString.Exclude
 	private Collection<Course> courseList;
+	
+	@OneToMany(targetEntity = Post.class, mappedBy = "category")
+	@JsonIgnore
+	@ToString.Exclude
+	private Collection<Post> postList;
+	
 
 	public int getCateID() {
 		return cateID;
@@ -69,6 +78,14 @@ public class Category implements Serializable{
 
 	public void setCourseList(Collection<Course> courseList) {
 		this.courseList = courseList;
+	}
+
+	public Collection<Post> getPostList() {
+		return postList;
+	}
+
+	public void setPostList(Collection<Post> postList) {
+		this.postList = postList;
 	}
 
 	public static long getSerialversionuid() {

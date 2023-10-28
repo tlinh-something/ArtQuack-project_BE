@@ -1,6 +1,7 @@
 package com.swp.ArtQuack.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -44,6 +45,9 @@ public class Enrollment implements Serializable{
 //	@Column(name = "courseID", nullable = false)
 //	private int courseID;
 	
+	@Column(name = "date")
+	private Date date;
+	
 	@Column(name = "status")
 	private boolean status;
 	
@@ -60,5 +64,51 @@ public class Enrollment implements Serializable{
 	@JsonIgnore
 	@ToString.Exclude
 	private Course course;
+
+	public int getEnrollmentID() {
+		return enrollmentID;
+	}
+
+	public void setEnrollmentID(int enrollmentID) {
+		this.enrollmentID = enrollmentID;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
+
+	public Course getCourse() {
+		return course;
+	}
+
+	public void setCourse(Course course) {
+		this.course = course;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+	
+	
 	
 }

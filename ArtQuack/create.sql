@@ -2,8 +2,8 @@ create table Category (cateID int not null, cateName varchar(255) not null, prim
 create table Chapter (chapterID int not null, courseID int not null, status bit, chapterName varchar(255) not null, primary key (chapterID));
 create table Complete (completeID int not null, itemID int not null, status bit, date datetime2(6), primary key (completeID));
 create table Course (cateID int not null, courseID int not null, instructorID int not null, levelID int not null, rate int, status bit not null, viewer int, upload_date datetime2(6), description varchar(255), name varchar(255) not null, primary key (courseID));
-create table Enrollment (courseID int not null, enrollmentID int identity not null, status bit, studentID int not null, primary key (enrollmentID));
-create table Instructor (instructorID int not null, rate int, status bit, certificate varchar(255), email varchar(255) not null, name varchar(255) not null, password varchar(255) not null, role varchar(255), summarize varchar(255), primary key (instructorID));
+create table Enrollment (courseID int not null, enrollmentID int identity not null, status bit, studentID int not null, date datetime2(6), primary key (enrollmentID));
+create table Instructor (instructorID int not null, rate int, status bit, email varchar(255) not null, name varchar(255) not null, password varchar(255) not null, role varchar(255), summarize varchar(255), primary key (instructorID));
 create table Item (chapterID int not null, itemID int identity not null, status bit, content varchar(255), itemName varchar(255) not null, primary key (itemID));
 create table Level (levelID int not null, levelName varchar(255), primary key (levelID));
 create table Post (cateID int not null, postID int identity not null, status bit, date datetime2(6), author varchar(255) not null, content varchar(255) not null, title varchar(255) not null, primary key (postID));

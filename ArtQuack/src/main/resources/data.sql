@@ -7,9 +7,9 @@ INSERT INTO Level (levelID, levelName) VALUES
 ('1', 'Level 1'),
 ('2', 'Level 2');
 
-INSERT INTO Instructor (rate, status, certificate, email, instructorID, name, password, role, summarize) VALUES
-(4, 1, 'Certificate 1', 'instructor1@example.com', '1', 'Instructor 1', 'password1', 'role1', 'Summary 1'),
-(5, 1, 'Certificate 2', 'instructor2@example.com', '2', 'Instructor 2', 'password2', 'role2', 'Summary 2');
+INSERT INTO Instructor (rate, status, email, instructorID, name, password, role, summarize) VALUES
+(4, 1, 'instructor1@example.com', '1', 'Instructor 1', 'password1', 'role1', 'Summary 1'),
+(5, 1, 'instructor2@example.com', '2', 'Instructor 2', 'password2', 'role2', 'Summary 2');
 
 INSERT INTO Course (rate, status, viewer, upload_date, cateID, courseID, description, instructorID, levelID, name) VALUES
 (4, 1, 100, '2023-10-25', '1', '1', 'Course 1 description', '1', '1', 'Course 1'),
@@ -37,10 +37,10 @@ INSERT INTO Review (rate, status, date, comment, courseID, reviewID, studentID) 
 (4, 1, '2023-10-25', 'Review 1 comment', '1', '1', '1'),
 (5, 1, '2023-10-26', 'Review 2 comment', '2', '2', '2');
 
-INSERT INTO Enrollment (status, courseID, studentID) VALUES
-(1, '1', '1'),
-(1, '1', '2'),
-(1, '2', '1');
+INSERT INTO Enrollment (status, date, courseID, studentID) VALUES
+(1, '2023-10-25','1', '1'),
+(1, '2023-10-26','1', '2'),
+(1, '2023-10-27','2', '1');
 
 INSERT INTO Submission (grade, status, chapterID, comment, final_project, studentID, submitID) VALUES
 (85, 1, '2', 'Submission 1 comment', 'Project 1', '1', '1'),

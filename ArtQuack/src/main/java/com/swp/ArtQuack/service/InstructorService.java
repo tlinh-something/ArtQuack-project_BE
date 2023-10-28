@@ -71,7 +71,6 @@ public class InstructorService {
 				y.setName(x.getName());
 				y.setEmail(x.getEmail());
 				y.setPassword(x.getPassword());
-				y.setCertificate(x.getCertificate());
 				y.setSummarize(x.getSummarize());
 				y.setRate(x.getRate());
 				y.setStatus(x.isStatus());
