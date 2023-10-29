@@ -11,7 +11,7 @@ import com.swp.ArtQuack.entity.Student;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Integer>, JpaSpecificationExecutor<Student>{
 	
-	public List<Student> findByNameIgnoreCaseAndStatusIsTrue(String name);
+	public List<Student> findByNameContainingIgnoreCaseAndStatusIsTrue(String name);
 	
 	public Student findByStudentIDAndStatusIsTrue(int studentID);
 	

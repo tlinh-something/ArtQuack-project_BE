@@ -109,10 +109,10 @@ public class CourseController {
 			if(instructor == null) return ResponseEntity.notFound().header("message", "Instructor not found. Adding failed").build();
 			
 			Category category = categoryService.findById(cateID);
-			if(instructor == null) return ResponseEntity.notFound().header("message", "Category not found. Adding failed").build();
+			if(category == null) return ResponseEntity.notFound().header("message", "Category not found. Adding failed").build();
 			
 			Level level = levelService.findById(levelID);
-			if(instructor == null) return ResponseEntity.notFound().header("message", "Level not found. Adding failed").build();
+			if(level == null) return ResponseEntity.notFound().header("message", "Level not found. Adding failed").build();
 			
 			if(courseService.findById(course.getCourseID()) != null) 
 				return ResponseEntity.badRequest().header("message", "Course with such ID already exists").build();
@@ -130,14 +130,28 @@ public class CourseController {
 		}
 	}
 	
-	@PutMapping("/course/{courseID}/updatecourse")
-	public ResponseEntity<Course> updatePost(@PathVariable int courseID, @RequestBody Course course){
-		Course available = courseService.findById(course.getCourseID());
-		if(available == null)
+	@PutMapping("/instructor/{instructorID}/category/{cateID}/level/{levelID}/updatecourse")
+	public ResponseEntity<Course> updatePost(@PathVariable("instructorID") int instructorID, @PathVariable("cateID") int cateID,@PathVariable("levelID") int levelID, @RequestBody CourseObject courseObject){
+		Course course = courseService.findById(courseObject.getCourseID());
+		if(course == null)
 			return  ResponseEntity.notFound().header("message", "No Course found for such ID").build();
 		
-		course.setInstructor(available.getInstructor());
+		Instructor instructor = instructorService.findById(instructorID);
+		if(instructor == null) return ResponseEntity.notFound().header("message", "Instructor not found. Updating failed").build();
 		
+		Category category = categoryService.findById(cateID);
+		if(category == null) return ResponseEntity.notFound().header("message", "Category not found. Updating failed").build();
+		
+		Level level = levelService.findById(levelID);
+		if(level == null) return ResponseEntity.notFound().header("message", "Level not found. Updating failed").build();
+		
+		course.setLevel(level);
+		course.setCategory(category);
+		course.setInstructor(instructor);
+		course.setStatus(true);
+		if(courseObject.getDescription() != null) course.setDescription(courseObject.getDescription());
+		course.setViewer(courseObject.getViewer());
+		course.setRate(courseObject.getRate());
 		Course updatedCourse = courseService.update(course);
 		if(updatedCourse != null)
 			return ResponseEntity.ok(updatedCourse);
@@ -145,6 +159,7 @@ public class CourseController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		
 	}
+	
 	
 	@DeleteMapping("/deletecourse/{courseID}")
 	public ResponseEntity<Void> deleteCourse(@PathVariable int courseID){

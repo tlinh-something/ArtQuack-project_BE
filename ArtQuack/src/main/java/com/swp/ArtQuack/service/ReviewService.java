@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.swp.ArtQuack.entity.Review;
+import com.swp.ArtQuack.entity.Student;
 import com.swp.ArtQuack.repository.ReviewRepository;
 
 @Service
@@ -29,4 +30,23 @@ public class ReviewService {
 		return reviewRepoService.findByCourseCourseID(courseID);
 	}
 	
+	
+	//ADD
+	public Review add(Review review) {
+		return reviewRepoService.save(review);
+	}
+	
+	//UPDATE
+	public Review update(Review newReview) {
+		return reviewRepoService.save(newReview);
+	}
+	
+	//DELETE
+	public boolean delete(int reviewID) {
+		Review review = findById(reviewID);
+		if(review == null) return false;
+		review.setStatus(false);
+		update(review);
+		return !review.isStatus();
+	}
 }

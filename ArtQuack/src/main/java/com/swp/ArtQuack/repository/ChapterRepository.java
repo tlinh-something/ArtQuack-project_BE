@@ -12,4 +12,10 @@ import com.swp.ArtQuack.entity.Chapter;
 public interface ChapterRepository extends JpaRepository<Chapter, Integer>, JpaSpecificationExecutor<Chapter>{
 
 	public List<Chapter> findByCourseCourseID(int courseID);
+	
+	public List<Chapter> findByStatusIsTrue();
+	
+	public Chapter findByChapterNameContainingIgnoreCaseAndStatusIsTrue(String chapterName);
+	
+	public Chapter findByChapterIDAndStatusIsTrue(int chapterID);
 }

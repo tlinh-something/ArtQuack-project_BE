@@ -48,7 +48,7 @@ public class CourseService {
 	}
 	
 	public Course findByKeyword(String keyword) {
-		return courseRepoService.findByNameIgnoreCaseAndStatusIsTrue(keyword);
+		return courseRepoService.findByNameContainingIgnoreCaseAndStatusIsTrue(keyword.trim());
 	}
 	
 	//DISPLAY

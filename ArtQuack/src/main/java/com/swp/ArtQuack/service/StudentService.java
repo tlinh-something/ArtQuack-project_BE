@@ -27,7 +27,7 @@ public class StudentService {
 	}
 	
 	public List<Student> findByNameIgnorecase(String name){
-		return studentRepoService.findByNameIgnoreCaseAndStatusIsTrue(name);
+		return studentRepoService.findByNameContainingIgnoreCaseAndStatusIsTrue(name.trim());
 	}
 	
 	public Student login(String email, String password) {

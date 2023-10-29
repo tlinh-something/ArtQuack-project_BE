@@ -1,5 +1,6 @@
 package com.swp.ArtQuack.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,8 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.swp.ArtQuack.entity.Chapter;
+import com.swp.ArtQuack.entity.Course;
 import com.swp.ArtQuack.entity.Review;
 import com.swp.ArtQuack.repository.ChapterRepository;
+import com.swp.ArtQuack.view.ChapterObject;
+import com.swp.ArtQuack.view.CourseObject;
 
 @Service
 public class ChapterService {
@@ -17,7 +21,7 @@ public class ChapterService {
 	private ChapterRepository chapterRepoService;
 	
 	public List<Chapter> findAll(){
-		return chapterRepoService.findAll();
+		return chapterRepoService.findByStatusIsTrue();
 	}
 	
 	public Chapter findById(int id) {
@@ -28,5 +32,40 @@ public class ChapterService {
 	
 	public List<Chapter> findByCourseID(int courseID){
 		return chapterRepoService.findByCourseCourseID(courseID);
+	}
+	
+	public Chapter findByKeyword(String keyword){
+		return chapterRepoService.findByChapterNameContainingIgnoreCaseAndStatusIsTrue(keyword);
+	}
+	
+	//ADD
+	public Chapter add(Chapter chapter) {
+		return chapterRepoService.save(chapter);
+	}
+	
+	//UPDATE
+	public Chapter update(Chapter newChapter) {
+		return chapterRepoService.save(newChapter);
+	}
+	
+	//DELETE
+	public boolean delete(int chapterID) {
+			Chapter chapter = findById(chapterID);
+			if(chapter == null) return false;
+			chapter.setStatus(false);
+			update(chapter);
+			return !chapter.isStatus();
+	}
+	
+	//DISPLAY
+	public ChapterObject displayRender(Chapter x) {
+			ChapterObject object = new ChapterObject();
+			object.setChapterID(x.getChapterID());
+			object.setChapterName(x.getChapterName());
+			object.setStatus(x.isStatus());
+			object.setCourseID(x.getCourse().getCourseID());
+			object.setCourseName(x.getCourse().getName());
+
+		return object;
 	}
 }

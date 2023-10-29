@@ -44,9 +44,6 @@ public class Chapter implements Serializable{
 	
 //	@Column(name = "courseID", nullable = false)
 //	private String courseID;
-//	
-//	@Column(name = "submitID", nullable = false)
-//	private String submitID;
 	
 	@Column(name = "status")
 	private boolean status;
@@ -58,13 +55,6 @@ public class Chapter implements Serializable{
 	@ToString.Exclude
 	private Course course;
 
-//	@OneToMany(targetEntity = Submission.class, fetch = FetchType.EAGER)
-//	@JoinColumn(name = "submitID", referencedColumnName = "submitID", nullable = false, insertable = true, updatable = false)
-//	@JsonIgnore
-//	@ToString.Exclude
-//	private Submission submission;
-	
-	
 	@OneToMany(targetEntity = Item.class, mappedBy = "chapter")
 	@JsonIgnore
 	@ToString.Exclude
