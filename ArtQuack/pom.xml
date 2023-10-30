@@ -14,7 +14,7 @@
 	<name>ArtQuack</name>
 	<description>ArtQuack_BE_SpringBoot</description>
 	<properties>
-		<java.version>19</java.version>
+		<java.version>16</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -39,6 +39,12 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
 		</dependency>
+
+		<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+    <version>2.2.0</version>
+</dependency>
 		<!--
 		https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-devtools -->
 		<dependency>
@@ -128,6 +134,7 @@
 	</dependencies>
 
 	<build>
+	<finalName>art-be</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

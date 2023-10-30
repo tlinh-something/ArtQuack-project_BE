@@ -24,7 +24,7 @@ public class LoginController {
 	
 	@GetMapping("/login/email/{email}/password/{password}/role/{role}")
 	public ResponseEntity<Object> login(@PathVariable("email") String email, @PathVariable("password") String password, @PathVariable("role") String role){
-		if(role.equalsIgnoreCase("student")){
+		if(role.equalsIgnoreCase("learner")){
 			Student student = studentService.login(email, password);
 			return ResponseEntity.ok(student);
 		}else if(role.equalsIgnoreCase("instructor")) {

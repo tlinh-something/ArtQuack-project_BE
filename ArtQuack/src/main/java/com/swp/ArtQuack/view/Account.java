@@ -12,19 +12,11 @@ import lombok.ToString;
 @EqualsAndHashCode
 @Data
 public class Account {
-	private String userName;
+	
 	private String fullName;
 	private String email;
 	private String password;
 	
-
-	
-	public String getUserName() {
-		return userName;
-	}
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 	public String getFullName() {
 		return fullName;
 	}

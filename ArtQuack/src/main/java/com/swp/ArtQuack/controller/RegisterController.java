@@ -27,7 +27,7 @@ public class RegisterController {
 	
 	@PostMapping("/register/role/{role}")
 	public ResponseEntity<Object> register(@RequestBody Account account, @PathVariable String role) {
-		if(role.equalsIgnoreCase("student")) {
+		if(role.equalsIgnoreCase("learner")) {
 			Student student = studentService.checkConflict(account.getEmail());
 			if(student != null) return null;
 		}else if(role.equalsIgnoreCase("instructor")) {
@@ -35,7 +35,7 @@ public class RegisterController {
 			if(instructor != null) return null;
 		}else return null;
 		
-		if(role.equalsIgnoreCase("student")) {
+		if(role.equalsIgnoreCase("learner")) {
 			Student newStudent = new Student();
 			newStudent.setName(account.getFullName());
 			newStudent.setRole(role);
