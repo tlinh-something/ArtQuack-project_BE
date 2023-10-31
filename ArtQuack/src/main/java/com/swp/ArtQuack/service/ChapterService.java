@@ -1,6 +1,5 @@
 package com.swp.ArtQuack.service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -8,11 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.swp.ArtQuack.entity.Chapter;
-import com.swp.ArtQuack.entity.Course;
-import com.swp.ArtQuack.entity.Review;
 import com.swp.ArtQuack.repository.ChapterRepository;
 import com.swp.ArtQuack.view.ChapterObject;
-import com.swp.ArtQuack.view.CourseObject;
 
 @Service
 public class ChapterService {

@@ -42,9 +42,6 @@ public class Item implements Serializable{
 	
 	@Column(name = "itemName", nullable = false)
 	private String itemName;
-
-//	@Column(name = "chapterID", nullable = false)
-//	private int chapterID;
 	
 	@Column(name = "content")
 	private String content;

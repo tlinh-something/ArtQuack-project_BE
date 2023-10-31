@@ -2,18 +2,9 @@ package com.swp.ArtQuack.entity;
 
 import java.io.Serializable;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -41,10 +32,7 @@ public class Submission implements Serializable{
 	
 	@Column(name = "final_project", nullable = false)
 	private String final_project;
-	
-//	@Column(name = "studentID", nullable = false)
-//	private String studentID;
-	
+
 	@Column(name = "comment")
 	private String comment;
 	
@@ -55,11 +43,11 @@ public class Submission implements Serializable{
 	private boolean status;
 	
 	//RELATIONSHIP SETUP
-	@ManyToOne(targetEntity = Student.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "studentID", referencedColumnName = "studentID", nullable = false, insertable = true, updatable = false)
+	@ManyToOne(targetEntity = Learner.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "learnerID", referencedColumnName = "learnerID", nullable = false, insertable = true, updatable = false)
 	@JsonIgnore
 	@ToString.Exclude
-	private Student student;
+	private Learner learner;
 	
 	@ManyToOne(targetEntity = Chapter.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "chapterID", referencedColumnName = "chapterID", nullable = false, insertable = true, updatable = false)
@@ -107,12 +95,12 @@ public class Submission implements Serializable{
 		this.status = status;
 	}
 
-	public Student getStudent() {
-		return student;
+	public Learner getLearner() {
+		return learner;
 	}
 
-	public void setStudent(Student student) {
-		this.student = student;
+	public void setLearner(Learner learner) {
+		this.learner = learner;
 	}
 
 	public Chapter getChapter() {

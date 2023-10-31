@@ -19,7 +19,11 @@ public class PostService {
 	private PostRepository postRepoService;
 	
 	public List<Post> findAll(){
-		return postRepoService.findAll();
+		return postRepoService.findByStatusIsTrue();
+	}
+	
+	public List<Post> findDeletedPost(){
+		return postRepoService.findByStatusIsFalse();
 	}
 	
 	public Post findById(int postID) {

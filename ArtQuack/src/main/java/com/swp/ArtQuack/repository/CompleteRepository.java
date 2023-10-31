@@ -11,10 +11,12 @@ import com.swp.ArtQuack.entity.Complete;
 @Repository
 public interface CompleteRepository extends JpaRepository<Complete, Integer>, JpaSpecificationExecutor<Complete>{
 
-//	public Complete findByCompleteIDAndStatusIsTrue(String completeID);
-//	
-//	public List<Complete> findByStatusIsTrue();
-//	
-//	public List<Complete> findByStatusIsFalse();
+	public Complete findByCompleteIDAndStatusIsTrue(int completeID);
+	
+	public List<Complete> findByStatusIsTrue();
+	
+	public  List<Complete>   findByItemItemID(int itemID);
+	
+	public List<Complete>  findByLearnerLearnerID(int learnerID);
 	
 }

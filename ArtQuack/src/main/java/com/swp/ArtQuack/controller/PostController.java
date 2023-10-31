@@ -42,6 +42,13 @@ public class PostController {
 		return ResponseEntity.ok(list);
     }
 	
+	@GetMapping("/deletedposts")
+	public ResponseEntity<List<PostObject>> retrieveAllDeletedPosts(){
+		List<Post> ls = postService.findDeletedPost();
+		List<PostObject> list = postService.display(ls);
+		return ResponseEntity.ok(list);
+    }
+	
 	@GetMapping("/post/{postID}")
 	public ResponseEntity<PostObject> retrievePost(@PathVariable int postID) {
 		Post post = postService.findById(postID);

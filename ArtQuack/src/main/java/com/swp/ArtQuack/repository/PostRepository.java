@@ -13,5 +13,9 @@ public interface PostRepository extends JpaRepository<Post, Integer>, JpaSpecifi
 
 	public Post findByPostIDAndStatusIsTrue(int postID);
 	
+	public List<Post> findByStatusIsTrue();
+	
+	public List<Post> findByStatusIsFalse();
+	
 	
 }

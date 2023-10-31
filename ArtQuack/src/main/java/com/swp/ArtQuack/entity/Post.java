@@ -3,7 +3,6 @@ package com.swp.ArtQuack.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.print.attribute.standard.MediaSize.Other;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

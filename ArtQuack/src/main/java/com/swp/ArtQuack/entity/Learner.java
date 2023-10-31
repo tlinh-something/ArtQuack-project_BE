@@ -3,20 +3,9 @@ package com.swp.ArtQuack.entity;
 import java.io.Serializable;
 import java.util.Collection;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Size;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,16 +20,15 @@ import lombok.ToString;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode
-
-@Table(name = "Student")
-public class Student implements Serializable{
+@Table(name = "Learner")
+public class Learner implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "studentID")
+	@Column(name = "learnerID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int studentID;
+	private int learnerID;
 	
 	@Column(name = "name", nullable = false)
 //	@Size(min = Constants.USERNAME_MIN, message = "username must have at least 6 characters")
@@ -60,27 +48,27 @@ public class Student implements Serializable{
 	private String role;
 	
 	//RELATIONSHIP SETUP	
-	@OneToMany(targetEntity = Enrollment.class, mappedBy = "student")
+	@OneToMany(targetEntity = Enrollment.class, mappedBy = "learner")
 	@JsonIgnore
 	@ToString.Exclude
 	private Collection<Enrollment> enrollmentsList;
 	
-	@OneToMany(targetEntity = Submission.class, mappedBy = "student")
+	@OneToMany(targetEntity = Submission.class, mappedBy = "learner")
 	@JsonIgnore
 	@ToString.Exclude
 	private Collection<Submission> submissionsList;
-	
-	@OneToMany(targetEntity = Review.class, mappedBy = "student")
+
+	@OneToMany(targetEntity = Complete.class, mappedBy = "learner")
 	@JsonIgnore
 	@ToString.Exclude
-	private Collection<Review> reviewsList;
+	private Collection<Complete> completesList;
 
-	public int getStudentID() {
-		return studentID;
+	public int getLearnerID() {
+		return learnerID;
 	}
 
-	public void setStudentID(int studentID) {
-		this.studentID = studentID;
+	public void setLearnerID(int learnerID) {
+		this.learnerID = learnerID;
 	}
 
 	public String getName() {
@@ -139,12 +127,12 @@ public class Student implements Serializable{
 		this.submissionsList = submissionsList;
 	}
 
-	public Collection<Review> getReviewsList() {
-		return reviewsList;
+	public Collection<Complete> getCompletesList() {
+		return completesList;
 	}
 
-	public void setReviewsList(Collection<Review> reviewsList) {
-		this.reviewsList = reviewsList;
+	public void setCompletesList(Collection<Complete> completesList) {
+		this.completesList = completesList;
 	}
 
 	public static long getSerialversionuid() {

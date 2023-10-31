@@ -29,8 +29,8 @@ public class SubmissionService {
 		return submissionRepoService.findByChapterChapterID(chapterID);
 	}
 	
-	public List<Submission> findByStudentID(int studentID){
-		return submissionRepoService.findByStudentStudentID(studentID);
+	public List<Submission> findByLearnerID(int learnerID){
+		return submissionRepoService.findByLearnerLearnerID(learnerID);
 	}
 	
 	//ADD
@@ -61,8 +61,8 @@ public class SubmissionService {
 		object.setComment(x.getComment());
 		object.setStatus(x.isStatus());
 		
-		object.setStudentID(x.getStudent().getStudentID());
-		object.setStudentName(x.getStudent().getName());
+		object.setLearnerID(x.getLearner().getLearnerID());
+		object.setLearnerName(x.getLearner().getName());
 		
 		object.setChapterID(x.getChapter().getChapterID());
 		object.setChapterName(x.getChapter().getChapterName());

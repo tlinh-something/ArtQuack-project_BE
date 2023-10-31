@@ -16,9 +16,9 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Integer>
 	
 	public Enrollment findByEnrollmentIDAndStatusIsTrue(int enrollmentID);
 	
-	public List<Enrollment>  findByStudentStudentID(int studentID);
+	public List<Enrollment>  findByLearnerLearnerID(int learnerID);
 	
-	public List<Enrollment>   findByCourseCourseID(int courseID);
+	public List<Enrollment> findByCourseCourseID(int courseID);
 	
 	public List<Enrollment> findByDate(Date date);
 }

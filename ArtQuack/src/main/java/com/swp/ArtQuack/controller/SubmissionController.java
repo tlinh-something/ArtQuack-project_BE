@@ -15,13 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.swp.ArtQuack.entity.Chapter;
-import com.swp.ArtQuack.entity.Item;
-import com.swp.ArtQuack.entity.Student;
+import com.swp.ArtQuack.entity.Learner;
 import com.swp.ArtQuack.entity.Submission;
 import com.swp.ArtQuack.service.ChapterService;
-import com.swp.ArtQuack.service.StudentService;
+import com.swp.ArtQuack.service.LearnerService;
 import com.swp.ArtQuack.service.SubmissionService;
-import com.swp.ArtQuack.view.ItemObject;
 import com.swp.ArtQuack.view.SubmissionObject;
 
 @RestController
@@ -35,7 +33,7 @@ public class SubmissionController {
 	private ChapterService chapterService;
 	
 	@Autowired
-	private StudentService studentService;
+	private LearnerService learnerService;
 	
 	@GetMapping("/submissions")
 	public ResponseEntity<List<SubmissionObject>> retrieveAllSubmissions() {
@@ -70,24 +68,24 @@ public class SubmissionController {
 		return ResponseEntity.ok(ls);
 	}
 	
-	@GetMapping("/student/{studentID}/submissions")
-	public ResponseEntity<List<SubmissionObject>> findByStudentID(@PathVariable("studentID") int studentID){
-		Student student = studentService.findById(studentID);
-		if(student == null)
-			return ResponseEntity.notFound().header("message", "No Student found for such ID").build();
+	@GetMapping("/learner/{learnerID}/submissions")
+	public ResponseEntity<List<SubmissionObject>> findByLearnerID(@PathVariable("learnerID") int learnerID){
+		Learner learner = learnerService.findById(learnerID);
+		if(learner == null)
+			return ResponseEntity.notFound().header("message", "No Learner found for such ID").build();
 		List<SubmissionObject> ls = new ArrayList<SubmissionObject>();
-		List<Submission> submitList = submissionService.findByStudentID(studentID);
+		List<Submission> submitList = submissionService.findByLearnerID(learnerID);
 		for(Submission x: submitList) {
 			ls.add(submissionService.displayRender(x));
 		}
 		return ResponseEntity.ok(ls);
 	}
 	
-	@PostMapping("/student/{studentID}/chapter/{chapterID}/createsubmission")
-	public ResponseEntity<Submission> createSubmission(@PathVariable int chapterID,@PathVariable int studentID, @RequestBody Submission submit){
+	@PostMapping("/learner/{learnerID}/chapter/{chapterID}/createsubmission")
+	public ResponseEntity<Submission> createSubmission(@PathVariable("chapterID") int chapterID,@PathVariable("learnerID") int learnerID, @RequestBody Submission submit){
 		try {
-			Student student = studentService.findById(studentID);
-			if(student == null) return ResponseEntity.notFound().header("message", "Student not found. Adding failed").build();
+			Learner learner = learnerService.findById(learnerID);
+			if(learner == null) return ResponseEntity.notFound().header("message", "Learner not found. Adding failed").build();
 			
 			Chapter chapter = chapterService.findById(chapterID);
 			if(chapter == null) return ResponseEntity.notFound().header("message", "Chapter not found. Adding failed").build();
@@ -95,7 +93,7 @@ public class SubmissionController {
 			if(submissionService.findBySubmitID(submit.getSubmitID()) != null)
 				return ResponseEntity.badRequest().header("message", "Submission with such ID already exists").build();
 
-			submit.setStudent(student);
+			submit.setLearner(learner);
 			submit.setChapter(chapter);
 			submit.setStatus(true);
 			Submission savedSubmit = submissionService.add(submit);

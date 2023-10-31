@@ -1,62 +1,64 @@
 package com.swp.ArtQuack.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.swp.ArtQuack.entity.Review;
-import com.swp.ArtQuack.entity.Student;
-import com.swp.ArtQuack.repository.StudentRepository;
+import com.swp.ArtQuack.entity.Learner;
+import com.swp.ArtQuack.repository.LearnerRepository;
 //import com.swp.ArtQuack.view.StudentObject;
 
 @Service
-public class StudentService {
+public class LearnerService {
 
 	@Autowired
-	private StudentRepository studentRepoService;
+	private LearnerRepository studentRepoService;
 	
 	//FIND
-	public List<Student> findAll(){
-		return studentRepoService.findAll();
+	public List<Learner> findAll(){
+		return studentRepoService.findByStatusIsTrue();
 	}
 	
-	public Student findById(int studentID) {
-		return studentRepoService.findByStudentIDAndStatusIsTrue(studentID);
+	public List<Learner> findAllDeletedStudents(){
+		return studentRepoService.findByStatusIsFalse();
 	}
 	
-	public List<Student> findByNameIgnorecase(String name){
+	public Learner findById(int learnerID) {
+		return studentRepoService.findByLearnerIDAndStatusIsTrue(learnerID);
+	}
+	
+	public List<Learner> findByNameIgnorecase(String name){
 		return studentRepoService.findByNameContainingIgnoreCaseAndStatusIsTrue(name.trim());
 	}
 	
-	public Student login(String email, String password) {
+	public Learner login(String email, String password) {
 		if(email == null || password == null) return null;
 		return studentRepoService.findByEmailAndPassword(email, password);
 	}
 	
-	public Student checkConflict(String name) {
+	public Learner checkConflict(String name) {
 		if(name == null) return null;
 		return studentRepoService.findByName(name);
 	}
 	
 	//ADD
-	public Student add(Student student) {
+	public Learner add(Learner student) {
 		return studentRepoService.save(student);
 	}
 	
 	//UPDATE
-	public Student update(Student newStudent) {
+	public Learner update(Learner newStudent) {
 		return add(newStudent);
 	}
 		
 	//DELETE
 	public boolean delete(int id) {
-		Student student = findById(id);
-		if(student == null) return false;
-		student.setStatus(false);
-		update(student);
-		return !student.isStatus();
+		Learner learner = findById(id);
+		if(learner == null) return false;
+		learner.setStatus(false);
+		update(learner);
+		return !learner.isStatus();
 	}
 	
 //	//DISPLAY

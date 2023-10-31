@@ -1,7 +1,6 @@
 package com.swp.ArtQuack.controller;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.swp.ArtQuack.entity.Category;
 import com.swp.ArtQuack.entity.Course;
 import com.swp.ArtQuack.entity.Enrollment;
-import com.swp.ArtQuack.entity.Instructor;
-import com.swp.ArtQuack.entity.Level;
-import com.swp.ArtQuack.entity.Student;
+import com.swp.ArtQuack.entity.Learner;
 import com.swp.ArtQuack.service.CourseService;
 import com.swp.ArtQuack.service.EnrollmentService;
-import com.swp.ArtQuack.service.StudentService;
+import com.swp.ArtQuack.service.LearnerService;
 import com.swp.ArtQuack.view.EnrollmentObject;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -35,7 +31,7 @@ public class EnrollmentController {
 	private EnrollmentService enrollmentService;
 	
 	@Autowired
-	private StudentService studentService;
+	private LearnerService learnerService;
 	
 	@Autowired
 	private CourseService courseService;
@@ -60,26 +56,26 @@ public class EnrollmentController {
 		}
 	}
 	
-	@GetMapping("/enrollment/student/{studentID}")
-	public ResponseEntity<List<EnrollmentObject>> findByStudentID(@PathVariable("studentID") int studentID) {		
-		List<Enrollment> ls = enrollmentService.findByStudentID(studentID);
+	@GetMapping("/enrollment/learner/{learnerID}")
+	public ResponseEntity<List<EnrollmentObject>> findByStudentID(@PathVariable("learnerID") int learnerID) {		
+		List<Enrollment> ls = enrollmentService.findByLearnerID(learnerID);
 		List<EnrollmentObject> list = enrollmentService.display(ls);
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 	
 	@GetMapping("/enrollment/course/{courseID}")
 	public ResponseEntity<List<EnrollmentObject>> findByCourseID(@PathVariable("courseID") int courseID) {		
-		List<Enrollment> ls = enrollmentService.findByStudentID(courseID);
+		List<Enrollment> ls = enrollmentService.findByCourseID(courseID);
 		List<EnrollmentObject> list = enrollmentService.display(ls);
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 	
 	//ADD
-	@PostMapping("/student/{studentID}/course/{courseID}/enrollment")
-	public ResponseEntity<Enrollment> createEnrollment(@PathVariable("studentID") int studentID,@PathVariable("courseID") int courseID, @RequestBody Enrollment enrollment){
+	@PostMapping("/learner/{learnerID}/course/{courseID}/enrollment")
+	public ResponseEntity<Enrollment> createEnrollment(@PathVariable("learnerID") int learnerID,@PathVariable("courseID") int courseID, @RequestBody Enrollment enrollment){
 		try {
-			Student student = studentService.findById(studentID);
-			if(student == null) return ResponseEntity.notFound().header("message", "Student not found. Adding failed").build();
+			Learner learner = learnerService.findById(learnerID);
+			if(learner == null) return ResponseEntity.notFound().header("message", "Learner not found. Adding failed").build();
 			
 			Course course = courseService.findById(courseID);
 			if(course == null) return ResponseEntity.notFound().header("message", "Course not found. Adding failed").build();
@@ -87,7 +83,7 @@ public class EnrollmentController {
 			if(enrollmentService.findById(enrollment.getEnrollmentID()) != null) 
 				return ResponseEntity.badRequest().header("message", "Enrollment with such ID already exists").build();
 			
-			enrollment.setStudent(student);
+			enrollment.setLearner(learner);
 			enrollment.setCourse(course);
 			enrollment.setStatus(true);
 			Enrollment savedEnroll = enrollmentService.add(enrollment);

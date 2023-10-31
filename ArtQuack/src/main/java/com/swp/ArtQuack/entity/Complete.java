@@ -3,23 +3,12 @@ package com.swp.ArtQuack.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 @Entity
@@ -37,9 +26,6 @@ public class Complete implements Serializable{
 	@Column(name = "completeID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int completeID;
-	
-//	@Column(name = "itemID", nullable = false)
-//	private String itemID;
 
 	@Column(name = "date")
 	private Date date;
@@ -53,6 +39,12 @@ public class Complete implements Serializable{
 	@JsonIgnore
 	@ToString.Exclude
 	private Item item;
+
+	@ManyToOne(targetEntity = Learner.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "learnerID", referencedColumnName = "learnerID", nullable = false, insertable = true, updatable = false)
+	@JsonIgnore
+	@ToString.Exclude
+	private Learner learner;
 
 
 	public int getCompleteID() {
@@ -90,6 +82,12 @@ public class Complete implements Serializable{
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-	
+
+	public Learner getLearner() {
+		return learner;
+	}
+
+	public void setLearner(Learner learner) {
+		this.learner = learner;
+	}
 }

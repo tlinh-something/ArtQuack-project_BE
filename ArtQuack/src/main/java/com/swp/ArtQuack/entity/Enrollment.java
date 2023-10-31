@@ -38,12 +38,12 @@ public class Enrollment implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "enrollmentID")
 	private int enrollmentID;	
-	
-//	@Column(name = "studentID", nullable = false)
-//	private int studentID;
-//	
-//	@Column(name = "courseID", nullable = false)
-//	private int courseID;
+
+	@Column(name = "rate")
+	private int rate;
+
+	@Column(name = "comment")
+	private String comment;
 	
 	@Column(name = "date")
 	private Date date;
@@ -53,17 +53,33 @@ public class Enrollment implements Serializable{
 	
 	
 	//RELATIONSHIP SETUP
-	@ManyToOne(targetEntity = Student.class, fetch = FetchType.EAGER)
-	@JoinColumn(name = "studentID", referencedColumnName = "studentID", nullable = false, insertable = true, updatable = false)
+	@ManyToOne(targetEntity = Learner.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "learnerID", referencedColumnName = "learnerID", nullable = false, insertable = true, updatable = false)
 	@JsonIgnore
 	@ToString.Exclude
-	private Student student;
+	private Learner learner;
 	
 	@ManyToOne(targetEntity = Course.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "courseID", referencedColumnName = "courseID", nullable = false, insertable = true, updatable = false)
 	@JsonIgnore
 	@ToString.Exclude
 	private Course course;
+
+	public int getRate() {
+		return rate;
+	}
+
+	public void setRate(int rate) {
+		this.rate = rate;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 
 	public int getEnrollmentID() {
 		return enrollmentID;
@@ -89,12 +105,12 @@ public class Enrollment implements Serializable{
 		this.status = status;
 	}
 
-	public Student getStudent() {
-		return student;
+	public Learner getLearner() {
+		return learner;
 	}
 
-	public void setStudent(Student student) {
-		this.student = student;
+	public void setLearner(Learner learner) {
+		this.learner = learner;
 	}
 
 	public Course getCourse() {

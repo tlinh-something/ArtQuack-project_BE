@@ -19,8 +19,6 @@ import com.swp.ArtQuack.entity.Category;
 import com.swp.ArtQuack.entity.Course;
 import com.swp.ArtQuack.entity.Instructor;
 import com.swp.ArtQuack.entity.Level;
-import com.swp.ArtQuack.entity.Post;
-import com.swp.ArtQuack.entity.Review;
 import com.swp.ArtQuack.service.CategoryService;
 import com.swp.ArtQuack.service.CourseService;
 import com.swp.ArtQuack.service.InstructorService;
@@ -54,6 +52,16 @@ public class CourseController {
 		return ResponseEntity.ok(ls);
 	}
 	
+	@GetMapping("/deleted-courses")
+	public ResponseEntity<List<CourseObject>> retrieveAllDeletedCourses() {
+		List<CourseObject> ls = new ArrayList<CourseObject>();
+		List<Course> courseList = courseService.findDeleteCourse();
+		for(Course x: courseList) {
+			ls.add(courseService.displayRender(x));
+		}
+		return ResponseEntity.ok(ls);
+	}
+	
 	
 	@GetMapping("/course/{courseID}")
 	public ResponseEntity<CourseObject> retrieveCourse(@PathVariable int courseID) {
@@ -79,13 +87,13 @@ public class CourseController {
 	}
 		
 	@GetMapping("/courses/{keyword}")
-	public ResponseEntity<CourseObject> retrieveCourseByKeyword(@PathVariable String keyword) {
-		Course courses = courseService.findByKeyword(keyword);
-		if (courses != null) {
-			return ResponseEntity.status(HttpStatus.OK).body(courseService.displayRender(courses));
-		} else {
-			return ResponseEntity.notFound().build();
+	public ResponseEntity<List<CourseObject>> retrieveCourseByKeyword(@PathVariable String keyword) {
+		List<CourseObject> ls = new ArrayList<CourseObject>();
+		List<Course> courseList = courseService.findByKeyword(keyword);
+		for(Course x: courseList) {
+			ls.add(courseService.displayRender(x));
 		}
+		return ResponseEntity.ok(ls);
 	}
 	
 	@GetMapping("/instructor/{instructorID}/coursesOfInstructor")

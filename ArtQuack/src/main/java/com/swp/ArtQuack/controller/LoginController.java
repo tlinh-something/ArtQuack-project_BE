@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.swp.ArtQuack.entity.Instructor;
-import com.swp.ArtQuack.entity.Student;
+import com.swp.ArtQuack.entity.Learner;
 import com.swp.ArtQuack.service.InstructorService;
-import com.swp.ArtQuack.service.StudentService;
+import com.swp.ArtQuack.service.LearnerService;
 
 @RestController
 @RequestMapping("/api")
@@ -20,12 +20,12 @@ public class LoginController {
 	private InstructorService instructorService;
 	
 	@Autowired
-	private StudentService studentService;
+	private LearnerService studentService;
 	
 	@GetMapping("/login/email/{email}/password/{password}/role/{role}")
 	public ResponseEntity<Object> login(@PathVariable("email") String email, @PathVariable("password") String password, @PathVariable("role") String role){
 		if(role.equalsIgnoreCase("learner")){
-			Student student = studentService.login(email, password);
+			Learner student = studentService.login(email, password);
 			return ResponseEntity.ok(student);
 		}else if(role.equalsIgnoreCase("instructor")) {
 			Instructor instructor = instructorService.login(email, password);

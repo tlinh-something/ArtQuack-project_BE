@@ -14,7 +14,7 @@
 	<name>ArtQuack</name>
 	<description>ArtQuack_BE_SpringBoot</description>
 	<properties>
-		<java.version>16</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -74,8 +74,7 @@
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
-			<version>1.18.24</version>
-			<scope>provided</scope>
+			<optional>true</optional>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -139,6 +138,14 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<excludes>
+						<exclude>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+						</exclude>
+					</excludes>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

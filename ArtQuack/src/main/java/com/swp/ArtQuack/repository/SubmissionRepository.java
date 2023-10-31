@@ -17,7 +17,7 @@ public interface SubmissionRepository extends JpaRepository<Submission, Integer>
 	
 	public List<Submission> findByChapterChapterID(int chapterID);
 	
-	public List<Submission> findByStudentStudentID(int studentID);
+	public List<Submission> findByLearnerLearnerID(int learnerID);
 	
 	public List<Submission> findByStatusIsTrue();
 	

@@ -19,8 +19,8 @@ public class EnrollmentObject {
 	private Date date;
 	private boolean status;
 	
-	private int studentID;
-	private String studentName;
+	private int learnerID;
+	private String learnerName;
 	
 	private int courseID;
 	private String courseName;
@@ -42,17 +42,17 @@ public class EnrollmentObject {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	public int getStudentID() {
-		return studentID;
+	public int getLearnerID() {
+		return learnerID;
 	}
-	public void setStudentID(int studentID) {
-		this.studentID = studentID;
+	public void setLearnerID(int learnerID) {
+		this.learnerID = learnerID;
 	}
-	public String getStudentName() {
-		return studentName;
+	public String getLearnerName() {
+		return learnerName;
 	}
-	public void setStudentName(String studentName) {
-		this.studentName = studentName;
+	public void setLearnerName(String learnerName) {
+		this.learnerName = learnerName;
 	}
 	public int getCourseID() {
 		return courseID;

@@ -4,20 +4,10 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.swp.ArtQuack.Utilities.Constants;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -43,18 +33,6 @@ public class Course implements Serializable{
 	@Column(name = "courseID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int courseID;
-	
-//	@Column(name = "instructorID")
-//	private String instructorID;
-//	
-//	@Column(name = "cateID")
-//	private String cateID;
-//	
-//	@Column(name = "levelID")
-//	private String levelID;
-//	
-//	@Column(name = "reviewID")
-//	private String reviewID;
 	
 	@Column(name = "name", nullable = false)
 	private String name;
@@ -93,17 +71,6 @@ public class Course implements Serializable{
 	@JsonIgnore
 	@ToString.Exclude
 	private Level level;
-	
-//	@OneToMany(targetEntity = Review.class, fetch = FetchType.EAGER)
-//	@JoinColumn(name = "reviewID", referencedColumnName = "reviewID", nullable = false, insertable = true, updatable = false)
-//	@JsonIgnore
-//	@ToString.Exclude
-//	private Review review;
-	
-	@OneToMany(targetEntity = Review.class, mappedBy = "course")
-	@JsonIgnore
-	@ToString.Exclude
-	private Collection<Review> reviewsList;
 	
 	@OneToMany(targetEntity = Chapter.class, mappedBy = "course")
 	@JsonIgnore
@@ -196,14 +163,6 @@ public class Course implements Serializable{
 		this.level = level;
 	}
 
-	public Collection<Review> getReviewsList() {
-		return reviewsList;
-	}
-
-	public void setReviewsList(Collection<Review> reviewsList) {
-		this.reviewsList = reviewsList;
-	}
-
 	public Collection<Chapter> getChaptersList() {
 		return chaptersList;
 	}
@@ -222,8 +181,8 @@ public class Course implements Serializable{
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	} 
+	}
 
-	
+
 	
 }

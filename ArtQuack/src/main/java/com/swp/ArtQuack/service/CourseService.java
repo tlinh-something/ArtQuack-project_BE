@@ -1,17 +1,11 @@
 package com.swp.ArtQuack.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import com.swp.ArtQuack.entity.Chapter;
 import com.swp.ArtQuack.entity.Course;
-import com.swp.ArtQuack.entity.Review;
 import com.swp.ArtQuack.repository.CourseRepository;
 import com.swp.ArtQuack.view.CourseObject;
 
@@ -20,9 +14,6 @@ public class CourseService {
 
 	@Autowired
 	private CourseRepository courseRepoService;
-	
-	@Autowired
-	private ReviewService reviewService;
 	
 	@Autowired
 	private ChapterService chapterService;
@@ -47,7 +38,7 @@ public class CourseService {
 		return courseRepoService.findByInstructorInstructorID(instructorID);
 	}
 	
-	public Course findByKeyword(String keyword) {
+	public List<Course> findByKeyword(String keyword) {
 		return courseRepoService.findByNameContainingIgnoreCaseAndStatusIsTrue(keyword.trim());
 	}
 	

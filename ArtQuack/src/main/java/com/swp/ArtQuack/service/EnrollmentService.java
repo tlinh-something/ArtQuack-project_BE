@@ -8,10 +8,9 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.swp.ArtQuack.Utilities.Constants;
 import com.swp.ArtQuack.entity.Course;
 import com.swp.ArtQuack.entity.Enrollment;
-import com.swp.ArtQuack.entity.Student;
+import com.swp.ArtQuack.entity.Learner;
 import com.swp.ArtQuack.repository.EnrollmentRepository;
 import com.swp.ArtQuack.view.EnrollmentObject;
 
@@ -35,15 +34,15 @@ public class EnrollmentService {
 		return enrollmentRepoService.findByDate(date);
 	}
 	
-	public List<Enrollment> findByStudentID(int studentID){
+	public List<Enrollment> findByLearnerID(int learnerID){
 		List<Enrollment> ls = new ArrayList<Enrollment>();
-		ls.addAll(enrollmentRepoService.findByStudentStudentID(studentID));
+		ls.addAll(enrollmentRepoService.findByLearnerLearnerID(learnerID));
 		return ls;
 	}
 	
 	public List<Enrollment> findByCourseID(int courseID){
 		List<Enrollment> ls = new ArrayList<Enrollment>();
-		ls.addAll(enrollmentRepoService.findByStudentStudentID(courseID));
+		ls.addAll(enrollmentRepoService.findByCourseCourseID(courseID));
 		return ls;
 	}
 	
@@ -76,9 +75,9 @@ public class EnrollmentService {
 				y.setCourseID(course.getCourseID());
 				y.setCourseName(course.getName());
 				
-				Student student = x.getStudent();
-				y.setStudentID(student.getStudentID());
-				y.setStudentName(student.getName());
+				Learner learner = x.getLearner();
+				y.setLearnerID(learner.getLearnerID());
+				y.setLearnerName(learner.getName());
 				list.add(y);
 			}
 			return list;
