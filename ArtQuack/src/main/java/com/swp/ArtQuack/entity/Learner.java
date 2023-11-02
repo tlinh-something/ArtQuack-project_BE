@@ -53,10 +53,6 @@ public class Learner implements Serializable{
 	@ToString.Exclude
 	private Collection<Enrollment> enrollmentsList;
 	
-	@OneToMany(targetEntity = Submission.class, mappedBy = "learner")
-	@JsonIgnore
-	@ToString.Exclude
-	private Collection<Submission> submissionsList;
 
 	@OneToMany(targetEntity = Complete.class, mappedBy = "learner")
 	@JsonIgnore
@@ -117,14 +113,6 @@ public class Learner implements Serializable{
 
 	public void setEnrollmentsList(Collection<Enrollment> enrollmentsList) {
 		this.enrollmentsList = enrollmentsList;
-	}
-
-	public Collection<Submission> getSubmissionsList() {
-		return submissionsList;
-	}
-
-	public void setSubmissionsList(Collection<Submission> submissionsList) {
-		this.submissionsList = submissionsList;
 	}
 
 	public Collection<Complete> getCompletesList() {

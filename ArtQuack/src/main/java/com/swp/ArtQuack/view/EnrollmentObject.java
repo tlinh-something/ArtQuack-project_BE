@@ -22,8 +22,78 @@ public class EnrollmentObject {
 	private int learnerID;
 	private String learnerName;
 	
+	private int cateID;
+	private String cateName;
+	
+	private int levelID;
+	private String levelName;
+	
 	private int courseID;
 	private String courseName;
+	private String description;
+	private Date upload_date;
+	private int viewer;
+	private int rate;
+	private String avatar;
+	
+	
+	
+	
+	
+	public int getCateID() {
+		return cateID;
+	}
+	public void setCateID(int cateID) {
+		this.cateID = cateID;
+	}
+	public String getCateName() {
+		return cateName;
+	}
+	public void setCateName(String cateName) {
+		this.cateName = cateName;
+	}
+	public int getLevelID() {
+		return levelID;
+	}
+	public void setLevelID(int levelID) {
+		this.levelID = levelID;
+	}
+	public String getLevelName() {
+		return levelName;
+	}
+	public void setLevelName(String levelName) {
+		this.levelName = levelName;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public Date getUpload_date() {
+		return upload_date;
+	}
+	public void setUpload_date(Date upload_date) {
+		this.upload_date = upload_date;
+	}
+	public int getViewer() {
+		return viewer;
+	}
+	public void setViewer(int viewer) {
+		this.viewer = viewer;
+	}
+	public int getRate() {
+		return rate;
+	}
+	public void setRate(int rate) {
+		this.rate = rate;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
 	public int getEnrollmentID() {
 		return enrollmentID;
 	}

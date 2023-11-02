@@ -1,14 +1,13 @@
-create table Category (cateID int identity not null, cateName varchar(255) not null, primary key (cateID));
+create table Category (cateID int identity not null, status bit, cateName varchar(255) not null, primary key (cateID));
 create table Chapter (chapterID int identity not null, courseID int not null, status bit, chapterName varchar(255) not null, primary key (chapterID));
-create table Complete (completeID int identity not null, itemID int not null, learnerID int not null, status bit, date datetime2(6), primary key (completeID));
-create table Course (cateID int not null, courseID int identity not null, instructorID int not null, levelID int not null, rate int, status bit not null, viewer int, upload_date datetime2(6), description varchar(255), name varchar(255) not null, primary key (courseID));
+create table Complete (completeID int identity not null, grade int, itemID int not null, learnerID int not null, status bit, date datetime2(6), comment varchar(255), homework varchar(255), primary key (completeID));
+create table Course (cateID int not null, courseID int identity not null, instructorID int not null, levelID int not null, price float(24), rate int, status bit not null, viewer int, upload_date datetime2(6), Avatar varchar(255), description varchar(255), name varchar(255) not null, primary key (courseID));
 create table Enrollment (courseID int not null, enrollmentID int identity not null, learnerID int not null, rate int, status bit, date datetime2(6), comment varchar(255), primary key (enrollmentID));
 create table Instructor (instructorID int identity not null, rate int, status bit, email varchar(255) not null, name varchar(255) not null, password varchar(255) not null, role varchar(255), summarize varchar(255), primary key (instructorID));
 create table Item (chapterID int not null, itemID int identity not null, status bit, content varchar(255), itemName varchar(255) not null, primary key (itemID));
 create table Learner (learnerID int identity not null, status bit, email varchar(255) not null, name varchar(255) not null, password varchar(255) not null, role varchar(255), primary key (learnerID));
-create table Level (levelID int identity not null, levelName varchar(255), primary key (levelID));
+create table Level (levelID int identity not null, status bit, levelName varchar(255), primary key (levelID));
 create table Post (cateID int not null, postID int identity not null, status bit, date datetime2(6), author varchar(255) not null, content varchar(255) not null, title varchar(255) not null, primary key (postID));
-create table Submission (chapterID int not null, grade int, learnerID int not null, status bit, submitID int identity not null, comment varchar(255), final_project varchar(255) not null, primary key (submitID));
 alter table Instructor add constraint UK_t6alh4njssx4tk4rlm6lu0odw unique (email);
 alter table Learner add constraint UK_726l1bip7l5kr4ldte1s6nrwq unique (email);
 alter table Chapter add constraint FK3r8caqrp38f0xtu9q848ii182 foreign key (courseID) references Course;
@@ -21,5 +20,3 @@ alter table Enrollment add constraint FKfcxfn633c555js0hdapvjxyh6 foreign key (c
 alter table Enrollment add constraint FKb7tkpqrbudrcy318cli5nchbl foreign key (learnerID) references Learner;
 alter table Item add constraint FKg9hgc86ngl1f7x8j8y51ai1ls foreign key (chapterID) references Chapter;
 alter table Post add constraint FK202bahptojc0t82jc82ja9jmv foreign key (cateID) references Category;
-alter table Submission add constraint FK11lmejai8ttg6ha6mbxm6cq8s foreign key (chapterID) references Chapter;
-alter table Submission add constraint FKdsf71s398hwnwcgprn4pdqla2 foreign key (learnerID) references Learner;

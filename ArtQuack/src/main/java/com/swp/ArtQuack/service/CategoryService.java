@@ -27,4 +27,17 @@ public class CategoryService {
 			return categoryRepoService.findByCateNameContainingIgnoreCase(keyword.trim());
 		}
 		
+	//ADD
+	public Category add(Category category) {
+		return categoryRepoService.save(category);
+	}
+	
+	//UPDATE
+	public Category update(Category category) {
+		return categoryRepoService.save(category);
+	}
+	
+	//DELETE
+	
+		
 }

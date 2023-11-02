@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.swp.ArtQuack.entity.Category;
 import com.swp.ArtQuack.entity.Course;
 import com.swp.ArtQuack.entity.Enrollment;
 import com.swp.ArtQuack.entity.Learner;
@@ -46,6 +47,10 @@ public class EnrollmentService {
 		return ls;
 	}
 	
+	public boolean hasEnrolled(int learnerID, int courseID) {
+        return enrollmentRepoService.existsByLearnerLearnerIDAndCourseCourseID(learnerID, courseID);
+    }
+	
 	//ADD
 	public Enrollment add(Enrollment enrollment) {
 		return enrollmentRepoService.save(enrollment);
@@ -71,9 +76,19 @@ public class EnrollmentService {
 				y.setDate(x.getDate());
 				y.setStatus(x.isStatus());
 				
+				
 				Course course = x.getCourse();
 				y.setCourseID(course.getCourseID());
 				y.setCourseName(course.getName());
+				y.setDescription(x.getCourse().getDescription());
+				y.setRate(x.getCourse().getRate());
+				y.setUpload_date(x.getCourse().getUpload_date());
+				y.setViewer(x.getCourse().getViewer());
+				y.setAvatar(x.getCourse().getAvatar());
+				y.setCateID(x.getCourse().getCategory().getCateID());
+				y.setCateName(x.getCourse().getCategory().getCateName());
+				y.setLevelID(x.getCourse().getLevel().getLevelID());
+				y.setLevelName(x.getCourse().getLevel().getLevelName());
 				
 				Learner learner = x.getLearner();
 				y.setLearnerID(learner.getLearnerID());

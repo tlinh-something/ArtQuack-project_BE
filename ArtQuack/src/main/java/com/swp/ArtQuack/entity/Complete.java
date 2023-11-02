@@ -33,6 +33,15 @@ public class Complete implements Serializable{
 	@Column(name = "status")
 	private boolean status;
 	
+	@Column(name = "comment")
+	private String comment;
+	
+	@Column(name = "grade")
+	private int grade;
+	
+	@Column(name = "homework")
+	private String homework;
+	
 	//RELATIONSHIP SETUP
 	@ManyToOne(targetEntity = Item.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "itemID", referencedColumnName = "itemID", nullable = false, insertable = true, updatable = false)
@@ -46,6 +55,29 @@ public class Complete implements Serializable{
 	@ToString.Exclude
 	private Learner learner;
 
+	public String getComment() {
+		return comment;
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public int getGrade() {
+		return grade;
+	}
+
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
+
+	public String getHomework() {
+		return homework;
+	}
+
+	public void setHomework(String homework) {
+		this.homework = homework;
+	}
 
 	public int getCompleteID() {
 		return completeID;

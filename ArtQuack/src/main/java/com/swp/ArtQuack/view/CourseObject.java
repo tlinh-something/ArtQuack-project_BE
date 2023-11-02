@@ -29,6 +29,8 @@ public class CourseObject implements Serializable{
 	private int viewer;
 	private int rate;
 	private boolean status;
+	private String avatar;
+	private float price;
 	
 	//Instructor
 	private int instructorID;
@@ -51,8 +53,21 @@ public class CourseObject implements Serializable{
 //	private String chapterName;
 
 	
+	
 	public String getName() {
 		return name;
+	}
+	public float getPrice() {
+		return price;
+	}
+	public void setPrice(float price) {
+		this.price = price;
+	}
+	public String getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
 	public int getCourseID() {
 		return courseID;

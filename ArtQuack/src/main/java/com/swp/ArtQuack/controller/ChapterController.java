@@ -10,19 +10,19 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.swp.ArtQuack.entity.Category;
 import com.swp.ArtQuack.entity.Chapter;
 import com.swp.ArtQuack.entity.Course;
-import com.swp.ArtQuack.entity.Instructor;
-import com.swp.ArtQuack.entity.Level;
+import com.swp.ArtQuack.entity.Item;
 import com.swp.ArtQuack.service.ChapterService;
 import com.swp.ArtQuack.service.CourseService;
+import com.swp.ArtQuack.service.ItemService;
 import com.swp.ArtQuack.view.ChapterObject;
-import com.swp.ArtQuack.view.CourseObject;
+import com.swp.ArtQuack.view.ItemObject;
 
 @RequestMapping("/api")
 @RestController
@@ -33,6 +33,9 @@ public class ChapterController {
 	
 	@Autowired
 	private CourseService courseService;
+	
+	@Autowired
+	private ItemService itemService;
 	
 	@GetMapping("/chapters")
 	public ResponseEntity<List<ChapterObject>> retrieveAllChapters() {
@@ -87,6 +90,21 @@ public class ChapterController {
 		}
 	}
 	
+	@PutMapping("/chapter/{chapterID}/updatechapter")
+	public ResponseEntity<Chapter> updateChapter(@PathVariable("chapterID") int chapterID , @RequestBody Chapter chapter){
+		Chapter available = chapterService.findById(chapter.getChapterID());
+		if(available == null)
+			return  ResponseEntity.notFound().header("message", "No Chapter found for such ID").build();
+		
+		chapter.setStatus(true);
+		Chapter updatedChapter = chapterService.update(chapter);
+		if(updatedChapter != null)
+			return ResponseEntity.ok(updatedChapter);
+		else 
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		
+	}
+	
 	@DeleteMapping("/deletechapter/{chapterID}")
 	public ResponseEntity<Void> deleteChapter(@PathVariable int chapterID){
 		try{
@@ -100,5 +118,39 @@ public class ChapterController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "Chapter deletion failed").build();
 		}
 	}
+	
+//	@GetMapping("/course/{courseID}/chapters/chapter/{chapterID}/items")
+//	public ResponseEntity<List<Object>> findByCourseAndChapterID(
+//	        @PathVariable("courseID") int courseID,
+//	        @PathVariable("chapterID") int chapterID) {
+//
+//	    Course course = courseService.findById(courseID);
+//	    if (course == null) {
+//	        return ResponseEntity.notFound()
+//	                .header("message", "No Course found for such ID")
+//	                .build();
+//	    }
+//
+//	    List<Object> chapterItemList = new ArrayList<>();
+//
+//	    // Get all chapters with the courseID
+//	    List<Chapter> chapterList = chapterService.findByCourseID(courseID);
+//	    for (Chapter chapter : chapterList) {
+//	        ChapterObject chapterObject = chapterService.displayRender(chapter);
+//	        chapterItemList.add(chapterObject);
+//
+//	        // Check if the chapterID matches the provided chapterID
+//	        if (chapter.getChapterID() == chapterID) {
+//	            // Get all items with the chapterID
+//	            List<Item> itemList = itemService.findByChapterID(chapterID);
+//	            for (Item item : itemList) {
+//	                ItemObject itemObject = itemService.displayRender(item);
+//	                chapterItemList.add(itemObject);
+//	            }
+//	        }
+//	    }
+//
+//	    return ResponseEntity.ok(chapterItemList);
+//	}
 	
 }

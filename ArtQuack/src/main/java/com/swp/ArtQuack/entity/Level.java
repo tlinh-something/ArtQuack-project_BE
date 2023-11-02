@@ -32,12 +32,24 @@ public class Level implements Serializable{
 	@Column(name = "levelName")
 	private String levelName;
 	
+	@Column(name = "status")
+	private boolean status;
+	
 	//RELATIONSHIP SETUP
 	@OneToMany(targetEntity = Course.class, mappedBy = "level")
 	@JsonIgnore
 	@ToString.Exclude
 	private Collection<Course> coursesList;
 
+	
+
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 
 	public int getLevelID() {
 		return levelID;

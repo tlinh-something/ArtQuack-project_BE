@@ -52,6 +52,8 @@ public class CourseService {
 			object.setViewer(x.getViewer());
 			object.setRate(x.getRate());
 			object.setStatus(x.isStatus());
+			object.setAvatar(x.getAvatar());
+			object.setPrice(x.getPrice());
 			
 			//Instructor
 			object.setInstructorID(x.getInstructor().getInstructorID());

@@ -22,4 +22,7 @@ public interface InstructorRepository extends JpaRepository<Instructor, Integer>
 	public Instructor findByEmail(String email);
 	
 	public Instructor findByEmailAndPassword(String email, String password);
+	
+//	public int countByInstructorID(int instructorID);
+
 }

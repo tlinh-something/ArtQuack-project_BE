@@ -44,11 +44,7 @@ public class Chapter implements Serializable{
 	@JsonIgnore
 	@ToString.Exclude
 	private Collection<Item> itemsList;
-	
-	@OneToMany(targetEntity = Submission.class, mappedBy = "chapter")
-	@JsonIgnore
-	@ToString.Exclude
-	private Collection<Submission> submissionsList;
+
 
 	public int getChapterID() {
 		return chapterID;
@@ -88,14 +84,6 @@ public class Chapter implements Serializable{
 
 	public void setItemsList(Collection<Item> itemsList) {
 		this.itemsList = itemsList;
-	}
-
-	public Collection<Submission> getSubmissionsList() {
-		return submissionsList;
-	}
-
-	public void setSubmissionsList(Collection<Submission> submissionsList) {
-		this.submissionsList = submissionsList;
 	}
 
 	public static long getSerialversionuid() {

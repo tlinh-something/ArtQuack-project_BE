@@ -20,8 +20,10 @@ import com.swp.ArtQuack.entity.Course;
 import com.swp.ArtQuack.entity.Instructor;
 import com.swp.ArtQuack.entity.Level;
 import com.swp.ArtQuack.service.CategoryService;
+import com.swp.ArtQuack.service.ChapterService;
 import com.swp.ArtQuack.service.CourseService;
 import com.swp.ArtQuack.service.InstructorService;
+import com.swp.ArtQuack.service.ItemService;
 import com.swp.ArtQuack.service.LevelService;
 import com.swp.ArtQuack.view.CourseObject;
 
@@ -41,6 +43,12 @@ public class CourseController {
 	
 	@Autowired
 	private LevelService levelService;
+	
+	@Autowired
+	private ChapterService chapterService;
+	
+	@Autowired
+	private ItemService itemService;
 	
 	@GetMapping("/courses")
 	public ResponseEntity<List<CourseObject>> retrieveAllCourses() {
@@ -139,7 +147,7 @@ public class CourseController {
 	}
 	
 	@PutMapping("/course/{courseID}/updatecourse")
-	public ResponseEntity<Course> updatePost(@PathVariable("courseID") int courseID , @RequestBody Course course){
+	public ResponseEntity<Course> updateCourse(@PathVariable("courseID") int courseID , @RequestBody Course course){
 		Course available = courseService.findById(course.getCourseID());
 		if(available == null)
 			return  ResponseEntity.notFound().header("message", "No Course found for such ID").build();

@@ -23,6 +23,7 @@ import com.swp.ArtQuack.view.EnrollmentObject;
 
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 
+
 @RestController
 @RequestMapping("/api")
 public class EnrollmentController {
@@ -74,15 +75,20 @@ public class EnrollmentController {
 	@PostMapping("/learner/{learnerID}/course/{courseID}/enrollment")
 	public ResponseEntity<Enrollment> createEnrollment(@PathVariable("learnerID") int learnerID,@PathVariable("courseID") int courseID, @RequestBody Enrollment enrollment){
 		try {
+			
 			Learner learner = learnerService.findById(learnerID);
 			if(learner == null) return ResponseEntity.notFound().header("message", "Learner not found. Adding failed").build();
 			
 			Course course = courseService.findById(courseID);
 			if(course == null) return ResponseEntity.notFound().header("message", "Course not found. Adding failed").build();
-			
+
 			if(enrollmentService.findById(enrollment.getEnrollmentID()) != null) 
 				return ResponseEntity.badRequest().header("message", "Enrollment with such ID already exists").build();
 			
+			 boolean hasEnrolled = enrollmentService.hasEnrolled(learnerID, courseID);
+		        if (hasEnrolled)
+		            return ResponseEntity.badRequest().header("message","Learner has already enrolled in the course!").build();
+						
 			enrollment.setLearner(learner);
 			enrollment.setCourse(course);
 			enrollment.setStatus(true);

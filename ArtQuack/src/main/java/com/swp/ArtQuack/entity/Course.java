@@ -53,6 +53,12 @@ public class Course implements Serializable{
 	@Column(name = "status", nullable = false)
 	private boolean status;
 	
+	@Column(name = "Avatar")
+	private String avatar;
+	
+	@Column(name = "price")
+	private float price;
+	
 	//RELATIONSHIP SETUP
 	@ManyToOne(targetEntity = Instructor.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "instructorID", referencedColumnName = "instructorID", nullable = false, insertable = true, updatable = false)
@@ -82,6 +88,23 @@ public class Course implements Serializable{
 	@ToString.Exclude
 	private Collection<Enrollment> enrollmentsList;
 
+	
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
 
 	public int getCourseID() {
 		return courseID;

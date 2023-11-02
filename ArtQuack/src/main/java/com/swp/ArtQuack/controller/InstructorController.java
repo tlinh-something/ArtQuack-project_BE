@@ -84,4 +84,5 @@ public class InstructorController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "instructor deletion failed").build();
 		}
 	}
+	
 }

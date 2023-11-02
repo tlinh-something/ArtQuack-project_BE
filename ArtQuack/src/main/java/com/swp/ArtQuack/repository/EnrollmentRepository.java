@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 
 import com.swp.ArtQuack.entity.Enrollment;
 import java.util.Date;
+import com.swp.ArtQuack.entity.Learner;
+import com.swp.ArtQuack.entity.Course;
+
 
 
 @Repository
@@ -21,4 +24,6 @@ public interface EnrollmentRepository extends JpaRepository<Enrollment, Integer>
 	public List<Enrollment> findByCourseCourseID(int courseID);
 	
 	public List<Enrollment> findByDate(Date date);
+	
+	public boolean existsByLearnerLearnerIDAndCourseCourseID(int learnerID, int courseID);
 }

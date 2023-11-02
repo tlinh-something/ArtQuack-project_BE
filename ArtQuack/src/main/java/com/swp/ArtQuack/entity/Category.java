@@ -34,6 +34,9 @@ public class Category implements Serializable{
 	@Column(name = "cateName", nullable = false)
 	private String cateName;
 	
+	@Column(name = "status")
+	private boolean status;
+	
 	//RELATIONSHIP SETUP
 	@OneToMany(targetEntity = Course.class, mappedBy = "category")
 	@JsonIgnore
@@ -45,6 +48,15 @@ public class Category implements Serializable{
 	@ToString.Exclude
 	private Collection<Post> postList;
 	
+	
+	
+	public boolean isStatus() {
+		return status;
+	}
+
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 
 	public int getCateID() {
 		return cateID;
