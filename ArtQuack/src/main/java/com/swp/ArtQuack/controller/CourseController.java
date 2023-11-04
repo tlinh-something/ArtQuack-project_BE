@@ -165,8 +165,8 @@ public class CourseController {
 	@DeleteMapping("/deletecourse/{courseID}")
 	public ResponseEntity<Void> deleteCourse(@PathVariable int courseID){
 		try{
-			Category category = categoryService.findById(courseID);
-			if(category == null) return ResponseEntity.notFound().header("message", "Category not found. Delete failed").build();
+			Course course = courseService.findById(courseID);
+			if(course == null) return ResponseEntity.notFound().header("message", "Course not found. Delete failed").build();
 			
 			courseService.delete(courseID);
 			return ResponseEntity.noContent().header("message", "Course deleted successfully").build();

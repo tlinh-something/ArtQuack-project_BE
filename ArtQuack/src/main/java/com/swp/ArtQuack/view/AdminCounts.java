@@ -6,12 +6,15 @@ public class AdminCounts {
 	private long learnerCount;
 	private long postCount;
 	private long courseCount;
-	public AdminCounts(long instrucCount, long learnerCount, long postCount, long courseCount) {
+	private long enrollmentCount;
+	
+	public AdminCounts(long instrucCount, long learnerCount, long postCount, long courseCount, long enrollmentCount) {
 		super();
 		this.instrucCount = instrucCount;
 		this.learnerCount = learnerCount;
 		this.postCount = postCount;
 		this.courseCount = courseCount;
+		this.enrollmentCount = enrollmentCount;
 	}
 	public long getInstrucCount() {
 		return instrucCount;
@@ -36,6 +39,12 @@ public class AdminCounts {
 	}
 	public void setCourseCount(long courseCount) {
 		this.courseCount = courseCount;
+	}
+	public long getEnrollmentCount() {
+		return enrollmentCount;
+	}
+	public void setEnrollmentCount(long enrollmentCount) {
+		this.enrollmentCount = enrollmentCount;
 	}
 	
 	

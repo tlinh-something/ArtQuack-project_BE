@@ -81,15 +81,20 @@ public class CompleteController {
 		return ResponseEntity.ok(ls);
 	}
 	
-	@PostMapping("/Item/{itemID}/complete")
-	public ResponseEntity<Complete> createComplete(@PathVariable int itemID, @RequestBody Complete complete){
+	@PostMapping("/Item/{itemID}/Learner/{learnerID}/complete")
+	public ResponseEntity<Complete> createComplete(@PathVariable("itemID") int itemID,@PathVariable("learnerID") int learnerID, @RequestBody Complete complete){
 		try {
 			Item item = itemService.findById(itemID);
 			if(item == null) return ResponseEntity.notFound().header("message", "Item not found. Adding failed").build();
+			
+			Learner learner = learnerService.findById(learnerID);
+			if(learner == null) return ResponseEntity.notFound().header("message", "Learner not found. Adding failed").build();
+
 
 			if(completeService.findById(complete.getCompleteID()) != null)
 				return ResponseEntity.badRequest().header("message", "Complete with such ID already exists").build();
 
+			complete.setLearner(learner);
 			complete.setItem(item);
 			complete.setStatus(true);
 			Complete savedComplete = completeService.add(complete);

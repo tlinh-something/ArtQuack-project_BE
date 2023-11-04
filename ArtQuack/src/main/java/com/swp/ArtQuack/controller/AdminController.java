@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.swp.ArtQuack.entity.Instructor;
 import com.swp.ArtQuack.repository.CourseRepository;
+import com.swp.ArtQuack.repository.EnrollmentRepository;
 import com.swp.ArtQuack.repository.InstructorRepository;
 import com.swp.ArtQuack.repository.LearnerRepository;
 import com.swp.ArtQuack.repository.PostRepository;
@@ -20,15 +21,18 @@ public class AdminController {
 	private final LearnerRepository learnerRepoService;
 	private final PostRepository postRepoService;
 	private final CourseRepository courseRepoService;
-	
+	private final EnrollmentRepository enrollmentRepoService;
+
 	@Autowired
 	public AdminController(InstructorRepository instructorRepoService, LearnerRepository learnerRepoService,
-			PostRepository postRepoService, CourseRepository courseRepoService) {
+			PostRepository postRepoService, CourseRepository courseRepoService,
+			EnrollmentRepository enrollmentRepoService) {
 		super();
 		this.instructorRepoService = instructorRepoService;
 		this.learnerRepoService = learnerRepoService;
 		this.postRepoService = postRepoService;
 		this.courseRepoService = courseRepoService;
+		this.enrollmentRepoService = enrollmentRepoService;
 	}
 	
 	@GetMapping("/admin/count")
@@ -37,7 +41,8 @@ public class AdminController {
 		long learnerCount =(long) learnerRepoService.count();
 		long postCount = (long) postRepoService.count();
 		long courseCount = (long) courseRepoService.count();
-		return new AdminCounts(instructorCount, learnerCount, postCount, courseCount);
+		long enrollmentCount = (long) enrollmentRepoService.count();
+		return new AdminCounts(instructorCount, learnerCount, postCount, courseCount, enrollmentCount);
 	}
 	
 }
