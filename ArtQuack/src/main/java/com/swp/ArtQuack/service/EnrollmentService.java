@@ -73,6 +73,8 @@ public class EnrollmentService {
 			for(Enrollment x: ls) {
 				EnrollmentObject y = new EnrollmentObject();
 				y.setEnrollmentID(x.getEnrollmentID());
+				y.setRate(x.getRate());
+				y.setComment(x.getComment());
 				y.setDate(x.getDate());
 				y.setStatus(x.isStatus());
 				
@@ -81,7 +83,7 @@ public class EnrollmentService {
 				y.setCourseID(course.getCourseID());
 				y.setCourseName(course.getName());
 				y.setDescription(x.getCourse().getDescription());
-				y.setRate(x.getCourse().getRate());
+				y.setRateCourse(x.getCourse().getRate());
 				y.setUpload_date(x.getCourse().getUpload_date());
 				y.setViewer(x.getCourse().getViewer());
 				y.setAvatar(x.getCourse().getAvatar());

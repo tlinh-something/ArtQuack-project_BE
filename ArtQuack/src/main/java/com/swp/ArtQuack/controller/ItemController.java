@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -83,6 +84,21 @@ public class ItemController {
 		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "Failed to add new item").build();
 		}
+	}
+	
+	@PutMapping("/item/{itemID}/updateitem")
+	public ResponseEntity<Item> updateItem(@PathVariable("itemID") int itemID , @RequestBody Item item){
+		Item available = itemService.findById(item.getItemID());
+		if(available == null)
+			return  ResponseEntity.notFound().header("message", "No Item found for such ID").build();
+		
+		item.setStatus(true);
+		Item updatedItem = itemService.update(item);
+		if(updatedItem != null)
+			return ResponseEntity.ok(updatedItem);
+		else 
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		
 	}
 	
 	@DeleteMapping("/deleteitem/{itemID}")

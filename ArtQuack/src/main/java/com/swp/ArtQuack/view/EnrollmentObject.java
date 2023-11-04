@@ -17,6 +17,8 @@ public class EnrollmentObject {
 
 	private int enrollmentID;
 	private Date date;
+	private int rate;
+	private String comment;
 	private boolean status;
 	
 	private int learnerID;
@@ -33,13 +35,25 @@ public class EnrollmentObject {
 	private String description;
 	private Date upload_date;
 	private int viewer;
-	private int rate;
+	private int rateCourse;
 	private String avatar;
 	
 	
 	
 	
 	
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	public int getRateCourse() {
+		return rateCourse;
+	}
+	public void setRateCourse(int rateCourse) {
+		this.rateCourse = rateCourse;
+	}
 	public int getCateID() {
 		return cateID;
 	}

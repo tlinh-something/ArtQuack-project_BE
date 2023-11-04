@@ -37,6 +37,9 @@ public class Category implements Serializable{
 	@Column(name = "status")
 	private boolean status;
 	
+	@Column(name = "picture")
+	private String picture;
+	
 	//RELATIONSHIP SETUP
 	@OneToMany(targetEntity = Course.class, mappedBy = "category")
 	@JsonIgnore
@@ -50,6 +53,14 @@ public class Category implements Serializable{
 	
 	
 	
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
 	public boolean isStatus() {
 		return status;
 	}

@@ -10,9 +10,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.swp.ArtQuack.entity.Chapter;
 import com.swp.ArtQuack.entity.Course;
 import com.swp.ArtQuack.entity.Enrollment;
 import com.swp.ArtQuack.entity.Learner;
@@ -21,7 +24,7 @@ import com.swp.ArtQuack.service.EnrollmentService;
 import com.swp.ArtQuack.service.LearnerService;
 import com.swp.ArtQuack.view.EnrollmentObject;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+
 
 
 @RestController
@@ -99,6 +102,22 @@ public class EnrollmentController {
 		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "Failed to add new enrollment").build();
 		}
+	}
+	
+	@PutMapping("/enrollment/{enrollmentID}/update")
+	public ResponseEntity<Enrollment> updateEnrollment(@PathVariable("enrollmentID") int enrollmentID , @RequestBody Enrollment enrollment){
+
+		Enrollment available = enrollmentService.findById(enrollment.getEnrollmentID());
+		if(available == null)
+			return  ResponseEntity.notFound().header("message", "No Enrollment found for such ID").build();
+
+		enrollment.setStatus(true);
+		Enrollment updatedEnroll = enrollmentService.update(enrollment);
+		if(updatedEnroll != null)
+			return ResponseEntity.ok(updatedEnroll);
+		else
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
 	}
 	
 	//DELETE

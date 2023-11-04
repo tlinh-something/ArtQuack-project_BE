@@ -1,4 +1,4 @@
-create table Category (cateID int identity not null, status bit, cateName varchar(255) not null, primary key (cateID));
+create table Category (cateID int identity not null, status bit, cateName varchar(255) not null, picture varchar(255), primary key (cateID));
 create table Chapter (chapterID int identity not null, courseID int not null, status bit, chapterName varchar(255) not null, primary key (chapterID));
 create table Complete (completeID int identity not null, grade int, itemID int not null, learnerID int not null, status bit, date datetime2(6), comment varchar(255), homework varchar(255), primary key (completeID));
 create table Course (cateID int not null, courseID int identity not null, instructorID int not null, levelID int not null, price float(24), rate int, status bit not null, viewer int, upload_date datetime2(6), Avatar varchar(255), description varchar(255), name varchar(255) not null, primary key (courseID));
