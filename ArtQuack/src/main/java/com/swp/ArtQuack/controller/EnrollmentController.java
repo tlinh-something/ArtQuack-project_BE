@@ -85,11 +85,18 @@ public class EnrollmentController {
 		if(enrollmentService.findById(enrollment.getEnrollmentID()) != null)
 			return ResponseEntity.badRequest().header("message", "Enrollment with such ID already exists").build();
 
-		boolean hasEnrolled = enrollmentService.hasEnrolled(learnerID, courseID);
-		if (hasEnrolled)
-			return ResponseEntity.badRequest().header("message","Learner has already enrolled in the course!").build();
+			boolean hasEnrolled = enrollmentService.hasEnrolled(learnerID, courseID);
+			if (hasEnrolled)
+				return ResponseEntity.badRequest().header("message","Learner has already enrolled in the course!").build();
 
 		return ResponseEntity.badRequest().header("message","Learner has already enrolled in the course!").build();
+	}
+	
+	@GetMapping("enrollment/course/{courseID}/learner/{learnerID}")
+	public ResponseEntity<List<EnrollmentObject>> findByCourseIDAndLearnerID(@PathVariable("courseID") int courseID, @PathVariable("learnerID") int learnerID) {		
+		List<Enrollment> ls = enrollmentService.findByCourseIDAndLearnerID(courseID, learnerID);
+		List<EnrollmentObject> list = enrollmentService.display(ls);
+		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 	
 	//ADD

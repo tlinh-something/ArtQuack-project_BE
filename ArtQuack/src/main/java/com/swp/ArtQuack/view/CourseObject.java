@@ -53,8 +53,15 @@ public class CourseObject implements Serializable{
 //	private String chapterID;
 //	private String chapterName;
 
-	
-	
+
+	public boolean isEnrolled() {
+		return isEnrolled;
+	}
+
+	public void setEnrolled(boolean enrolled) {
+		isEnrolled = enrolled;
+	}
+
 	public String getName() {
 		return name;
 	}

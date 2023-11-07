@@ -42,6 +42,21 @@ public class EnrollmentObject {
 	private String avatar;
 	private float price;
 
+	public String getInstructorName() {
+		return instructorName;
+	}
+
+	public void setInstructorName(String instructorName) {
+		this.instructorName = instructorName;
+	}
+
+	public int getInstructorID() {
+		return instructorID;
+	}
+
+	public void setInstructorID(int instructorID) {
+		this.instructorID = instructorID;
+	}
 
 	public float getPrice() {
 		return price;

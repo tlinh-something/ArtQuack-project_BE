@@ -51,6 +51,10 @@ public class EnrollmentService {
         return enrollmentRepoService.existsByLearnerLearnerIDAndCourseCourseID(learnerID, courseID);
     }
 	
+	public List<Enrollment> findByCourseIDAndLearnerID(int courseID, int learnerID) {
+		return enrollmentRepoService.findByCourseCourseIDAndLearnerLearnerID(courseID, learnerID);
+	}
+	
 	//ADD
 	public Enrollment add(Enrollment enrollment) {
 		return enrollmentRepoService.save(enrollment);

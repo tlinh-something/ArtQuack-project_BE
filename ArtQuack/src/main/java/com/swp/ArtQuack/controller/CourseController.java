@@ -90,7 +90,6 @@ public class CourseController {
 		return ResponseEntity.ok(ls);
 	}
 	
-	
 	@GetMapping("/course/{courseID}/{learnerID}")
 	public ResponseEntity<CourseObject> retrieveCourse(@PathVariable int courseID, @PathVariable int learnerID) {
 		Course course = courseService.findById(courseID);
@@ -155,7 +154,7 @@ public class CourseController {
 		try {
 			Instructor instructor = instructorService.findById(instructorID);
 			if(instructor == null) return ResponseEntity.notFound().header("message", "Instructor not found. Adding failed").build();
-			
+
 			Category category = categoryService.findById(cateID);
 			if(category == null) return ResponseEntity.notFound().header("message", "Category not found. Adding failed").build();
 			
