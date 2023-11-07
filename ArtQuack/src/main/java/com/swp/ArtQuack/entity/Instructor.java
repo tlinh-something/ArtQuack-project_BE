@@ -61,6 +61,10 @@ public class Instructor implements Serializable{
 	@ToString.Exclude
 	private Collection<Course> coursesList;
 
+	@OneToOne(mappedBy = "instructor")
+	@ToString.Exclude
+	private Wallet wallet;
+
 
 	public int getInstructorID() {
 		return instructorID;

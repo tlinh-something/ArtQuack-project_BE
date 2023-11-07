@@ -59,6 +59,10 @@ public class Learner implements Serializable{
 	@ToString.Exclude
 	private Collection<Complete> completesList;
 
+	@OneToOne(mappedBy = "learner")
+	@ToString.Exclude
+	private Wallet wallet;
+
 	public int getLearnerID() {
 		return learnerID;
 	}

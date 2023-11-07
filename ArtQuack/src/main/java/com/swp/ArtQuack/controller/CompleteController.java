@@ -3,6 +3,8 @@ package com.swp.ArtQuack.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.swp.ArtQuack.service.EmailService;
+import com.swp.ArtQuack.view.EmailDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +37,9 @@ public class CompleteController {
 	
 	@Autowired
 	private LearnerService learnerService;
+
+	@Autowired
+	EmailService emailService;
 	
 	@GetMapping("/completes")
 	public ResponseEntity<List<CompleteObject>> retrieveAllCompletes() {
@@ -117,6 +122,14 @@ public class CompleteController {
 			complete.setItem(item);
 			complete.setStatus(true);
 			Complete savedComplete = completeService.add(complete);
+			EmailDetail emailDetail = new EmailDetail();
+			emailDetail.setRecipient(complete.getItem().getChapter().getCourse().getInstructor().getEmail());
+			emailDetail.setToName(complete.getItem().getChapter().getCourse().getInstructor().getName());
+			emailDetail.setFromName(complete.getLearner().getName());
+			emailDetail.setSubject("Request for Submission Grading");
+			emailDetail.setMsgBody("aaa");
+			emailService.sendMailTemplate(emailDetail, "emailtemplate");
+
 			if(savedComplete != null)
 				return ResponseEntity.status(HttpStatus.CREATED).body(savedComplete);
 			else return ResponseEntity.internalServerError().build();
@@ -130,9 +143,20 @@ public class CompleteController {
 		Complete available = completeService.findById(complete.getCompleteID());
 		if(available == null)
 			return  ResponseEntity.notFound().header("message", "No Complete found for such ID").build();
-		
-		complete.setStatus(true);
-		Complete updatedComplete = completeService.update(complete);
+
+		available.setStatus(true);
+		available.setComment(complete.getComment());
+		available.setGrade(complete.getGrade());
+		Complete updatedComplete = completeService.update(available);
+		EmailDetail emailDetail = new EmailDetail();
+		emailDetail.setRecipient(updatedComplete.getLearner().getEmail());
+		emailDetail.setFromName(updatedComplete.getItem().getChapter().getCourse().getInstructor().getName());
+		emailDetail.setToName(updatedComplete.getLearner().getName());
+		emailDetail.setCourseName(updatedComplete.getItem().getChapter().getCourse().getName());
+		emailDetail.setItemName(updatedComplete.getItem().getItemName());
+		emailDetail.setSubject("Response for Submission Grading");
+		emailDetail.setMsgBody("aaa");
+		emailService.sendMailTemplate(emailDetail, "to-learner");
 		if(updatedComplete != null)
 			return ResponseEntity.ok(updatedComplete);
 		else 

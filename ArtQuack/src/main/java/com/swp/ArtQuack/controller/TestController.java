@@ -17,6 +17,6 @@ public class TestController {
         emailDetail.setRecipient("leanhduy16022002@gmail.com");
         emailDetail.setSubject("test123");
         emailDetail.setMsgBody("aaa");
-        emailService.sendMailTemplate(emailDetail);
+        emailService.sendMailTemplate(emailDetail,"emailtemplate");
     }
 }

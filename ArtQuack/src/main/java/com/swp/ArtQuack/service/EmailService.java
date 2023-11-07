@@ -18,13 +18,16 @@ public class EmailService {
 
     @Autowired
     private JavaMailSender javaMailSender;
-    public void sendMailTemplate(EmailDetail emailDetail){
+    public void sendMailTemplate(EmailDetail emailDetail, String template){
         try{
             Context context = new Context();
 
-            context.setVariable("name", "Anh Duy");
+            context.setVariable("name", emailDetail.getToName());
+            context.setVariable("fromName", emailDetail.getFromName());
+            context.setVariable("itemName", emailDetail.getItemName());
+            context.setVariable("courseName", emailDetail.getCourseName());
 
-            String text = templateEngine.process("emailtemplate", context);
+            String text = templateEngine.process(template, context);
 
             // Creating a simple mail message
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
