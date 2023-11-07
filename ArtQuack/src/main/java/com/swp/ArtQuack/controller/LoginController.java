@@ -1,5 +1,6 @@
 package com.swp.ArtQuack.controller;
 
+import com.swp.ArtQuack.exception.BadRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +27,15 @@ public class LoginController {
 	public ResponseEntity<Object> login(@PathVariable("email") String email, @PathVariable("password") String password, @PathVariable("role") String role){
 		if(role.equalsIgnoreCase("learner")){
 			Learner student = studentService.login(email, password);
+			if(student == null){
+				throw new BadRequest("Invalid learner!");
+			}
 			return ResponseEntity.ok(student);
 		}else if(role.equalsIgnoreCase("instructor")) {
 			Instructor instructor = instructorService.login(email, password);
+			if(instructor == null){
+				throw new BadRequest("Invalid instructor!");
+			}
 			return ResponseEntity.ok(instructor);
 		}
 		return ResponseEntity.notFound().build();

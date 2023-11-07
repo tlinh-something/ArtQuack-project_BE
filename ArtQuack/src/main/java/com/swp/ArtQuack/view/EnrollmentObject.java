@@ -42,6 +42,8 @@ public class EnrollmentObject {
 	private String avatar;
 	private float price;
 
+
+
 	public String getInstructorName() {
 		return instructorName;
 	}
