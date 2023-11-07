@@ -18,15 +18,54 @@ public class CompleteObject {
 	private int completeID;
 	private Date date;
 	private boolean status;
+	private String comment;
+	private int grade;
+	private String homework;
 	
 	private int learnerID;
 	private String learnerName;
 	
 	private int itemID;
 	private String itemName;
-	
-	
-	
+
+	private int instructorID;
+	private String instructorName;
+
+
+	public int getInstructorID() {
+		return instructorID;
+	}
+
+	public void setInstructorID(int instructorID) {
+		this.instructorID = instructorID;
+	}
+
+	public String getInstructorName() {
+		return instructorName;
+	}
+
+	public void setInstructorName(String instructorName) {
+		this.instructorName = instructorName;
+	}
+
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	public int getGrade() {
+		return grade;
+	}
+	public void setGrade(int grade) {
+		this.grade = grade;
+	}
+	public String getHomework() {
+		return homework;
+	}
+	public void setHomework(String homework) {
+		this.homework = homework;
+	}
 	public int getLearnerID() {
 		return learnerID;
 	}

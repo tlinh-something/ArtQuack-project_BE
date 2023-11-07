@@ -31,6 +31,7 @@ public class CourseObject implements Serializable{
 	private boolean status;
 	private String avatar;
 	private float price;
+	private boolean isEnrolled = false;
 	
 	//Instructor
 	private int instructorID;

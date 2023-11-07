@@ -3,6 +3,9 @@ package com.swp.ArtQuack.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.swp.ArtQuack.entity.*;
+import com.swp.ArtQuack.repository.EnrollmentRepository;
+import com.swp.ArtQuack.view.ItemObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,10 +18,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.swp.ArtQuack.entity.Category;
-import com.swp.ArtQuack.entity.Course;
-import com.swp.ArtQuack.entity.Instructor;
-import com.swp.ArtQuack.entity.Level;
 import com.swp.ArtQuack.service.CategoryService;
 import com.swp.ArtQuack.service.ChapterService;
 import com.swp.ArtQuack.service.CourseService;
@@ -49,13 +48,34 @@ public class CourseController {
 	
 	@Autowired
 	private ItemService itemService;
-	
+
+	@Autowired
+	private EnrollmentRepository enrollmentRepository;
+
+
 	@GetMapping("/courses")
-	public ResponseEntity<List<CourseObject>> retrieveAllCourses() {
+	public ResponseEntity<List<CourseObject>> retrieveCourses() {
 		List<CourseObject> ls = new ArrayList<CourseObject>();
 		List<Course> courseList = courseService.findAll();
 		for(Course x: courseList) {
 			ls.add(courseService.displayRender(x));
+		}
+		return ResponseEntity.ok(ls);
+	}
+	@GetMapping("/count-by-level")
+	public List<Object[]> countCoursesByLevel() {
+		return courseService.countCoursesByLevel();
+	}
+	
+	@GetMapping("/courses-learner/{learnerID}")
+	public ResponseEntity<List<CourseObject>> retrieveAllCourses(@PathVariable int learnerID) {
+		List<CourseObject> ls = new ArrayList<CourseObject>();
+		List<Course> courseList = courseService.findAll();
+		for(Course x: courseList) {
+			boolean check = enrollmentRepository.existsByLearnerLearnerIDAndCourseCourseID(learnerID, x.getCourseID());
+			if(!check){
+				ls.add(courseService.displayRender(x));
+			}
 		}
 		return ResponseEntity.ok(ls);
 	}
@@ -71,8 +91,20 @@ public class CourseController {
 	}
 	
 	
+	@GetMapping("/course/{courseID}/{learnerID}")
+	public ResponseEntity<CourseObject> retrieveCourse(@PathVariable int courseID, @PathVariable int learnerID) {
+		Course course = courseService.findById(courseID);
+		if (course != null) {
+			CourseObject courseObject = courseService.displayRender(course);
+			courseObject.setEnrolled(enrollmentRepository.existsByLearnerLearnerIDAndCourseCourseID(learnerID, courseID));
+			return ResponseEntity.status(HttpStatus.OK).body(courseObject);
+		} else {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
 	@GetMapping("/course/{courseID}")
-	public ResponseEntity<CourseObject> retrieveCourse(@PathVariable int courseID) {
+	public ResponseEntity<CourseObject> retrieveCourseByID(@PathVariable int courseID) {
 		Course course = courseService.findById(courseID);
 		if (course != null) {
 			return ResponseEntity.status(HttpStatus.OK).body(courseService.displayRender(course));
@@ -80,7 +112,7 @@ public class CourseController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
+
 	@GetMapping("/category/{cateID}/courses")
 	public ResponseEntity<List<CourseObject>> findByCateID(@PathVariable("cateID") int cateID){
 		Category category = categoryService.findById(cateID);

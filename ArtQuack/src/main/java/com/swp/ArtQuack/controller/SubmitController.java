@@ -18,4 +18,9 @@ public class SubmitController {
     public ResponseEntity getSubmitByInstructor(@PathVariable int instructorID){
         return ResponseEntity.ok(submitService.getSubmitList(instructorID));
     }
+    
+    @GetMapping("/submit-of-learner/{learnerID}")
+    public ResponseEntity getSubmitByLearner(@PathVariable int learnerID){
+        return ResponseEntity.ok(submitService.getSubmitListOfLearner(learnerID));
+    }
 }

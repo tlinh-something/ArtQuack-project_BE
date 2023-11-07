@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Repository;
 
@@ -26,5 +27,7 @@ public interface CourseRepository extends JpaRepository<Course, Integer>, JpaSpe
 	
 	public List<Course> findByInstructorInstructorID(int instructorID);
 
+	@Query("SELECT c.level.levelName, COUNT(c) FROM Course c GROUP BY c.level.levelName")
+	List<Object[]> countCoursesByLevel();
 	
 }

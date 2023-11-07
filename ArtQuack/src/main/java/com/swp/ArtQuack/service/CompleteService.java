@@ -2,6 +2,7 @@ package com.swp.ArtQuack.service;
 
 import java.util.List;
 
+import com.swp.ArtQuack.entity.Instructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,11 @@ public class CompleteService {
 		return completeRepoService.findByLearnerLearnerID(learnerID);
 	}
 	
+	public List<Complete> findByLearnerIDAndItemID(int learnerID, int itemID) {
+		return completeRepoService.findByLearnerLearnerIDAndItemItemID(learnerID, itemID);
+	}
+	
+	
 	//ADD
 	public Complete add(Complete complete) {
 		return completeRepoService.save(complete);
@@ -58,12 +64,18 @@ public class CompleteService {
 		object.setCompleteID(x.getCompleteID());
 		object.setDate(x.getDate());
 		object.setStatus(x.isStatus());
+		object.setComment(x.getComment());
+		object.setGrade(x.getGrade());
+		object.setHomework(x.getHomework());
 		
 		object.setLearnerID(x.getLearner().getLearnerID());
 		object.setLearnerName(x.getLearner().getName());
 		
 		object.setItemID(x.getItem().getItemID());
 		object.setItemName(x.getItem().getItemName());
+
+		object.setInstructorID(x.getItem().getChapter().getCourse().getInstructor().getInstructorID());
+		object.setInstructorName(x.getItem().getChapter().getCourse().getInstructor().getName());
 
 		return object;
 	}

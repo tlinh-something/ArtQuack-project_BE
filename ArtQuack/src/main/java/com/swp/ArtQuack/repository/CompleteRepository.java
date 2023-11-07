@@ -18,5 +18,7 @@ public interface CompleteRepository extends JpaRepository<Complete, Integer>, Jp
 	public  List<Complete>   findByItemItemID(int itemID);
 	
 	public List<Complete>  findByLearnerLearnerID(int learnerID);
+
+	public  List<Complete> findByLearnerLearnerIDAndItemItemID(int learnerID, int itemID);
 	
 }

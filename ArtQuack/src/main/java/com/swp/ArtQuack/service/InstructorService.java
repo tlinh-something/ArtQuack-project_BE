@@ -25,6 +25,14 @@ public class InstructorService {
 		return instructorRepoService.findAll();
 	}
 	
+	public List<Instructor> findInstructorsByTrue(){
+		return instructorRepoService.findByStatusIsTrue();
+	}
+	
+	public List<Instructor> findDeletedInstructor(){
+		return instructorRepoService.findByStatusIsFalse();
+	}
+	
 	public Instructor findById(int instructorID) {
 		return instructorRepoService.findByInstructorIDAndStatusIsTrue(instructorID);
 	}

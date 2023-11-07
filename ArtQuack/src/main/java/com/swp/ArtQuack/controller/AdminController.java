@@ -17,11 +17,11 @@ import com.swp.ArtQuack.view.AdminCounts;
 @RequestMapping("/api")
 public class AdminController {
 
-	private final InstructorRepository instructorRepoService;
-	private final LearnerRepository learnerRepoService;
-	private final PostRepository postRepoService;
-	private final CourseRepository courseRepoService;
-	private final EnrollmentRepository enrollmentRepoService;
+	 InstructorRepository instructorRepoService;
+	 LearnerRepository learnerRepoService;
+	 PostRepository postRepoService;
+	 CourseRepository courseRepoService;
+	 EnrollmentRepository enrollmentRepoService;
 
 	@Autowired
 	public AdminController(InstructorRepository instructorRepoService, LearnerRepository learnerRepoService,

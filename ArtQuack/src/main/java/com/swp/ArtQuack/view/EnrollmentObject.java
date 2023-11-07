@@ -20,6 +20,9 @@ public class EnrollmentObject {
 	private int rate;
 	private String comment;
 	private boolean status;
+
+	private int instructorID;
+	private String instructorName;
 	
 	private int learnerID;
 	private String learnerName;
@@ -31,17 +34,23 @@ public class EnrollmentObject {
 	private String levelName;
 	
 	private int courseID;
-	private String courseName;
+	private String name;
 	private String description;
 	private Date upload_date;
 	private int viewer;
 	private int rateCourse;
 	private String avatar;
-	
-	
-	
-	
-	
+	private float price;
+
+
+	public float getPrice() {
+		return price;
+	}
+
+	public void setPrice(float price) {
+		this.price = price;
+	}
+
 	public String getComment() {
 		return comment;
 	}
@@ -144,12 +153,12 @@ public class EnrollmentObject {
 	public void setCourseID(int courseID) {
 		this.courseID = courseID;
 	}
-	public String getCourseName() {
-		return courseName;
+
+	public String getName() {
+		return name;
 	}
-	public void setCourseName(String courseName) {
-		this.courseName = courseName;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	
-	
 }

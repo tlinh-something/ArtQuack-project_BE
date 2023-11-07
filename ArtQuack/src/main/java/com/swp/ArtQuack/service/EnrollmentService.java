@@ -77,16 +77,19 @@ public class EnrollmentService {
 				y.setComment(x.getComment());
 				y.setDate(x.getDate());
 				y.setStatus(x.isStatus());
-				
+
+				y.setInstructorID(x.getCourse().getInstructor().getInstructorID());
+				y.setInstructorName(x.getCourse().getInstructor().getName());
 				
 				Course course = x.getCourse();
 				y.setCourseID(course.getCourseID());
-				y.setCourseName(course.getName());
+				y.setName(course.getName());
 				y.setDescription(x.getCourse().getDescription());
 				y.setRateCourse(x.getCourse().getRate());
 				y.setUpload_date(x.getCourse().getUpload_date());
 				y.setViewer(x.getCourse().getViewer());
 				y.setAvatar(x.getCourse().getAvatar());
+				y.setPrice(x.getCourse().getPrice());
 				y.setCateID(x.getCourse().getCategory().getCateID());
 				y.setCateName(x.getCourse().getCategory().getCateName());
 				y.setLevelID(x.getCourse().getLevel().getLevelID());

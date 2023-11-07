@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -80,6 +81,24 @@ public class CompleteController {
 		}
 		return ResponseEntity.ok(ls);
 	}
+
+	@GetMapping("/Learner/{learnerID}/Item/{itemID}/complete")
+	public ResponseEntity<List<CompleteObject>> findByLearnerIDAndItemID(@PathVariable("learnerID") int learnerID, @PathVariable("itemID") int itemID){
+		Learner learner = learnerService.findById(learnerID);
+		if(learner == null)
+			return ResponseEntity.notFound().header("message", "No Learner found for such ID").build();
+
+		Item item = itemService.findById(itemID);
+		if(item == null)
+			return ResponseEntity.notFound().header("message", "No Item found for such ID").build();
+
+		List<CompleteObject> ls = new ArrayList<>();
+		List<Complete> completeList = completeService.findByLearnerIDAndItemID(learnerID, itemID);
+		for(Complete x: completeList) {
+			ls.add(completeService.displayRender(x));
+		}
+		return ResponseEntity.ok(ls);
+	}
 	
 	@PostMapping("/Item/{itemID}/Learner/{learnerID}/complete")
 	public ResponseEntity<Complete> createComplete(@PathVariable("itemID") int itemID,@PathVariable("learnerID") int learnerID, @RequestBody Complete complete){
@@ -104,6 +123,21 @@ public class CompleteController {
 		}catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "Failed to add new complete").build();
 		}
+	}
+	
+	@PutMapping("/complete/{completeID}/updatecomplete")
+	public ResponseEntity<Complete> updateComplete(@PathVariable("completeID") int completeID , @RequestBody Complete complete){
+		Complete available = completeService.findById(complete.getCompleteID());
+		if(available == null)
+			return  ResponseEntity.notFound().header("message", "No Complete found for such ID").build();
+		
+		complete.setStatus(true);
+		Complete updatedComplete = completeService.update(complete);
+		if(updatedComplete != null)
+			return ResponseEntity.ok(updatedComplete);
+		else 
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		
 	}
 	
 	@DeleteMapping("/deletecomplete/{completeID}")

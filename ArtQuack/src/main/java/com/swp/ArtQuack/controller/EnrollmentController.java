@@ -73,6 +73,24 @@ public class EnrollmentController {
 		List<EnrollmentObject> list = enrollmentService.display(ls);
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
+
+	@GetMapping("/course/{courseID}/learner/{learnerID}")
+	public ResponseEntity<Enrollment> checkEnroll(@PathVariable("courseID") int courseID, @PathVariable("learnerID") int learnerID, @RequestBody Enrollment enrollment){
+		Learner learner = learnerService.findById(learnerID);
+		if(learner == null) return ResponseEntity.notFound().header("message", "Learner not found. Adding failed").build();
+
+		Course course = courseService.findById(courseID);
+		if(course == null) return ResponseEntity.notFound().header("message", "Course not found. Adding failed").build();
+
+		if(enrollmentService.findById(enrollment.getEnrollmentID()) != null)
+			return ResponseEntity.badRequest().header("message", "Enrollment with such ID already exists").build();
+
+		boolean hasEnrolled = enrollmentService.hasEnrolled(learnerID, courseID);
+		if (hasEnrolled)
+			return ResponseEntity.badRequest().header("message","Learner has already enrolled in the course!").build();
+
+		return ResponseEntity.badRequest().header("message","Learner has already enrolled in the course!").build();
+	}
 	
 	//ADD
 	@PostMapping("/learner/{learnerID}/course/{courseID}/enrollment")
@@ -88,7 +106,7 @@ public class EnrollmentController {
 			if(enrollmentService.findById(enrollment.getEnrollmentID()) != null) 
 				return ResponseEntity.badRequest().header("message", "Enrollment with such ID already exists").build();
 			
-			 boolean hasEnrolled = enrollmentService.hasEnrolled(learnerID, courseID);
+			boolean hasEnrolled = enrollmentService.hasEnrolled(learnerID, courseID);
 		        if (hasEnrolled)
 		            return ResponseEntity.badRequest().header("message","Learner has already enrolled in the course!").build();
 						

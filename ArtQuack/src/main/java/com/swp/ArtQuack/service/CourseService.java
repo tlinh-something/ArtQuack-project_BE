@@ -18,6 +18,9 @@ public class CourseService {
 	@Autowired
 	private ChapterService chapterService;
 	
+	@Autowired
+	private EnrollmentService enrollmentService;
+	
 	public List<Course> findAll(){
 		return courseRepoService.findByStatusIsTrue();
 	}
@@ -32,6 +35,10 @@ public class CourseService {
 	
 	public List<Course> findByCategory(int cateID){
 		return courseRepoService.findByCategoryCateID(cateID);
+	}
+
+	public List<Object[]> countCoursesByLevel() {
+		return courseRepoService.countCoursesByLevel();
 	}
 	
 	public List<Course> findByInstructorID(int instructorID){

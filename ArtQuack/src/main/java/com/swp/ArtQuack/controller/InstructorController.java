@@ -33,6 +33,13 @@ public class InstructorController {
 		return ResponseEntity.ok(list);
     }
 	
+	@GetMapping("/instructor-by-true")
+	public ResponseEntity<List<InstructorObject>> retrieveInstructorsByTrue(){
+		List<Instructor> ls = instructorService.findInstructorsByTrue();
+		List<InstructorObject> list = instructorService.display(ls);
+		return ResponseEntity.ok(list);
+    }
+	
 	@GetMapping("/instructor/{instructorID}")
 	public ResponseEntity<InstructorObject> retrieveInstructor(@PathVariable int instructorID) {
 		Instructor instructor = instructorService.findById(instructorID);
