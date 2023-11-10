@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,7 +22,14 @@ public class ChapterObject {
 	private int chapterID;
 	private String chapterName;
 	private boolean status;
-	
+	private List<ItemObject> items;
+
+	public ChapterObject(int chapterID, String chapterName, boolean status) {
+		this.chapterID = chapterID;
+		this.chapterName = chapterName;
+		this.status = status;
+	}
+
 	private int courseID;
 	private String courseName;
 	public int getChapterID() {

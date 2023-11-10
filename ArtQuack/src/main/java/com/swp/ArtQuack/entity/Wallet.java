@@ -13,7 +13,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@EqualsAndHashCode
+//@EqualsAndHashCode
 public class Wallet implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -53,5 +53,67 @@ public class Wallet implements Serializable {
     @JsonIgnore
     @ToString.Exclude
     private Collection<Transaction> transactionsTo;
+
+	public int getWalletID() {
+		return walletID;
+	}
+
+	public void setWalletID(int walletID) {
+		this.walletID = walletID;
+	}
+
+	public double getBalance() {
+		return balance;
+	}
+
+	public void setBalance(double balance) {
+		this.balance = balance;
+	}
+
+	public Instructor getInstructor() {
+		return instructor;
+	}
+
+	public void setInstructor(Instructor instructor) {
+		this.instructor = instructor;
+	}
+
+	public Learner getLearner() {
+		return learner;
+	}
+
+	public void setLearner(Learner learner) {
+		this.learner = learner;
+	}
+
+	public Admin getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Admin admin) {
+		this.admin = admin;
+	}
+
+	public Collection<Transaction> getTransactionsFrom() {
+		return transactionsFrom;
+	}
+
+	public void setTransactionsFrom(Collection<Transaction> transactionsFrom) {
+		this.transactionsFrom = transactionsFrom;
+	}
+
+	public Collection<Transaction> getTransactionsTo() {
+		return transactionsTo;
+	}
+
+	public void setTransactionsTo(Collection<Transaction> transactionsTo) {
+		this.transactionsTo = transactionsTo;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+    
+    
 
 }

@@ -17,9 +17,11 @@ public class ItemObject {
 	private String itemName;
 	private String content;
 	private boolean status;
-	
+
 	private int chapterID;
 	private String chapterName;
+
+
 	public int getItemID() {
 		return itemID;
 	}

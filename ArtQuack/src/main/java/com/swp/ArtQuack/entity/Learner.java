@@ -59,7 +59,7 @@ public class Learner implements Serializable{
 	@ToString.Exclude
 	private Collection<Complete> completesList;
 
-	@OneToOne(mappedBy = "learner")
+	@OneToOne(mappedBy = "learner", cascade = CascadeType.ALL)
 	@ToString.Exclude
 	private Wallet wallet;
 

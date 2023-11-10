@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -84,6 +83,7 @@ public class SubmitService {
             CourseResponse courseResponse = new CourseResponse();
             courseResponse.setCourseName(course.getName());
             courseResponse.setCourseID(course.getCourseID());
+            courseResponse.setStatus(course.isStatus());
             List<ChapterResponse> chapterResponses = new ArrayList<>();
             courseResponse.setChapters(chapterResponses);
 
@@ -91,6 +91,7 @@ public class SubmitService {
                 boolean check = false;
                 ChapterResponse chapterResponse = new ChapterResponse();
                 chapterResponse.setChapterID(chapter.getChapterID());
+                chapterResponse.setStatus(course.isStatus());
                 chapterResponse.setChapterName(chapter.getChapterName());
                 List<ItemResponse> itemResponses = new ArrayList<>();
                 chapterResponse.setItems(itemResponses);
@@ -100,6 +101,7 @@ public class SubmitService {
                         ItemResponse itemResponse = new ItemResponse();
                         itemResponse.setItemID(item.getItemID());
                         itemResponse.setItemName(item.getItemName());
+                        itemResponse.setStatus(item.isStatus());
                         itemResponses.add(itemResponse);
                     }
                 }

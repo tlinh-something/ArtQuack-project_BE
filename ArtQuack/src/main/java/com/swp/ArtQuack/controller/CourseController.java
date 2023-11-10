@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.swp.ArtQuack.entity.*;
 import com.swp.ArtQuack.repository.EnrollmentRepository;
+import com.swp.ArtQuack.view.ChapterObject;
 import com.swp.ArtQuack.view.ItemObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -110,6 +111,12 @@ public class CourseController {
 		} else {
 			return ResponseEntity.notFound().build();
 		}
+	}
+
+	@GetMapping("/all-of-course/{courseID}")
+	public ResponseEntity<List<ChapterObject>> getAllChaptersAndItemsInCourse(@PathVariable int courseID) {
+		List<ChapterObject> chapters = courseService.getAllChaptersAndItemsInCourse(courseID);
+		return ResponseEntity.ok(chapters);
 	}
 
 	@GetMapping("/category/{cateID}/courses")

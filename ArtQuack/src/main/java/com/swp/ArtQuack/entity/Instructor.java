@@ -20,7 +20,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-@EqualsAndHashCode
+//@EqualsAndHashCode
 
 @Table(name = "Instructor")
 public class Instructor implements Serializable{
@@ -61,7 +61,7 @@ public class Instructor implements Serializable{
 	@ToString.Exclude
 	private Collection<Course> coursesList;
 
-	@OneToOne(mappedBy = "instructor")
+	@OneToOne(mappedBy = "instructor", cascade = CascadeType.ALL)
 	@ToString.Exclude
 	private Wallet wallet;
 

@@ -27,6 +27,8 @@ public interface CourseRepository extends JpaRepository<Course, Integer>, JpaSpe
 	
 	public List<Course> findByInstructorInstructorID(int instructorID);
 
+	public List<Course>  findAllOfCourseByCourseID(int courseID);
+
 	@Query("SELECT c.level.levelName, COUNT(c) FROM Course c GROUP BY c.level.levelName")
 	List<Object[]> countCoursesByLevel();
 	

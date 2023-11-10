@@ -29,13 +29,17 @@ public class LoginController {
 			Learner student = studentService.login(email, password);
 			if(student == null){
 				throw new BadRequest("Invalid learner!");
-			}
+			}else if (!student.isStatus()) {
+	            throw new BadRequest("Account has been deleted!");
+	        }
 			return ResponseEntity.ok(student);
 		}else if(role.equalsIgnoreCase("instructor")) {
 			Instructor instructor = instructorService.login(email, password);
 			if(instructor == null){
 				throw new BadRequest("Invalid instructor!");
-			}
+			}else if (!instructor.isStatus()) {
+	            throw new BadRequest("Account has been deleted!");
+	        }
 			return ResponseEntity.ok(instructor);
 		}
 		return ResponseEntity.notFound().build();

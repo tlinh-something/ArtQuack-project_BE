@@ -44,6 +44,15 @@ public class CourseObject implements Serializable{
 	//Level
 	private int levelID;
 	private String levelName;
+
+	//Chapter
+	private int chapterID;
+	private String chapterName;
+
+	//Item
+	private int itemID;
+	private String itemName;
+	private String content;
 	
 //	//Review
 //	private String reviewID;
@@ -53,6 +62,46 @@ public class CourseObject implements Serializable{
 //	private String chapterID;
 //	private String chapterName;
 
+
+	public int getChapterID() {
+		return chapterID;
+	}
+
+	public void setChapterID(int chapterID) {
+		this.chapterID = chapterID;
+	}
+
+	public String getChapterName() {
+		return chapterName;
+	}
+
+	public void setChapterName(String chapterName) {
+		this.chapterName = chapterName;
+	}
+
+	public int getItemID() {
+		return itemID;
+	}
+
+	public void setItemID(int itemID) {
+		this.itemID = itemID;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
+	public String getContent() {
+		return content;
+	}
+
+	public void setContent(String content) {
+		this.content = content;
+	}
 
 	public boolean isEnrolled() {
 		return isEnrolled;

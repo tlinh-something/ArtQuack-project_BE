@@ -42,4 +42,50 @@ public class Transaction implements Serializable {
     @ToString.Exclude
     private Wallet toWallet;
 
+	public int getTransactionID() {
+		return transactionID;
+	}
+
+	public void setTransactionID(int transactionID) {
+		this.transactionID = transactionID;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	public double getMoney() {
+		return money;
+	}
+
+	public void setMoney(double money) {
+		this.money = money;
+	}
+
+	public Wallet getFromWallet() {
+		return fromWallet;
+	}
+
+	public void setFromWallet(Wallet fromWallet) {
+		this.fromWallet = fromWallet;
+	}
+
+	public Wallet getToWallet() {
+		return toWallet;
+	}
+
+	public void setToWallet(Wallet toWallet) {
+		this.toWallet = toWallet;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+    
+    
+
 }

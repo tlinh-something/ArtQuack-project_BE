@@ -1,7 +1,18 @@
 package com.swp.ArtQuack.service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.swp.ArtQuack.entity.Chapter;
+import com.swp.ArtQuack.entity.Item;
+import com.swp.ArtQuack.view.ChapterObject;
+import com.swp.ArtQuack.view.ItemObject;
+import com.swp.ArtQuack.view.response.ChapterResponse;
+import com.swp.ArtQuack.view.response.CourseResponse;
+import com.swp.ArtQuack.view.response.ItemResponse;
+import com.swp.ArtQuack.view.response.SubmitListResponse;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,6 +76,7 @@ public class CourseService {
 			//Instructor
 			object.setInstructorID(x.getInstructor().getInstructorID());
 			object.setInstructorName(x.getInstructor().getName());
+
 			
 			//Category
 			object.setCateID(x.getCategory().getCateID());
@@ -73,14 +85,7 @@ public class CourseService {
 			//Level
 			object.setLevelID(x.getLevel().getLevelID());
 			object.setLevelName(x.getLevel().getLevelName());
-			
-//			//Review
-//			List<Review> lr = reviewService.findByCourseID(x.getCourseID());
-//			object.setRateReview(lr.get(0).getRate());
-//			
-//			//Chapter
-//			List<Chapter> lc = chapterService.findByCourseID(x.getCourseID());
-//			object.setChapterName(lc.get(0).getChapterName());
+
 			
 		return object;
 	}
@@ -102,5 +107,22 @@ public class CourseService {
 		course.setStatus(false);
 		update(course);
 		return !course.isStatus();
+	}
+
+	public List<ChapterObject> getAllChaptersAndItemsInCourse(int courseID) {
+		Course course = courseRepoService.findById(courseID)
+				.orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + courseID));
+
+		List<ChapterObject> chapterDTOs = new ArrayList<>();
+		for (Chapter chapter : course.getChaptersList()) {
+			ChapterObject chapterDTO = new ChapterObject(chapter.getChapterID(), chapter.getChapterName(), chapter.isStatus());
+			List<ItemObject> itemDTOs = chapter.getItemsList().stream()
+					.map(item -> new ItemObject(item.getItemID(), item.getItemName(), item.getContent(), item.isStatus(), item.getChapter().getChapterID(), item.getChapter().getChapterName()))
+					.collect(Collectors.toList());
+			chapterDTO.setItems(itemDTOs);
+			chapterDTOs.add(chapterDTO);
+		}
+
+		return chapterDTOs;
 	}
 }

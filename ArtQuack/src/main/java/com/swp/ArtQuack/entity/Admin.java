@@ -22,4 +22,38 @@ public class Admin {
     @OneToOne(mappedBy = "admin")
     @ToString.Exclude
     private Wallet wallet;
+
+	public int getAdminID() {
+		return adminID;
+	}
+
+	public void setAdminID(int adminID) {
+		this.adminID = adminID;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Wallet getWallet() {
+		return wallet;
+	}
+
+	public void setWallet(Wallet wallet) {
+		this.wallet = wallet;
+	}
+    
+    
 }
