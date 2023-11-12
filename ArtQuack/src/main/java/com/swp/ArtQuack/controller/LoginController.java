@@ -30,7 +30,7 @@ public class LoginController {
 			if(student == null){
 				throw new BadRequest("Invalid learner!");
 			}else if (!student.isStatus()) {
-	            throw new BadRequest("Account has been deleted!");
+	            throw new BadRequest("Account not found!");
 	        }
 			return ResponseEntity.ok(student);
 		}else if(role.equalsIgnoreCase("instructor")) {
@@ -38,7 +38,7 @@ public class LoginController {
 			if(instructor == null){
 				throw new BadRequest("Invalid instructor!");
 			}else if (!instructor.isStatus()) {
-	            throw new BadRequest("Account has been deleted!");
+	            throw new BadRequest("Account not found!");
 	        }
 			return ResponseEntity.ok(instructor);
 		}

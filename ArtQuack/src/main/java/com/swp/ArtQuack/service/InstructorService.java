@@ -22,7 +22,7 @@ public class InstructorService {
 	private CourseService courseService;
 	
 	public List<Instructor> findAll(){
-		return instructorRepoService.findAll();
+		return instructorRepoService.findByStatusIsTrue();
 	}
 	
 	public List<Instructor> findInstructorsByTrue(){
