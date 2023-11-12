@@ -2,6 +2,7 @@ package com.swp.ArtQuack.service;
 
 import java.util.List;
 
+import com.swp.ArtQuack.entity.Chapter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,12 @@ public class CategoryService {
 	}
 	
 	//DELETE
-	
+	public boolean delete(int categoryID) {
+		Category category = findById(categoryID);
+		if(category == null) return false;
+		category.setStatus(false);
+		update(category);
+		return !category.isStatus();
+	}
 		
 }

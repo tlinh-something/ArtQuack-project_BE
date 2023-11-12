@@ -2,6 +2,7 @@ package com.swp.ArtQuack.service;
 
 import java.util.List;
 
+import com.swp.ArtQuack.entity.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +16,31 @@ public class LevelService {
 	private LevelRepository levelRepository;
 	
 	public List<Level> findAll(){
-		return levelRepository.findAll();
+		return levelRepository.findByStatusIsTrue();
 	}
 	
 	public Level findById(int levelID) {
 		return levelRepository.findByLevelID(levelID);
+	}
+
+	public List<Level> findDeletedLevel(){ return levelRepository.findByStatusIsFalse(); }
+
+	//ADD
+	public Level add(Level level){
+		return levelRepository.save(level);
+	}
+
+	//UPDATE
+	public Level update(Level level){
+		return levelRepository.save(level);
+	}
+
+	//DELETE
+	public boolean delete(int levelID) {
+		Level level = findById(levelID);
+		if(level == null) return false;
+		level.setStatus(false);
+		update(level);
+		return !level.isStatus();
 	}
 }

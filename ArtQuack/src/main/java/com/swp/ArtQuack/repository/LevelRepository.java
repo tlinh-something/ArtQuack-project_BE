@@ -12,4 +12,10 @@ import java.util.List;
 public interface LevelRepository extends JpaRepository<Level, Integer>, JpaSpecificationExecutor<Level>{
 
 	public Level findByLevelID(int levelID);
+
+	public List<Level> findByStatusIsTrue();
+
+	public List<Level> findByStatusIsFalse();
+
+
 }
