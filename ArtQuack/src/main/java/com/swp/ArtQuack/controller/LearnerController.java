@@ -65,6 +65,7 @@ public class LearnerController {
 
 		learner.setEmail(available.getEmail());
 		learner.setPassword(available.getPassword());
+		learner.setRole(available.getRole());
 
 		Learner updatedLearner = learnerService.update(learner);
 		if(updatedLearner != null)

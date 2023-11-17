@@ -67,6 +67,7 @@ public class InstructorController {
 		
 		instructor.setEmail(available.getEmail());
 		instructor.setPassword(available.getPassword());
+		instructor.setRole(available.getRole());
 		
 		Instructor updatedInstructor = instructorService.update(instructor);
 		if(updatedInstructor != null)
