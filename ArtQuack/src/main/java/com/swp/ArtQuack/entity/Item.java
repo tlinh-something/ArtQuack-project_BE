@@ -48,6 +48,12 @@ public class Item implements Serializable{
 	
 	@Column(name = "status")
 	private boolean status;
+
+	@Column(name = "report")
+	private String report;
+
+	@Column(name = "typeOfReport")
+	private String typeofreport;
 	
 	//RELATIONSHIP SETUP
 	@ManyToOne(targetEntity = Chapter.class, fetch = FetchType.EAGER)

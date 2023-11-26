@@ -35,9 +35,6 @@ public class ItemController {
 	
 	@Autowired
 	private ChapterService chapterService;
-
-	@Autowired
-	private CourseService courseService;
 	
 	@GetMapping("items")
 	public ResponseEntity<List<ItemObject>> retrieveAllItems() {
@@ -97,8 +94,8 @@ public class ItemController {
 		Item available = itemService.findById(item.getItemID());
 		if(available == null)
 			return  ResponseEntity.notFound().header("message", "No Item found for such ID").build();
-		
-		item.setStatus(true);
+
+		item.setStatus(available.isStatus());
 		Item updatedItem = itemService.update(item);
 		if(updatedItem != null)
 			return ResponseEntity.ok(updatedItem);
@@ -120,30 +117,5 @@ public class ItemController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "Item deletion failed").build();
 		}
 	}
-
-	//All item of first chapter for non-register
-//	@GetMapping("/course/{courseID}/chapter/{chapterID}/all-item")
-//	public ResponseEntity<List<Item>> getChapterItemsForCourse(@PathVariable("courseID") int courseID, @PathVariable("chapterID") int chapterID) {
-//		Course course = courseService.findById(courseID);
-//
-//		if (course == null) {
-//			return ResponseEntity.notFound().build();
-//		}
-//
-//		Chapter chapter = course.getChaptersList().stream()
-//				.filter(ch -> ch.getChapterID() == chapterID && ch.isStatus())
-//				.findFirst()
-//				.orElse(null);
-//
-//		if (chapter == null) {
-//			return ResponseEntity.notFound().build();
-//		}
-//
-//		List<Item> items = chapter.getItemsList().stream()
-//				.filter(Item::isStatus)
-//				.collect(Collectors.toList());
-//
-//		return ResponseEntity.ok(items);
-//	}
 	
 }

@@ -66,7 +66,7 @@ public class CourseController {
 	@GetMapping("/courses")
 	public ResponseEntity<List<CourseObject>> retrieveCourses() {
 		List<CourseObject> ls = new ArrayList<CourseObject>();
-		List<Course> courseList = courseService.findAll(true, CourseStatus.ACTIVE);
+		List<Course> courseList = courseService.findAll(true);
 		for(Course x: courseList) {
 			ls.add(courseService.displayRender(x));
 		}

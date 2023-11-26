@@ -1,11 +1,9 @@
 package com.swp.ArtQuack.view;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -17,6 +15,8 @@ public class ItemObject {
 	private String itemName;
 	private String content;
 	private boolean status;
+	private String report;
+	private String typeofreport;
 
 	private int chapterID;
 	private String chapterName;

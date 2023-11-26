@@ -1,14 +1,10 @@
 package com.swp.ArtQuack.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.swp.ArtQuack.entity.*;
 import com.swp.ArtQuack.repository.TransactionRepository;
-import com.swp.ArtQuack.view.TransactionObject;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -64,7 +60,7 @@ public class InstructorService {
 	}
 	
 	//UPDATE
-		public Instructor update(Instructor newInstructor) {
+	public Instructor update(Instructor newInstructor) {
 			return instructorRepoService.save(newInstructor);
 		}
 		

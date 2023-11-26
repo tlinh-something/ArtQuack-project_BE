@@ -19,7 +19,7 @@ public interface CourseRepository extends JpaRepository<Course, Integer>, JpaSpe
 
 	public Course findByCourseIDAndStatusIsTrue(int courseID);
 
-	public List<Course> findCoursesByStatusAndCourseStatus(boolean status, CourseStatus courseStatus);
+	public List<Course> findCoursesByStatus(boolean status);
 
 	public List<Course> findByStatusIsTrue();
 	public List<Course> findByStatusIsFalse();

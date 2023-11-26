@@ -3,12 +3,10 @@ package com.swp.ArtQuack.view;
 import java.util.Date;
 
 import com.swp.ArtQuack.Enum.CourseStatus;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString

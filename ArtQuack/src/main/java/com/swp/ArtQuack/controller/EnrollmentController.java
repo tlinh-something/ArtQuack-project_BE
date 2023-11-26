@@ -164,10 +164,6 @@ public class EnrollmentController {
 		Enrollment available = enrollmentService.findById(enrollment.getEnrollmentID());
 		if(available == null)
 			return  ResponseEntity.notFound().header("message", "No Enrollment found for such ID").build();
-//		enrollment.setRate(available.getRate());
-//		enrollment.setComment(available.getComment());
-//		enrollment.setDate(available.getDate());
-//		enrollment.setStatus(true);
 		available.setTypeOfReport(enrollment.getTypeOfReport());
 		available.setReport(enrollment.getReport());
 		Enrollment updatedEnroll = enrollmentService.update(available);

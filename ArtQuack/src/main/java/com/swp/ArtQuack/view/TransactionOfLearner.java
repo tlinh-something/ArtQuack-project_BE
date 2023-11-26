@@ -1,10 +1,8 @@
 package com.swp.ArtQuack.view;
 
-import com.swp.ArtQuack.entity.Learner;
 import lombok.*;
 
 import java.util.Date;
-import java.util.List;
 
 @Getter
 @Setter
@@ -13,13 +11,13 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 @Data
-public class TransactionObject {
+public class TransactionOfLearner {
     private int transactionID;
     private Date date;
     private double money;
 
-    private int from_learnerID;
-    private String learnerName;
+    private int to_instructorID;
+    private String instructorName;
 
     private int courseID;
     private String courseName;

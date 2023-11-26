@@ -55,6 +55,8 @@ public class ItemService {
 		object.setItemName(x.getItemName());
 		object.setContent(x.getContent());
 		object.setStatus(x.isStatus());
+		object.setReport(x.getReport());
+		object.setTypeofreport(x.getTypeofreport());
 		
 		object.setChapterID(x.getChapter().getChapterID());
 		object.setChapterName(x.getChapter().getChapterName());

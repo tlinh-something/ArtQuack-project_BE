@@ -1,20 +1,21 @@
 package com.swp.ArtQuack.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
-import com.swp.ArtQuack.entity.Category;
-import com.swp.ArtQuack.entity.Course;
-import com.swp.ArtQuack.entity.Transaction;
+import com.swp.ArtQuack.entity.*;
+import com.swp.ArtQuack.repository.LearnerRepository;
 import com.swp.ArtQuack.service.TransactionService;
 import com.swp.ArtQuack.view.CourseObject;
 import com.swp.ArtQuack.view.TransactionObject;
+import com.swp.ArtQuack.view.TransactionOfLearner;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.swp.ArtQuack.entity.Learner;
 import com.swp.ArtQuack.service.LearnerService;
 //import com.swp.ArtQuack.view.StudentObject;
 
@@ -27,6 +28,9 @@ public class LearnerController {
 
 	@Autowired
 	private TransactionService transactionService;
+
+	@Autowired
+	private LearnerRepository learnerRepository;
 	
 	
 	@GetMapping("/learners")
@@ -106,5 +110,41 @@ public class LearnerController {
 	public ResponseEntity<List<Transaction>> getLearnerTransactions(@PathVariable("learnerId") int learnerId) {
 		List<Transaction> transactions = transactionService.getLearnerTransactions(learnerId);
 		return new ResponseEntity<>(transactions, HttpStatus.OK);
+	}
+
+	@GetMapping("/{learnerId}/transactions-of-learner")
+	public ResponseEntity<List<TransactionOfLearner>> getLearnerTransactions1(@PathVariable int learnerId) {
+		try {
+			Learner learner = learnerRepository.findById(learnerId)
+					.orElseThrow(() -> new NotFoundException("Learner not found"));
+
+			List<TransactionOfLearner> transactionDTOs = mapTransactionsToDTOs(learner.getWallet().getTransactionsTo());
+			return ResponseEntity.ok(transactionDTOs);
+		} catch (NotFoundException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+
+	private List<TransactionOfLearner> mapTransactionsToDTOs(Collection<Transaction> transactions) {
+		List<TransactionOfLearner> transactionDTOs = new ArrayList<>();
+
+		for (Transaction transaction : transactions) {
+			TransactionOfLearner transactionDTO = new TransactionOfLearner();
+			transactionDTO.setTransactionID(transaction.getTransactionID());
+			transactionDTO.setDate(transaction.getDate());
+			transactionDTO.setMoney(transaction.getMoney());
+
+			Enrollment course = transaction.getEnrollment();
+			if (course != null) {
+				transactionDTO.setCourseID(course.getCourse().getCourseID());
+				transactionDTO.setCourseName(course.getCourse().getName());
+				transactionDTO.setTo_instructorID(course.getCourse().getInstructor().getInstructorID());
+				transactionDTO.setInstructorName(course.getCourse().getInstructor().getName());
+			}
+
+			transactionDTOs.add(transactionDTO);
+		}
+
+		return transactionDTOs;
 	}
 }
