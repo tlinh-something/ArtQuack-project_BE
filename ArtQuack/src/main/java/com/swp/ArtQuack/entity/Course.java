@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.swp.ArtQuack.Enum.CourseStatus;
 import com.swp.ArtQuack.Utilities.Constants;
 
 import jakarta.persistence.*;
@@ -49,6 +50,9 @@ public class Course implements Serializable{
 	@Column(name = "rate", precision = 2, scale = 1)
 //	@Size(min = Constants.REVIEW_MIN, max = Constants.REVIEW_MAX)
 	private int rate;
+
+	@Enumerated(EnumType.STRING)
+	private CourseStatus courseStatus = CourseStatus.UPDATING;
 	
 	@Column(name = "status", nullable = false)
 	private boolean status;
@@ -58,6 +62,9 @@ public class Course implements Serializable{
 	
 	@Column(name = "price")
 	private float price;
+
+	@Column(name = "reason")
+	private String reason;
 	
 	//RELATIONSHIP SETUP
 	@ManyToOne(targetEntity = Instructor.class, fetch = FetchType.EAGER)
@@ -87,6 +94,11 @@ public class Course implements Serializable{
 	@JsonIgnore
 	@ToString.Exclude
 	private Collection<Enrollment> enrollmentsList;
+
+//	@OneToMany(targetEntity = Transaction.class, mappedBy = "course")
+//	@JsonIgnore
+//	@ToString.Exclude
+//	private Collection<Transaction> transactionsList;
 
 	
 

@@ -2,6 +2,7 @@ package com.swp.ArtQuack.view;
 
 import java.util.Date;
 
+import com.swp.ArtQuack.Enum.CourseStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -19,6 +20,8 @@ public class EnrollmentObject {
 	private Date date;
 	private int rate;
 	private String comment;
+	private String typeOfReport;
+	private String report;
 	private boolean status;
 
 	private int instructorID;
@@ -41,6 +44,7 @@ public class EnrollmentObject {
 	private int rateCourse;
 	private String avatar;
 	private float price;
+	private CourseStatus courseStatus;
 
 
 

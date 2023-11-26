@@ -6,11 +6,10 @@ import java.util.Collection;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -32,6 +31,9 @@ public class Chapter implements Serializable{
 	
 	@Column(name = "status")
 	private boolean status;
+
+	@Column(name = "seevideo")
+	private boolean seevideo;
 	
 	//RELATIONSHIP SETUP
 	@ManyToOne(targetEntity = Course.class, fetch = FetchType.EAGER)
@@ -44,6 +46,7 @@ public class Chapter implements Serializable{
 	@JsonIgnore
 	@ToString.Exclude
 	private Collection<Item> itemsList;
+
 
 
 	public int getChapterID() {

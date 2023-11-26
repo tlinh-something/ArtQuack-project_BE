@@ -2,7 +2,12 @@ package com.swp.ArtQuack.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.swp.ArtQuack.Enum.CourseStatus;
+import com.swp.ArtQuack.exception.BadRequest;
+import com.swp.ArtQuack.service.EmailService;
+import com.swp.ArtQuack.view.EmailDetail;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,7 +44,10 @@ public class EnrollmentController {
 	
 	@Autowired
 	private CourseService courseService;
-	
+
+	@Autowired
+	private EmailService emailService;
+
 	@GetMapping("/enrollments")
 	public ResponseEntity<List<EnrollmentObject>> retreiveAllEnrollments() {
 		List<Enrollment> ls = enrollmentService.findAll();
@@ -60,11 +68,18 @@ public class EnrollmentController {
 		}
 	}
 	
+//	@GetMapping("/enrollment/learner/{learnerID}")
+//	public ResponseEntity<List<EnrollmentObject>> findByStudentID(@PathVariable("learnerID") int learnerID) {
+//		List<Enrollment> ls = enrollmentService.findByLearnerID(learnerID);
+//		List<EnrollmentObject> list = enrollmentService.display(ls);
+//		return ResponseEntity.status(HttpStatus.OK).body(list);
+//	}
+
 	@GetMapping("/enrollment/learner/{learnerID}")
-	public ResponseEntity<List<EnrollmentObject>> findByStudentID(@PathVariable("learnerID") int learnerID) {		
-		List<Enrollment> ls = enrollmentService.findByLearnerID(learnerID);
-		List<EnrollmentObject> list = enrollmentService.display(ls);
-		return ResponseEntity.status(HttpStatus.OK).body(list);
+	public ResponseEntity<List<EnrollmentObject>> getEnrollmentsByLearnerAndStatus(@PathVariable("learnerID") int learnerID) {
+		List<Enrollment> enrollments = enrollmentService.findByLearnerID(learnerID);
+		List<EnrollmentObject> enrollmentObjects = enrollmentService.display(enrollments);
+		return ResponseEntity.ok(enrollmentObjects);
 	}
 	
 	@GetMapping("/enrollment/course/{courseID}")
@@ -74,23 +89,23 @@ public class EnrollmentController {
 		return ResponseEntity.status(HttpStatus.OK).body(list);
 	}
 
-	@GetMapping("/course/{courseID}/learner/{learnerID}")
-	public ResponseEntity<Enrollment> checkEnroll(@PathVariable("courseID") int courseID, @PathVariable("learnerID") int learnerID, @RequestBody Enrollment enrollment){
-		Learner learner = learnerService.findById(learnerID);
-		if(learner == null) return ResponseEntity.notFound().header("message", "Learner not found. Adding failed").build();
-
-		Course course = courseService.findById(courseID);
-		if(course == null) return ResponseEntity.notFound().header("message", "Course not found. Adding failed").build();
-
-		if(enrollmentService.findById(enrollment.getEnrollmentID()) != null)
-			return ResponseEntity.badRequest().header("message", "Enrollment with such ID already exists").build();
-
-			boolean hasEnrolled = enrollmentService.hasEnrolled(learnerID, courseID);
-			if (hasEnrolled)
-				return ResponseEntity.badRequest().header("message","Learner has already enrolled in the course!").build();
-
-		return ResponseEntity.badRequest().header("message","Learner has already enrolled in the course!").build();
-	}
+//	@GetMapping("/course/{courseID}/learner/{learnerID}")
+//	public ResponseEntity<Enrollment> checkEnroll(@PathVariable("courseID") int courseID, @PathVariable("learnerID") int learnerID, @RequestBody Enrollment enrollment){
+//		Learner learner = learnerService.findById(learnerID);
+//		if(learner == null) return ResponseEntity.notFound().header("message", "Learner not found. Adding failed").build();
+//
+//		Course course = courseService.findById(courseID, );
+//		if(course == null) return ResponseEntity.notFound().header("message", "Course not found. Adding failed").build();
+//
+//		if(enrollmentService.findById(enrollment.getEnrollmentID()) != null)
+//			return ResponseEntity.badRequest().header("message", "Enrollment with such ID already exists").build();
+//
+//			boolean hasEnrolled = enrollmentService.hasEnrolled(learnerID, courseID);
+//			if (hasEnrolled)
+//				return ResponseEntity.badRequest().header("message","Learner has already enrolled in the course!").build();
+//
+//		return ResponseEntity.badRequest().header("message","Learner has already enrolled in the course!").build();
+//	}
 	
 	@GetMapping("enrollment/course/{courseID}/learner/{learnerID}")
 	public ResponseEntity<List<EnrollmentObject>> findByCourseIDAndLearnerID(@PathVariable("courseID") int courseID, @PathVariable("learnerID") int learnerID) {		
@@ -115,7 +130,7 @@ public class EnrollmentController {
 			
 			boolean hasEnrolled = enrollmentService.hasEnrolled(learnerID, courseID);
 		        if (hasEnrolled)
-		            return ResponseEntity.badRequest().header("message","Learner has already enrolled in the course!").build();
+		            throw new BadRequest("Learner has already enrolled in the course!");
 						
 			enrollment.setLearner(learner);
 			enrollment.setCourse(course);
@@ -125,7 +140,7 @@ public class EnrollmentController {
 				return ResponseEntity.status(HttpStatus.CREATED).body(savedEnroll);
 			else return ResponseEntity.internalServerError().build();
 		}catch(Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "Failed to add new enrollment").build();
+			throw new BadRequest(e.getMessage());
 		}
 	}
 	
@@ -135,7 +150,6 @@ public class EnrollmentController {
 		Enrollment available = enrollmentService.findById(enrollment.getEnrollmentID());
 		if(available == null)
 			return  ResponseEntity.notFound().header("message", "No Enrollment found for such ID").build();
-
 		enrollment.setStatus(true);
 		Enrollment updatedEnroll = enrollmentService.update(enrollment);
 		if(updatedEnroll != null)
@@ -144,6 +158,48 @@ public class EnrollmentController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 
 	}
+
+	@PutMapping("/enrollment/{enrollmentID}/update-of-report")
+	public ResponseEntity<Enrollment> updateEnrollmentForReport(@PathVariable("enrollmentID") int enrollmentID , @RequestBody Enrollment enrollment){
+		Enrollment available = enrollmentService.findById(enrollment.getEnrollmentID());
+		if(available == null)
+			return  ResponseEntity.notFound().header("message", "No Enrollment found for such ID").build();
+//		enrollment.setRate(available.getRate());
+//		enrollment.setComment(available.getComment());
+//		enrollment.setDate(available.getDate());
+//		enrollment.setStatus(true);
+		available.setTypeOfReport(enrollment.getTypeOfReport());
+		available.setReport(enrollment.getReport());
+		Enrollment updatedEnroll = enrollmentService.update(available);
+		EmailDetail emailDetail = new EmailDetail();
+		emailDetail.setRecipient(updatedEnroll.getCourse().getInstructor().getEmail());
+		emailDetail.setToName(updatedEnroll.getCourse().getInstructor().getName());
+		emailDetail.setCourseName(updatedEnroll.getCourse().getName());
+		emailDetail.setSubject("Report for course");
+		emailDetail.setMsgBody("aaa");
+		emailService.sendMailTemplate(emailDetail, "report-to-instructor");
+		if(updatedEnroll != null)
+			return ResponseEntity.ok(updatedEnroll);
+		else
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
+	}
+	//Report
+//	@PutMapping("enrollment/{enrollmentID}/type-of-report/{typeOfReport}/report/{report}")
+//	public ResponseEntity<Enrollment> updateEnrollmentForReport(@PathVariable("enrollmentID") int enrollmentID,@PathVariable("typeOfReport") String typeOfReport,@PathVariable("report") String report , @RequestBody Enrollment enrollment){
+//		Enrollment available = enrollmentService.findById(enrollment.getEnrollmentID());
+//		if(available == null)
+//			return  ResponseEntity.notFound().header("message", "No Enrollment found for such ID").build();
+//		available.setTypeOfReport(typeOfReport);
+//		available.setReport(report);
+//		available.setStatus(true);
+//		Enrollment updatedEnroll = enrollmentService.update(available);
+//		if(updatedEnroll != null)
+//			return ResponseEntity.ok(updatedEnroll);
+//		else
+//			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+//
+//	}
 	
 	//DELETE
 	@DeleteMapping("/enrollment/{enrollmentID}")

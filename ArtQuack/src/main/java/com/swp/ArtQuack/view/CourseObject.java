@@ -3,6 +3,7 @@ package com.swp.ArtQuack.view;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.swp.ArtQuack.Enum.CourseStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,9 +29,10 @@ public class CourseObject implements Serializable{
 	private Date upload_date;
 	private int viewer;
 	private int rate;
-	private boolean status;
+	private CourseStatus courseStatus;
 	private String avatar;
 	private float price;
+	private String reason;
 	private boolean isEnrolled = false;
 	
 	//Instructor
@@ -71,14 +73,6 @@ public class CourseObject implements Serializable{
 		this.chapterID = chapterID;
 	}
 
-	public String getChapterName() {
-		return chapterName;
-	}
-
-	public void setChapterName(String chapterName) {
-		this.chapterName = chapterName;
-	}
-
 	public int getItemID() {
 		return itemID;
 	}
@@ -89,22 +83,6 @@ public class CourseObject implements Serializable{
 
 	public String getItemName() {
 		return itemName;
-	}
-
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
-	}
-
-	public String getContent() {
-		return content;
-	}
-
-	public void setContent(String content) {
-		this.content = content;
-	}
-
-	public boolean isEnrolled() {
-		return isEnrolled;
 	}
 
 	public void setEnrolled(boolean enrolled) {
@@ -158,12 +136,6 @@ public class CourseObject implements Serializable{
 	}
 	public void setRate(int rate) {
 		this.rate = rate;
-	}
-	public boolean isStatus() {
-		return status;
-	}
-	public void setStatus(boolean status) {
-		this.status = status;
 	}
 	public String getInstructorName() {
 		return instructorName;

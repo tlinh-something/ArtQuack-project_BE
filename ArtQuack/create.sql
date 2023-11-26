@@ -3,13 +3,13 @@ create table Category (cateID int identity not null, status bit, cateName varcha
 create table Chapter (chapterID int identity not null, courseID int not null, status bit, chapterName varchar(255) not null, primary key (chapterID));
 create table Complete (completeID int identity not null, grade int, itemID int not null, learnerID int not null, status bit, date datetime2(6), comment varchar(255), homework varchar(255), primary key (completeID));
 create table Course (cateID int not null, courseID int identity not null, instructorID int not null, levelID int not null, price float(24), rate int, status bit not null, viewer int, upload_date datetime2(6), Avatar varchar(255), description varchar(255), name varchar(255) not null, primary key (courseID));
-create table Enrollment (courseID int not null, enrollmentID int identity not null, learnerID int not null, rate int, status bit, date datetime2(6), comment varchar(255), primary key (enrollmentID));
+create table Enrollment (courseID int not null, enrollmentID int identity not null, learnerID int not null, rate int, status bit, date datetime2(6), comment varchar(255), report varchar(255), typeofreport varchar(255), primary key (enrollmentID));
 create table Instructor (instructorID int identity not null, rate int, status bit, email varchar(255) not null, name varchar(255) not null, password varchar(255) not null, role varchar(255), summarize varchar(255), primary key (instructorID));
-create table Item (chapterID int not null, itemID int identity not null, status bit, content varchar(255), itemName varchar(255) not null, primary key (itemID));
+create table Item (chapterID int not null, itemID int identity not null, seevideo bit, status bit, content varchar(255), itemName varchar(255) not null, primary key (itemID));
 create table Learner (learnerID int identity not null, status bit, email varchar(255) not null, name varchar(255) not null, password varchar(255) not null, role varchar(255), primary key (learnerID));
 create table Level (levelID int identity not null, status bit, levelName varchar(255), primary key (levelID));
 create table Post (cateID int not null, postID int identity not null, status bit, date datetime2(6), author varchar(255) not null, content varchar(255) not null, title varchar(255) not null, primary key (postID));
-create table transactions (from_walletID int, money float(53), to_walletID int, transactionID int identity not null, date datetime2(6), primary key (transactionID));
+create table transactions (enrollmentID int, from_walletID int, money float(53), to_walletID int, transactionID int identity not null, date datetime2(6), primary key (transactionID));
 create table Wallet (adminID int, balance float(53), instructorID int, learnerID int, walletID int identity not null, primary key (walletID));
 alter table Instructor add constraint UK_t6alh4njssx4tk4rlm6lu0odw unique (email);
 alter table Learner add constraint UK_726l1bip7l5kr4ldte1s6nrwq unique (email);
@@ -26,6 +26,7 @@ alter table Enrollment add constraint FKfcxfn633c555js0hdapvjxyh6 foreign key (c
 alter table Enrollment add constraint FKb7tkpqrbudrcy318cli5nchbl foreign key (learnerID) references Learner;
 alter table Item add constraint FKg9hgc86ngl1f7x8j8y51ai1ls foreign key (chapterID) references Chapter;
 alter table Post add constraint FK202bahptojc0t82jc82ja9jmv foreign key (cateID) references Category;
+alter table transactions add constraint FK7qa4q27ty7tj7f9eebvpgrsmk foreign key (enrollmentID) references Enrollment;
 alter table transactions add constraint FKpm0e18q07l14q000hvftbuse3 foreign key (from_walletID) references Wallet;
 alter table transactions add constraint FKqdcilxfy6dudjnjhg8eqfs8l5 foreign key (to_walletID) references Wallet;
 alter table Wallet add constraint FKeyfvdj8yjrqiji19wyawjtl1r foreign key (adminID) references Admin;

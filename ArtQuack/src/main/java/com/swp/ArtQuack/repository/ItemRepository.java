@@ -16,4 +16,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer>, JpaSpecifi
 	public List<Item> findByChapterChapterID(int chapterID);
 	
 	public List<Item> findByStatusIsTrue();
+
+
 }

@@ -146,7 +146,9 @@ public class CompleteController {
 
 		available.setStatus(true);
 		available.setComment(complete.getComment());
+		available.setDate(complete.getDate());
 		available.setGrade(complete.getGrade());
+		available.setHomework(complete.getHomework());
 		Complete updatedComplete = completeService.update(available);
 		EmailDetail emailDetail = new EmailDetail();
 		emailDetail.setRecipient(updatedComplete.getLearner().getEmail());
@@ -157,6 +159,14 @@ public class CompleteController {
 		emailDetail.setSubject("Response for Submission Grading");
 		emailDetail.setMsgBody("aaa");
 		emailService.sendMailTemplate(emailDetail, "to-learner");
+		if(updatedComplete.getGrade() < 5){
+			emailDetail.setRecipient(updatedComplete.getLearner().getEmail());
+			emailDetail.setToName(updatedComplete.getLearner().getName());
+			emailDetail.setItemName(updatedComplete.getItem().getItemName());
+			emailDetail.setSubject("Response for Resubmit");
+			emailDetail.setMsgBody("aaa");
+			emailService.sendMailTemplate(emailDetail, "Resubmit");
+		}
 		if(updatedComplete != null)
 			return ResponseEntity.ok(updatedComplete);
 		else 

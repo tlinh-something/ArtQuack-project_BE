@@ -47,7 +47,7 @@ public class SubmitService {
                 ChapterResponse chapterResponse = new ChapterResponse();
                 chapterResponse.setChapterID(chapter.getChapterID());
                 chapterResponse.setChapterName(chapter.getChapterName());
-                chapterResponse.setStatus(course.isStatus());
+                chapterResponse.setStatus(chapter.isStatus());
                 List<ItemResponse> itemResponses = new ArrayList<>();
                 chapterResponse.setItems(itemResponses);
                 for(Item item: chapter.getItemsList()){
@@ -83,7 +83,6 @@ public class SubmitService {
             CourseResponse courseResponse = new CourseResponse();
             courseResponse.setCourseName(course.getName());
             courseResponse.setCourseID(course.getCourseID());
-            courseResponse.setStatus(course.isStatus());
             List<ChapterResponse> chapterResponses = new ArrayList<>();
             courseResponse.setChapters(chapterResponses);
 
@@ -91,7 +90,6 @@ public class SubmitService {
                 boolean check = false;
                 ChapterResponse chapterResponse = new ChapterResponse();
                 chapterResponse.setChapterID(chapter.getChapterID());
-                chapterResponse.setStatus(course.isStatus());
                 chapterResponse.setChapterName(chapter.getChapterName());
                 List<ItemResponse> itemResponses = new ArrayList<>();
                 chapterResponse.setItems(itemResponses);

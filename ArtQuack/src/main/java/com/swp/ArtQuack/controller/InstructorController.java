@@ -1,8 +1,14 @@
 package com.swp.ArtQuack.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import com.swp.ArtQuack.entity.*;
+import com.swp.ArtQuack.repository.InstructorRepository;
+import com.swp.ArtQuack.service.TransactionService;
+import com.swp.ArtQuack.view.TransactionObject;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.swp.ArtQuack.entity.Instructor;
 import com.swp.ArtQuack.service.InstructorService;
 import com.swp.ArtQuack.view.InstructorObject;
 
@@ -25,6 +30,12 @@ public class InstructorController {
 
 	@Autowired
 	private InstructorService instructorService;
+
+	@Autowired
+	private TransactionService transactionService;
+
+	@Autowired
+	private InstructorRepository instructorRepository;
 	
 	@GetMapping("/instructors")
 	public ResponseEntity<List<InstructorObject>> retrieveAllInstructors(){
@@ -92,5 +103,47 @@ public class InstructorController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "instructor deletion failed").build();
 		}
 	}
-	
+
+	//Transaction
+	@GetMapping("/instructor/{instructorId}/transactions")
+	public ResponseEntity<List<Transaction>> getInstructorTransactions(@PathVariable("instructorId") int instructorId) {
+		List<Transaction> transactions = transactionService.getInstructorTransactions(instructorId);
+		return new ResponseEntity<>(transactions, HttpStatus.OK);
+	}
+
+
+	@GetMapping("/{instructorId}/transactions-of-instructor")
+	public ResponseEntity<List<TransactionObject>> getInstructorTransactions1(@PathVariable int instructorId) {
+		try {
+			Instructor instructor = instructorRepository.findById(instructorId)
+					.orElseThrow(() -> new NotFoundException("Instructor not found"));
+
+			List<TransactionObject> transactionDTOs = mapTransactionsToDTOs(instructor.getWallet().getTransactionsTo());
+			return ResponseEntity.ok(transactionDTOs);
+		} catch (NotFoundException e) {
+			return ResponseEntity.notFound().build();
+		}
+	}
+	private List<TransactionObject> mapTransactionsToDTOs(Collection<Transaction> transactions) {
+		List<TransactionObject> transactionDTOs = new ArrayList<>();
+
+		for (Transaction transaction : transactions) {
+			TransactionObject transactionDTO = new TransactionObject();
+			transactionDTO.setTransactionID(transaction.getTransactionID());
+			transactionDTO.setDate(transaction.getDate());
+			transactionDTO.setMoney(transaction.getMoney());
+
+			Enrollment course = transaction.getEnrollment();
+			if (course != null) {
+				transactionDTO.setCourseID(course.getCourse().getCourseID());
+				transactionDTO.setCourseName(course.getCourse().getName());
+				transactionDTO.setFrom_learnerID(course.getLearner().getLearnerID());
+				transactionDTO.setLearnerName(course.getLearner().getName());
+			}
+
+			transactionDTOs.add(transactionDTO);
+		}
+
+		return transactionDTOs;
+	}
 }

@@ -1,14 +1,18 @@
 package com.swp.ArtQuack.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.swp.ArtQuack.entity.*;
+import com.swp.ArtQuack.repository.TransactionRepository;
+import com.swp.ArtQuack.view.TransactionObject;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
-import com.swp.ArtQuack.entity.Course;
-import com.swp.ArtQuack.entity.Instructor;
 import com.swp.ArtQuack.repository.InstructorRepository;
 import com.swp.ArtQuack.view.InstructorObject;
 
@@ -20,6 +24,9 @@ public class InstructorService {
 	
 	@Autowired
 	private CourseService courseService;
+
+	@Autowired
+	private TransactionRepository transactionRepository;
 	
 	public List<Instructor> findAll(){
 		return instructorRepoService.findByStatusIsTrue();
@@ -88,5 +95,7 @@ public class InstructorService {
 			}
 			return list;
 		}
+
+
 	
 }

@@ -1,19 +1,12 @@
 package com.swp.ArtQuack.entity;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,37 +26,48 @@ import lombok.ToString;
 public class Enrollment implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "enrollmentID")
-	private int enrollmentID;	
+	private int enrollmentID;
 
 	@Column(name = "rate")
 	private int rate;
 
 	@Column(name = "comment")
 	private String comment;
-	
+
 	@Column(name = "date")
 	private Date date;
-	
+
 	@Column(name = "status")
 	private boolean status;
-	
-	
+
+	@Column(name = "report")
+	private String report;
+
+	@Column(name = "typeofreport")
+	private String typeOfReport;
+
+
 	//RELATIONSHIP SETUP
 	@ManyToOne(targetEntity = Learner.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "learnerID", referencedColumnName = "learnerID", nullable = false, insertable = true, updatable = false)
 	@JsonIgnore
 	@ToString.Exclude
 	private Learner learner;
-	
+
 	@ManyToOne(targetEntity = Course.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "courseID", referencedColumnName = "courseID", nullable = false, insertable = true, updatable = false)
 	@JsonIgnore
 	@ToString.Exclude
 	private Course course;
+
+	@OneToMany(targetEntity = Transaction.class, mappedBy = "enrollment")
+	@JsonIgnore
+	@ToString.Exclude
+	private Collection<Transaction> transactionsList;
 
 	public int getRate() {
 		return rate;

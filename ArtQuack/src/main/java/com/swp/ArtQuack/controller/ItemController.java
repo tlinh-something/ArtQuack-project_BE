@@ -1,8 +1,11 @@
 package com.swp.ArtQuack.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.swp.ArtQuack.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +35,9 @@ public class ItemController {
 	
 	@Autowired
 	private ChapterService chapterService;
+
+	@Autowired
+	private CourseService courseService;
 	
 	@GetMapping("items")
 	public ResponseEntity<List<ItemObject>> retrieveAllItems() {
@@ -114,5 +120,30 @@ public class ItemController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "Item deletion failed").build();
 		}
 	}
+
+	//All item of first chapter for non-register
+//	@GetMapping("/course/{courseID}/chapter/{chapterID}/all-item")
+//	public ResponseEntity<List<Item>> getChapterItemsForCourse(@PathVariable("courseID") int courseID, @PathVariable("chapterID") int chapterID) {
+//		Course course = courseService.findById(courseID);
+//
+//		if (course == null) {
+//			return ResponseEntity.notFound().build();
+//		}
+//
+//		Chapter chapter = course.getChaptersList().stream()
+//				.filter(ch -> ch.getChapterID() == chapterID && ch.isStatus())
+//				.findFirst()
+//				.orElse(null);
+//
+//		if (chapter == null) {
+//			return ResponseEntity.notFound().build();
+//		}
+//
+//		List<Item> items = chapter.getItemsList().stream()
+//				.filter(Item::isStatus)
+//				.collect(Collectors.toList());
+//
+//		return ResponseEntity.ok(items);
+//	}
 	
 }

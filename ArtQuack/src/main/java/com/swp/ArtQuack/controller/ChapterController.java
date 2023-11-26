@@ -1,8 +1,12 @@
 package com.swp.ArtQuack.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import com.swp.ArtQuack.repository.ChapterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +40,9 @@ public class ChapterController {
 	
 	@Autowired
 	private ItemService itemService;
+
+	@Autowired
+	private ChapterRepository chapterRepository;
 	
 	@GetMapping("/chapters")
 	public ResponseEntity<List<ChapterObject>> retrieveAllChapters() {
@@ -80,6 +87,7 @@ public class ChapterController {
 				return ResponseEntity.badRequest().header("message", "Chapter with such ID already exists").build();
 			
 			chapter.setCourse(course);
+			chapter.setSeevideo(false);
 			chapter.setStatus(true);
 			Chapter savedChapter = chapterService.add(chapter);
 			if(savedChapter != null)
@@ -95,8 +103,9 @@ public class ChapterController {
 		Chapter available = chapterService.findById(chapter.getChapterID());
 		if(available == null)
 			return  ResponseEntity.notFound().header("message", "No Chapter found for such ID").build();
-		
-		chapter.setStatus(true);
+
+		chapter.setSeevideo(available.isSeevideo());
+		chapter.setStatus(available.isStatus());
 		Chapter updatedChapter = chapterService.update(chapter);
 		if(updatedChapter != null)
 			return ResponseEntity.ok(updatedChapter);
@@ -118,39 +127,22 @@ public class ChapterController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "Chapter deletion failed").build();
 		}
 	}
-	
-//	@GetMapping("/course/{courseID}/chapters/chapter/{chapterID}/items")
-//	public ResponseEntity<List<Object>> findByCourseAndChapterID(
-//	        @PathVariable("courseID") int courseID,
-//	        @PathVariable("chapterID") int chapterID) {
-//
-//	    Course course = courseService.findById(courseID);
-//	    if (course == null) {
-//	        return ResponseEntity.notFound()
-//	                .header("message", "No Course found for such ID")
-//	                .build();
-//	    }
-//
-//	    List<Object> chapterItemList = new ArrayList<>();
-//
-//	    // Get all chapters with the courseID
-//	    List<Chapter> chapterList = chapterService.findByCourseID(courseID);
-//	    for (Chapter chapter : chapterList) {
-//	        ChapterObject chapterObject = chapterService.displayRender(chapter);
-//	        chapterItemList.add(chapterObject);
-//
-//	        // Check if the chapterID matches the provided chapterID
-//	        if (chapter.getChapterID() == chapterID) {
-//	            // Get all items with the chapterID
-//	            List<Item> itemList = itemService.findByChapterID(chapterID);
-//	            for (Item item : itemList) {
-//	                ItemObject itemObject = itemService.displayRender(item);
-//	                chapterItemList.add(itemObject);
-//	            }
-//	        }
-//	    }
-//
-//	    return ResponseEntity.ok(chapterItemList);
-//	}
+
+	//Update Seevideo for freetrial
+	@PutMapping("/chapter/{chapterID}/update-freetrial")
+	public ResponseEntity<Chapter> updateChapterForFreetrial(@PathVariable("chapterID") int chapterID , @RequestBody Chapter chapter){
+		Chapter available = chapterService.findById(chapter.getChapterID());
+		if(available == null)
+			return  ResponseEntity.notFound().header("message", "No Chapter found for such ID").build();
+		chapter.setChapterName(available.getChapterName());
+		chapter.setStatus(available.isStatus());
+		Chapter updatedChapter = chapterService.update(chapter);
+		if(updatedChapter != null)
+			return ResponseEntity.ok(updatedChapter);
+		else
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+
+	}
+
 	
 }

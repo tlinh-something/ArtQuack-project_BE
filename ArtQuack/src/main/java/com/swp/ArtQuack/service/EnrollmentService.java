@@ -6,13 +6,10 @@ import java.util.List;
 import java.util.Optional;
 
 import com.swp.ArtQuack.entity.*;
-import com.swp.ArtQuack.repository.AdminRepository;
-import com.swp.ArtQuack.repository.TransactionRepository;
-import com.swp.ArtQuack.repository.WalletRepository;
+import com.swp.ArtQuack.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.swp.ArtQuack.repository.EnrollmentRepository;
 import com.swp.ArtQuack.view.EnrollmentObject;
 
 @Service
@@ -29,6 +26,9 @@ public class EnrollmentService {
 
     @Autowired
     TransactionRepository transactionRepository;
+
+    @Autowired
+    CourseRepository courseRepository;
     private float price;
 
     public List<Enrollment> findAll() {
@@ -70,6 +70,7 @@ public class EnrollmentService {
         Enrollment enroll = enrollmentRepoService.save(enrollment);
         float price = enroll.getCourse().getPrice();
         Admin admin = adminRepository.findFirstByAdminIDNotNull();
+        Enrollment enroll1 =  enrollmentRepoService.findByEnrollmentIDAndStatusIsTrue(enroll.getEnrollmentID());
         Wallet learnerWallet = walletRepository.findWalletByLearnerLearnerID(enroll.getLearner().getLearnerID());
         Wallet adminWallet = walletRepository.findWalletByAdminAdminID(admin.getAdminID());
         Wallet instuctorWallet = walletRepository.findWalletByInstructorInstructorID(enroll.getCourse().getInstructor().getInstructorID());
@@ -98,6 +99,7 @@ public class EnrollmentService {
         transaction1.setDate(new Date());
         transaction1.setToWallet(learnerWallet);
         transaction1.setMoney(price);
+        transaction1.setEnrollment(enroll1);
         transactionRepository.save(transaction1);
 
 
@@ -106,6 +108,7 @@ public class EnrollmentService {
         transaction2.setFromWallet(learnerWallet);
         transaction2.setToWallet(adminWallet);
         transaction2.setMoney(price);
+        transaction2.setEnrollment(enroll1);
         transactionRepository.save(transaction2);
 
         Transaction transaction3 = new Transaction();
@@ -113,10 +116,12 @@ public class EnrollmentService {
         transaction3.setFromWallet(adminWallet);
         transaction3.setToWallet(instuctorWallet);
         transaction3.setMoney(price * 0.95);
+        transaction3.setEnrollment(enroll1);
         transactionRepository.save(transaction3);
 
         adminWallet.setBalance(adminWallet.getBalance() + price * 0.05);
         instuctorWallet.setBalance(instuctorWallet.getBalance() + price * 0.95);
+        enrollmentRepoService.save(enroll1);
         walletRepository.save(adminWallet);
         walletRepository.save(instuctorWallet);
 
@@ -143,6 +148,8 @@ public class EnrollmentService {
             y.setRate(x.getRate());
             y.setComment(x.getComment());
             y.setDate(x.getDate());
+            y.setTypeOfReport(x.getTypeOfReport());
+            y.setReport(x.getReport());
             y.setStatus(x.isStatus());
 
             y.setInstructorID(x.getCourse().getInstructor().getInstructorID());
@@ -157,6 +164,8 @@ public class EnrollmentService {
             y.setViewer(x.getCourse().getViewer());
             y.setAvatar(x.getCourse().getAvatar());
             y.setPrice(x.getCourse().getPrice());
+            y.setCourseStatus(x.getCourse().getCourseStatus());
+
             y.setCateID(x.getCourse().getCategory().getCateID());
             y.setCateName(x.getCourse().getCategory().getCateName());
             y.setLevelID(x.getCourse().getLevel().getLevelID());

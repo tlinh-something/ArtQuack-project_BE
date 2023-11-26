@@ -42,6 +42,11 @@ public class Transaction implements Serializable {
     @ToString.Exclude
     private Wallet toWallet;
 
+	@ManyToOne(targetEntity = Enrollment.class, fetch = FetchType.EAGER)
+	@JoinColumn(name = "enrollmentID", referencedColumnName = "enrollmentID", nullable = true, insertable = true, updatable = false)
+	@ToString.Exclude
+	private Enrollment enrollment;
+
 	public int getTransactionID() {
 		return transactionID;
 	}

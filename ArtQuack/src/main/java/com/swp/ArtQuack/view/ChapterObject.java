@@ -24,14 +24,18 @@ public class ChapterObject {
 	private boolean status;
 	private List<ItemObject> items;
 
-	public ChapterObject(int chapterID, String chapterName, boolean status) {
-		this.chapterID = chapterID;
-		this.chapterName = chapterName;
-		this.status = status;
-	}
 
 	private int courseID;
 	private String courseName;
+
+	public ChapterObject(int chapterID, String chapterName, boolean status, int courseID, String courseName) {
+		this.chapterID = chapterID;
+		this.chapterName = chapterName;
+		this.status = status;
+		this.courseID = courseID;
+		this.courseName = courseName;
+	}
+
 	public int getChapterID() {
 		return chapterID;
 	}

@@ -2,6 +2,8 @@ package com.swp.ArtQuack.repository;
 
 import java.util.List;
 
+import com.swp.ArtQuack.Enum.CourseStatus;
+import com.swp.ArtQuack.entity.Enrollment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
@@ -16,9 +18,10 @@ import com.swp.ArtQuack.entity.Instructor;
 public interface CourseRepository extends JpaRepository<Course, Integer>, JpaSpecificationExecutor<Course>{
 
 	public Course findByCourseIDAndStatusIsTrue(int courseID);
-	
+
+	public List<Course> findCoursesByStatusAndCourseStatus(boolean status, CourseStatus courseStatus);
+
 	public List<Course> findByStatusIsTrue();
-	
 	public List<Course> findByStatusIsFalse();
 	
 	public List<Course> findByCategoryCateID(int cateID);
@@ -27,7 +30,10 @@ public interface CourseRepository extends JpaRepository<Course, Integer>, JpaSpe
 	
 	public List<Course> findByInstructorInstructorID(int instructorID);
 
-	public List<Course>  findAllOfCourseByCourseID(int courseID);
+	public List<Course> findCoursesByEnrollmentsListNotEmptyAndInstructorInstructorID(int instructorID);
+
+	@Query("SELECT e FROM Enrollment e WHERE e.course.courseID = ?1 AND e.report IS NOT NULL")
+	List<Enrollment> findByCourseIdAndReportIsNotNull(int courseID);
 
 	@Query("SELECT c.level.levelName, COUNT(c) FROM Course c GROUP BY c.level.levelName")
 	List<Object[]> countCoursesByLevel();

@@ -1,7 +1,14 @@
 package com.swp.ArtQuack.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.swp.ArtQuack.entity.Category;
+import com.swp.ArtQuack.entity.Course;
+import com.swp.ArtQuack.entity.Transaction;
+import com.swp.ArtQuack.service.TransactionService;
+import com.swp.ArtQuack.view.CourseObject;
+import com.swp.ArtQuack.view.TransactionObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +24,9 @@ public class LearnerController {
 
 	@Autowired
 	private LearnerService learnerService;
+
+	@Autowired
+	private TransactionService transactionService;
 	
 	
 	@GetMapping("/learners")
@@ -89,5 +99,12 @@ public class LearnerController {
 		catch(Exception e){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).header("message", "learner deletion failed").build();
 		}
+	}
+
+	//Transactions
+	@GetMapping("/learner/{learnerId}/transactions")
+	public ResponseEntity<List<Transaction>> getLearnerTransactions(@PathVariable("learnerId") int learnerId) {
+		List<Transaction> transactions = transactionService.getLearnerTransactions(learnerId);
+		return new ResponseEntity<>(transactions, HttpStatus.OK);
 	}
 }

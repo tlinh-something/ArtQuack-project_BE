@@ -1,11 +1,16 @@
 package com.swp.ArtQuack.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.swp.ArtQuack.entity.Chapter;
-import com.swp.ArtQuack.entity.Item;
+import com.swp.ArtQuack.Enum.CourseStatus;
+import com.swp.ArtQuack.entity.*;
+import com.swp.ArtQuack.exception.CourseNotFoundException;
+import com.swp.ArtQuack.exception.CourseStatusException;
+import com.swp.ArtQuack.exception.InstructorNotFoundException;
+import com.swp.ArtQuack.repository.InstructorRepository;
 import com.swp.ArtQuack.view.ChapterObject;
 import com.swp.ArtQuack.view.ItemObject;
 import com.swp.ArtQuack.view.response.ChapterResponse;
@@ -16,7 +21,6 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.swp.ArtQuack.entity.Course;
 import com.swp.ArtQuack.repository.CourseRepository;
 import com.swp.ArtQuack.view.CourseObject;
 
@@ -31,8 +35,19 @@ public class CourseService {
 	
 	@Autowired
 	private EnrollmentService enrollmentService;
-	
-	public List<Course> findAll(){
+
+	@Autowired
+	private InstructorRepository instructorRepository;
+
+	public List<Course> findAll(boolean status, CourseStatus courseStatus) {
+		return courseRepoService.findCoursesByStatusAndCourseStatus(true, CourseStatus.ACTIVE);
+	}
+
+	public List<Course> findAllCourses(){
+		return courseRepoService.findAll();
+	}
+
+	public List<Course> findAllOfLearner(){
 		return courseRepoService.findByStatusIsTrue();
 	}
 	
@@ -59,6 +74,31 @@ public class CourseService {
 	public List<Course> findByKeyword(String keyword) {
 		return courseRepoService.findByNameContainingIgnoreCaseAndStatusIsTrue(keyword.trim());
 	}
+
+	public List<Course> findCourseReportByInstructorID(int instructorID){
+		List<Course> courses = courseRepoService.findCoursesByEnrollmentsListNotEmptyAndInstructorInstructorID(instructorID);
+		List<Course> coursesReported = new ArrayList<>();
+
+		for(Course c: courses){
+			boolean check = false;
+
+			for(Enrollment e: c.getEnrollmentsList()){
+				if(e.getReport() != null && !e.getReport().isEmpty()){
+					check = true;
+				}
+			}
+
+			if (check){
+				coursesReported.add(c);
+			}
+		}
+		return coursesReported;
+	}
+
+	public List<Enrollment> findCourseReportedByCourseID(int courseID){
+		List<Enrollment> enrollments = courseRepoService.findByCourseIdAndReportIsNotNull(courseID);
+		return enrollments;
+	}
 	
 	//DISPLAY
 	public CourseObject displayRender(Course x) {
@@ -69,9 +109,10 @@ public class CourseService {
 			object.setUpload_date(x.getUpload_date());
 			object.setViewer(x.getViewer());
 			object.setRate(x.getRate());
-			object.setStatus(x.isStatus());
 			object.setAvatar(x.getAvatar());
 			object.setPrice(x.getPrice());
+			object.setCourseStatus(x.getCourseStatus());
+			object.setReason(x.getReason());
 			
 			//Instructor
 			object.setInstructorID(x.getInstructor().getInstructorID());
@@ -101,21 +142,22 @@ public class CourseService {
 	}
 	
 	//DELETE
-	public boolean delete(int courseID) {
-		Course course = findById(courseID);
-		if(course == null) return false;
-		course.setStatus(false);
-		update(course);
-		return !course.isStatus();
-	}
+//	public boolean delete(int courseID) {
+//		Course course = findById(courseID);
+//		if(course == null) return false;
+//		course.setStatus(false);
+//		update(course);
+//		return !course.isStatus();
+//	}
 
+	//List all chapters and items of course
 	public List<ChapterObject> getAllChaptersAndItemsInCourse(int courseID) {
 		Course course = courseRepoService.findById(courseID)
 				.orElseThrow(() -> new EntityNotFoundException("Course not found with ID: " + courseID));
 
 		List<ChapterObject> chapterDTOs = new ArrayList<>();
 		for (Chapter chapter : course.getChaptersList()) {
-			ChapterObject chapterDTO = new ChapterObject(chapter.getChapterID(), chapter.getChapterName(), chapter.isStatus());
+			ChapterObject chapterDTO = new ChapterObject(chapter.getChapterID(), chapter.getChapterName(), chapter.isStatus(), chapter.getCourse().getCourseID(), chapter.getCourse().getName());
 			List<ItemObject> itemDTOs = chapter.getItemsList().stream()
 					.map(item -> new ItemObject(item.getItemID(), item.getItemName(), item.getContent(), item.isStatus(), item.getChapter().getChapterID(), item.getChapter().getChapterName()))
 					.collect(Collectors.toList());
@@ -125,4 +167,16 @@ public class CourseService {
 
 		return chapterDTOs;
 	}
+
+	//Verify course
+	public boolean changeCourseState(int courseId, CourseStatus state) {
+		Course course = courseRepoService.findById(courseId).orElse(null);
+		if (course != null) {
+			course.setCourseStatus(state);
+			courseRepoService.save(course);
+			return true;
+		}
+		return false;
+	}
+
 }
