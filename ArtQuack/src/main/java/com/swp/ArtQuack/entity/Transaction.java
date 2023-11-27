@@ -30,6 +30,15 @@ public class Transaction implements Serializable {
     @Column(name = "money")
     private double money;
 
+	@Column(name = "stk")
+	private String stk;
+
+	@Column(name = "Bank")
+	private String bank;
+
+	@Column(name = "amount")
+	private double amount = 0.0;
+
     @ManyToOne(targetEntity = Wallet.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "from_walletID", referencedColumnName = "walletID", nullable = true, insertable = true, updatable = false)
     @JsonIgnore

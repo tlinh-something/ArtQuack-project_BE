@@ -51,7 +51,7 @@ public class SubmitService {
                 List<ItemResponse> itemResponses = new ArrayList<>();
                 chapterResponse.setItems(itemResponses);
                 for(Item item: chapter.getItemsList()){
-                    if(item.getItemName().toLowerCase().contains("peer")){
+                    if(item.getItemName().toLowerCase().contains("peer") && item.isStatus() == true ){
                         check = true;
                         ItemResponse itemResponse = new ItemResponse();
                         itemResponse.setItemID(item.getItemID());
@@ -83,6 +83,7 @@ public class SubmitService {
             CourseResponse courseResponse = new CourseResponse();
             courseResponse.setCourseName(course.getName());
             courseResponse.setCourseID(course.getCourseID());
+            courseResponse.setStatus(course.isStatus());
             List<ChapterResponse> chapterResponses = new ArrayList<>();
             courseResponse.setChapters(chapterResponses);
 
@@ -91,10 +92,11 @@ public class SubmitService {
                 ChapterResponse chapterResponse = new ChapterResponse();
                 chapterResponse.setChapterID(chapter.getChapterID());
                 chapterResponse.setChapterName(chapter.getChapterName());
+                chapterResponse.setStatus(chapter.isStatus());
                 List<ItemResponse> itemResponses = new ArrayList<>();
                 chapterResponse.setItems(itemResponses);
                 for(Item item: chapter.getItemsList()){
-                    if(item.getItemName().toLowerCase().contains("peer")){
+                    if(item.getItemName().toLowerCase().contains("peer")&& item.isStatus() == true){
                         check = true;
                         ItemResponse itemResponse = new ItemResponse();
                         itemResponse.setItemID(item.getItemID());

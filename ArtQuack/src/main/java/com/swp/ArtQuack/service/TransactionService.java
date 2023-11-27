@@ -1,16 +1,11 @@
 package com.swp.ArtQuack.service;
 
-import com.swp.ArtQuack.entity.Instructor;
-import com.swp.ArtQuack.entity.Learner;
-import com.swp.ArtQuack.entity.Transaction;
-import com.swp.ArtQuack.entity.Wallet;
+import com.swp.ArtQuack.entity.*;
 import com.swp.ArtQuack.repository.TransactionRepository;
-import com.swp.ArtQuack.view.TransactionObject;
-import com.swp.ArtQuack.view.WalletLearner;
+import com.swp.ArtQuack.view.WithdrawalRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -32,4 +27,28 @@ public class TransactionService {
         instructor.setInstructorID(instructorID);
         return transactionRepository.findByToWalletInstructor(instructor);
     }
+
+    public List<Transaction> retrieveAllTransactions(){
+        return transactionRepository.findAll();
+    }
+
+//    public WithdrawalRequest displayRender(Transaction x) {
+//        WithdrawalRequest object = new WithdrawalRequest();
+//        object.setTransactionID(x.getTransactionID());
+//        object.setDate(x.getDate());
+//        object.setMoney(x.getMoney());
+//
+//        object.setFrom_learnerID(x.getEnrollment().getLearner().getLearnerID());
+//        object.setLearnerName(x.getEnrollment().getLearner().getName());
+//
+//        object.setTo_instructorID(x.getEnrollment().getCourse().getInstructor().getInstructorID());
+//        object.setInstructorName(x.getEnrollment().getCourse().getInstructor().getName());
+//
+//        object.setCourseID(x.getEnrollment().getCourse().getCourseID());
+//        object.setCourseName(x.getEnrollment().getCourse().getName());
+//
+//        return object;
+//    }
+
+
 }

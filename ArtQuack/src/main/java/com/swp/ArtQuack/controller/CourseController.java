@@ -183,6 +183,7 @@ public class CourseController {
 			courseDto.setUploadDate(course.getUpload_date());
 			courseDto.setViewer(course.getViewer());
 			courseDto.setRate(course.getRate());
+			courseDto.setStatus(course.isStatus());
 			courseDto.setCourseStatus(course.getCourseStatus());
 			courseDto.setAvatar(course.getAvatar());
 			courseDto.setPrice(course.getPrice());

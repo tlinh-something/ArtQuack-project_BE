@@ -20,6 +20,7 @@ public class CourseDTO{
         private Date uploadDate;
         private int viewer;
         private int rate;
+        private boolean status;
         private CourseStatus courseStatus;
         private String avatar;
         private float price;

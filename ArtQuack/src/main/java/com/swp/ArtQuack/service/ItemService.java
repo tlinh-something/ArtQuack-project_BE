@@ -61,6 +61,9 @@ public class ItemService {
 		object.setChapterID(x.getChapter().getChapterID());
 		object.setChapterName(x.getChapter().getChapterName());
 
+		object.setCourseID(x.getChapter().getCourse().getCourseID());
+		object.setCourseName(x.getChapter().getCourse().getName());
+
 		return object;
 	}
 } 

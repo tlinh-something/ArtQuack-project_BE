@@ -9,7 +9,7 @@ import java.util.List;
 @Repository
 public interface WalletRepository extends JpaRepository<Wallet, Integer> {
     public Wallet findWalletByLearnerLearnerID(int learnerID);
-    public Wallet findWalletByInstructorInstructorID(int learnerID);
-    public Wallet findWalletByAdminAdminID(int learnerID);
+    public Wallet findWalletByInstructorInstructorID(int instructorID);
+    public Wallet findWalletByAdminAdminID(int adminID);
 
 }

@@ -54,6 +54,6 @@ public class Admin {
 	public void setWallet(Wallet wallet) {
 		this.wallet = wallet;
 	}
-    
-    
+
+
 }

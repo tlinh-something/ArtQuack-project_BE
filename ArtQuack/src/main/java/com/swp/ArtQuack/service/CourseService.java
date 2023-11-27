@@ -159,7 +159,7 @@ public class CourseService {
 		for (Chapter chapter : course.getChaptersList()) {
 			ChapterObject chapterDTO = new ChapterObject(chapter.getChapterID(), chapter.getChapterName(), chapter.isStatus(), chapter.getCourse().getCourseID(), chapter.getCourse().getName());
 			List<ItemObject> itemDTOs = chapter.getItemsList().stream()
-					.map(item -> new ItemObject(item.getItemID(), item.getItemName(), item.getContent(), item.isStatus(), item.getReport(), item.getTypeofreport(), item.getChapter().getChapterID(), item.getChapter().getChapterName()))
+					.map(item -> new ItemObject(item.getItemID(), item.getItemName(), item.getContent(), item.isStatus(), item.getReport(), item.getTypeofreport(), item.getChapter().getChapterID(), item.getChapter().getChapterName(), item.getChapter().getCourse().getCourseID(), item.getChapter().getCourse().getName()))
 					.collect(Collectors.toList());
 			chapterDTO.setItems(itemDTOs);
 			chapterDTOs.add(chapterDTO);

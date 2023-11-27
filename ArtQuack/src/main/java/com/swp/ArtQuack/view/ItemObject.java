@@ -21,6 +21,9 @@ public class ItemObject {
 	private int chapterID;
 	private String chapterName;
 
+	private int courseID;
+	private String courseName;
+
 
 	public int getItemID() {
 		return itemID;
