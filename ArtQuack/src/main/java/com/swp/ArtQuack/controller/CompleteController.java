@@ -150,15 +150,6 @@ public class CompleteController {
 		available.setGrade(complete.getGrade());
 		available.setHomework(complete.getHomework());
 		Complete updatedComplete = completeService.update(available);
-//		EmailDetail emailDetail = new EmailDetail();
-//		emailDetail.setRecipient(updatedComplete.getLearner().getEmail());
-//		emailDetail.setFromName(updatedComplete.getItem().getChapter().getCourse().getInstructor().getName());
-//		emailDetail.setToName(updatedComplete.getLearner().getName());
-//		emailDetail.setCourseName(updatedComplete.getItem().getChapter().getCourse().getName());
-//		emailDetail.setItemName(updatedComplete.getItem().getItemName());
-//		emailDetail.setSubject("Response for Submission Grading");
-//		emailDetail.setMsgBody("aaa");
-//		emailService.sendMailTemplate(emailDetail, "to-learner");
 		EmailDetail emailDetail = new EmailDetail();
 		if(updatedComplete.getGrade() >= 5) {
 			emailDetail.setRecipient(updatedComplete.getLearner().getEmail());

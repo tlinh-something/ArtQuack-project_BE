@@ -18,6 +18,7 @@ public class Admin {
     int adminID;
     String username;
     String password;
+	String role;
 
     @OneToOne(mappedBy = "admin")
     @ToString.Exclude
